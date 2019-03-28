@@ -1,0 +1,45 @@
+<div class="customer-list">
+
+    <h1> Kundenübersicht </h1>
+
+
+    <div class="mobile-style">
+        <table style="width:100%">
+            <thead>
+            <tr>
+                <th>Kundennummer</th>
+                <th>Kundenname</th>
+                <th>Land</th>
+                <th>Postleitzahl</th>
+                <th>Stadt</th>
+                <th>Adresse 1</th>
+                <th>Adresse 2</th>
+                <th>Adresse 3</th>
+                <th>Umsatzsteuernummer</th>
+                <th>erstellt am</th>
+                <th>Ändern</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let customer of customers">
+                <td>{{customer.customerNumber}}</td>
+                <td>{{customer.customerName}}</td>
+                <td>{{customer.country}}</td>
+                <td>{{customer.postalCode}}</td>
+                <td>{{customer.city}}</td>
+                <td>{{customer.addressLine1}}</td>
+                <td>{{customer.addressLine2}}</td>
+                <td>{{customer.addressLine3}}</td>
+                <td>{{customer.customerSalesTaxNumber}}</td>
+                <td>{{customer.creationTime | date:'yyyy-MM-dd'}}</td>
+                <td>
+                    <a routerLink="/customer-detail/{{customer.getCustomerId()}}/false">Kunden bearbeiten</a>
+                    <button (click)="deleteCustomer(customer.getCustomerId())">löschen</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a routerLink="/invoice-list">Rechnungsübersicht</a>
+    <button (click)="newCustomereBtn()">Neuer Kunde</button>
+</div>
