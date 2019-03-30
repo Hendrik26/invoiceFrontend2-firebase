@@ -78,7 +78,7 @@ export class CustomerDetailComponent implements OnInit {
             });
     }
 
-    saveCustomer(): void {
+    saveCustomerOlod(): void {
         this.newCustomer = false;
         this.customerService.saveCustomerGlobalsByCustomerId(
             this.customerId,
@@ -96,7 +96,7 @@ export class CustomerDetailComponent implements OnInit {
         this.router.navigateByUrl('/customer-list');
     }
 
-    saveCustomerNew(): void {
+    saveCustomer(): void {
         this.newCustomer = false;
         this.fbInvoiceService.createCustomer01(
             this.customerNumber,
