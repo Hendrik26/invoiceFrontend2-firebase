@@ -9,10 +9,10 @@ import {InvoiceRouterModule} from './/invoice-router.module';
 import {FormsModule} from '@angular/forms';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
-import {FbInvoiceService} from './fb-invoice.service';
+import { AngularFireModule } from '@angular/fire'; // line must be addesd
+import { AngularFirestoreModule } from '@angular/fire/firestore'; // line must be addesd
+import { environment } from '../environments/environment'; // line must be addesd
+import {FbInvoiceService} from './fb-invoice.service'; // line must be addesd
 
 
 @NgModule({
@@ -28,10 +28,10 @@ import {FbInvoiceService} from './fb-invoice.service';
     BrowserModule,
     FormsModule,
     InvoiceRouterModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFireModule.initializeApp(environment.firebase), // line must be addesd
+    AngularFirestoreModule // line must be addesd
   ],
-  providers: [FbInvoiceService],
+  providers: [FbInvoiceService], // line must be changed
   bootstrap: [AppComponent]
 })
 export class AppModule {
