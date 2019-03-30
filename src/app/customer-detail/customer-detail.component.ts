@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../customer';
 import {CustomerService} from '../customer.service';
-// import {FbInvoiceService} from '../fb-invoice.service';
+import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
 import {InvoiceKind} from '../invoice-kind';
 
@@ -38,8 +38,8 @@ export class CustomerDetailComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
-        private customerService: CustomerService) {
-        // private fbInvoiceService: FbInvoiceService) { // To Comment in
+        private customerService: CustomerService,
+        private fbInvoiceService: FbInvoiceService) { // To Comment in
     }
 
     ngOnInit() {

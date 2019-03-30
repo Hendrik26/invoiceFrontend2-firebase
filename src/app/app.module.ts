@@ -9,6 +9,11 @@ import {InvoiceRouterModule} from './/invoice-router.module';
 import {FormsModule} from '@angular/forms';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+import {FbInvoiceService} from './fb-invoice.service';
+
 
 @NgModule({
   declarations: [
@@ -22,9 +27,11 @@ import { CustomerDetailComponent } from './customer-detail/customer-detail.compo
   imports: [
     BrowserModule,
     FormsModule,
-    InvoiceRouterModule
+    InvoiceRouterModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
-  providers: [],
+  providers: [FbInvoiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
