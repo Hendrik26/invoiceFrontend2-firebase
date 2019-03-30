@@ -29,7 +29,7 @@ export class Customer implements CustomerType {
     addressLine3: string;
     customerSalesTaxNumber: string;
     creationTime: Date;
-    private customerId: string;
+    private customerId: string; // === key
 
     //endregion
 
