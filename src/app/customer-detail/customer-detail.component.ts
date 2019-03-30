@@ -96,7 +96,7 @@ export class CustomerDetailComponent implements OnInit {
         this.router.navigateByUrl('/customer-list');
     }
 
-    /* saveCustomerNew(): void {
+    saveCustomerNew(): void {
         this.newCustomer = false;
         this.fbInvoiceService.createCustomer01(
             this.customerNumber,
@@ -111,7 +111,7 @@ export class CustomerDetailComponent implements OnInit {
             this.creationTime
         );
         this.router.navigateByUrl('/customer-list');
-    } */
+    }
 
     backToCustomerList(): void {
         if (this.newCustomer) {
