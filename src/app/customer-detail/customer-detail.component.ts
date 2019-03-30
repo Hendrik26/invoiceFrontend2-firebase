@@ -39,7 +39,7 @@ export class CustomerDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         private customerService: CustomerService) {
-        // private fbInvoiceService: FbInvoiceService) {
+        // private fbInvoiceService: FbInvoiceService) { // To Comment in
     }
 
     ngOnInit() {
