@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../customer';
 import {CustomerService} from '../customer.service';
+// import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
 import {InvoiceKind} from '../invoice-kind';
 
@@ -17,8 +18,8 @@ export class CustomerDetailComponent implements OnInit {
     // endregion
 
     // region other properties
-    //creatingCustomer: boolean;
-    //creatingCustomerBtn: boolean;
+    // creatingCustomer: boolean;
+    // creatingCustomerBtn: boolean;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
     customerNumber: string; // Kundennummer
@@ -38,6 +39,7 @@ export class CustomerDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         private customerService: CustomerService) {
+        // private fbInvoiceService: FbInvoiceService) {
     }
 
     ngOnInit() {
@@ -93,6 +95,23 @@ export class CustomerDetailComponent implements OnInit {
         );
         this.router.navigateByUrl('/customer-list');
     }
+
+    /* saveCustomerNew(): void {
+        this.newCustomer = false;
+        this.fbInvoiceService.createCustomer01(
+            this.customerNumber,
+            this.customerName,
+            this.country,
+            this.postalCode,
+            this.city,
+            this.addressLine1,
+            this.addressLine2,
+            this.addressLine3,
+            this.customerSalesTaxNumber,
+            this.creationTime
+        );
+        this.router.navigateByUrl('/customer-list');
+    } */
 
     backToCustomerList(): void {
         if (this.newCustomer) {

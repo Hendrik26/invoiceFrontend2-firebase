@@ -37,6 +37,23 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
+    createCustomer01(customerNumber: string, customerName: string, country: string,
+                     postalCode: string, city: string, addressLine1: string, addressLine2: string,
+                     addressLine3: string, customerSalesTaxNumber: string, creationTime: Date): void {
+        this.db.collection(this.dbPath).add({
+            'customerNumber': customerNumber,
+            'customerName': customerName,
+            'country': country,
+            'postalCode': postalCode,
+            'city': city,
+            'addressLine1': addressLine1,
+            'addressLine2': addressLine2,
+            'addressLine3': addressLine3,
+            'customerSalesTaxNumber': customerSalesTaxNumber,
+            'creationTime': creationTime
+        }).catch(error => this.handleError(error));
+    }
+
     private handleError(error) {
         console.log(error);
     }
