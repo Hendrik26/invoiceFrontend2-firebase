@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 // import {isNullOrUndefined} from 'util';
 import {Customer} from '../customer';
 import {CustomerService} from '../customer.service';
+import {FbInvoiceService} from '../fb-invoice.service';
 import {CUSTOMERS} from '../mock-customer';
 import {Invoice} from '../invoice';
 import {INVOICES} from '../mock-invoice';
@@ -21,6 +22,7 @@ export class CustomerListComponent implements OnInit {
     // endregion
 
     constructor(private customerService: CustomerService,
+                private fbInvoiceService: FbInvoiceService,
                 private router: Router) {
     }
 
@@ -29,7 +31,8 @@ export class CustomerListComponent implements OnInit {
     }
 
     receiveCustomers(): void {
-        this.customerService.getCustomers().subscribe(customers => this.customers = customers);
+        // this.customerService.getCustomers().subscribe(customers => this.customers = customers);
+        this.fbInvoiceService.getCustomersList('xxx').subscribe(customers => this.customers = customers);
     }
 
     public newCustomereBtn(): void {

@@ -30,6 +30,7 @@ export class Customer implements CustomerType {
     customerSalesTaxNumber: string;
     creationTime: Date;
     private customerId: string; // === key
+    key: string;
 
     //endregion
 
@@ -64,7 +65,8 @@ export class Customer implements CustomerType {
     //endregion
     //region getter
     public getCustomerId(): string {
-        return this.customerId;
+        // return this.customerId;
+        return this.key;
     }
 
     //endregion
