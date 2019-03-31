@@ -16,6 +16,19 @@ export class Customer implements CustomerType {
         customerSalesTaxNumber: '000000',
         creationTime: new Date()
     };
+
+    private static editedCustomer: CustomerType = {
+        customerNumber: '2018', // Kundennummer
+        customerName: 'neuer Kunde',  // Kundenname
+        country: 'Deutschland',
+        postalCode: '',
+        city: '',
+        addressLine1: '',
+        addressLine2: '',
+        addressLine3: '',
+        customerSalesTaxNumber: '000000',
+        creationTime: new Date()
+    };
     //endregion
     //region other properties
 
@@ -61,12 +74,27 @@ export class Customer implements CustomerType {
         methCustomer = new Customer(this.createNewCustomerId(), this.emptyCustomer);
         return methCustomer;
     }
+    public static normalizeCustomer(inCustomer: any): Customer {
+        this.editedCustomer = {
+            customerNumber: inCustomer.customerNumber, // Kundennummer
+            customerName: inCustomer.customerName,  // Kundenname
+            country: inCustomer.country,
+            postalCode: inCustomer.postalCode,
+            city: inCustomer.city,
+            addressLine1: inCustomer.addressLine1,
+            addressLine2: inCustomer.addressLine2,
+            addressLine3: inCustomer.addressLine3,
+            customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
+            creationTime: inCustomer.creationTime
+        };
+        return new Customer(inCustomer.key, this.editedCustomer);
+    }
 
     //endregion
     //region getter
     public getCustomerId(): string {
-        // return this.customerId;
-        return this.key;
+        return this.customerId;
+        // return this.key;
     }
 
     //endregion
