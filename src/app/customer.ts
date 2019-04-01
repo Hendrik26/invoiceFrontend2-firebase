@@ -75,7 +75,8 @@ export class Customer implements CustomerType {
         return methCustomer;
     }
     public static normalizeCustomer(inCustomer: any): Customer {
-        this.editedCustomer = {
+       // this.editedCustomer = {
+        const cData : CustomerType = {
             customerNumber: inCustomer.customerNumber, // Kundennummer
             customerName: inCustomer.customerName,  // Kundenname
             country: inCustomer.country,
@@ -87,7 +88,13 @@ export class Customer implements CustomerType {
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
             creationTime: inCustomer.creationTime
         };
-        return new Customer(inCustomer.key, this.editedCustomer);
+        return new Customer(inCustomer.key, /* this.editedCustomer */ cData);
+    }
+
+    public static normalizeCustomerList(inCustomers: any[]): Customer[] {
+        const retCustomers: Customer[] = [];
+        // TODO: add transformation here
+        return retCustomers;
     }
 
     //endregion
