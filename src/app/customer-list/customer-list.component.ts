@@ -5,7 +5,6 @@ import {Customer} from '../customer';
 import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {CUSTOMERS} from '../mock-customer';
-import {Invoice} from '../invoice';
 import {INVOICES} from '../mock-invoice';
 
 
@@ -15,6 +14,8 @@ import {INVOICES} from '../mock-invoice';
     styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
+
+    // Branch FbCustomer
 
     // region other properties
     customers: Customer[];
