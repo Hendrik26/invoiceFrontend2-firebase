@@ -16,7 +16,7 @@ import {INVOICES} from '../mock-invoice';
 })
 export class CustomerListComponent implements OnInit {
 
-    // branch CustomerConversionExperiments
+    // Branch CustomerConversionExperiments
 
     // region other properties
     customers: Customer[];
