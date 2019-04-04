@@ -14,9 +14,6 @@ export class FbInvoiceService {
 
     private dbPath = '/customers';
     private customersList: Observable<any>;
-    private carsByCustomersList: Observable<any>;
-
-    carsRef: AngularFirestoreCollection<Customer> = null;
     customersRef: AngularFirestoreCollection<Customer> = null;
 
 

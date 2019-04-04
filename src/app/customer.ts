@@ -75,7 +75,6 @@ export class Customer implements CustomerType {
         return methCustomer;
     }
     public static normalizeCustomer(inCustomer: any): Customer {
-       // this.editedCustomer = {
         console.log('XXX2');
         console.log(inCustomer);
         const cData: CustomerType = {
@@ -90,7 +89,7 @@ export class Customer implements CustomerType {
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
             creationTime: inCustomer.creationTime
         };
-        return new Customer(inCustomer.key, /* this.editedCustomer */ cData);
+        return new Customer(inCustomer.key, cData);
     }
 
     public static normalizeCustomerList(inCustomers: any[]): Customer[] {
@@ -103,7 +102,6 @@ export class Customer implements CustomerType {
     //region getter
     public getCustomerId(): string {
         return this.customerId;
-        // return this.key;
     }
 
     //endregion

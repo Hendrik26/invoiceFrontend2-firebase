@@ -33,7 +33,6 @@ export class CustomerListComponent implements OnInit {
     }
 
     receiveCustomers(): void {
-        // this.customerService.getCustomers().subscribe(customers => this.customers = customers);
         this.fbInvoiceService.getCustomersList('xxx')
             .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
     }
