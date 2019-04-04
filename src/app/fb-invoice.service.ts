@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 
 import {Customer} from './customer';
+import {CustomerType} from './customer-type';
 import {map} from 'rxjs/operators';
 import {Observable, combineLatest} from 'rxjs';
 
@@ -38,6 +39,21 @@ export class FbInvoiceService {
     }
 
     createCustomer(customer: Customer): void {
+        this.db.collection(this.dbPath).add({
+            'customerNumber': customer.customerNumber,
+            'customerName': customer.customerName,
+            'country': customer.country,
+            'postalCode': customer.postalCode,
+            'city': customer.city,
+            'addressLine1': customer.addressLine1,
+            'addressLine2': customer.addressLine2,
+            'addressLine3': customer.addressLine3,
+            'customerSalesTaxNumber': customer.customerSalesTaxNumber,
+            'creationTime': customer.creationTime
+        }).catch(error => this.handleError(error));
+    }
+
+    createCustomer01(customer: CustomerType): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': customer.customerNumber,
             'customerName': customer.customerName,

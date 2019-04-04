@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../customer';
+import {CustomerType} from '../customer-type';
 import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
@@ -78,7 +79,7 @@ export class CustomerDetailComponent implements OnInit {
             });
     }
 
-    saveCustomerOlod(): void {
+    saveCustomerOld(): void {
         this.newCustomer = false;
         this.customerService.saveCustomerGlobalsByCustomerId(
             this.customerId,
@@ -98,7 +99,20 @@ export class CustomerDetailComponent implements OnInit {
 
     saveCustomer(): void {
         this.newCustomer = false;
-        this.fbInvoiceService.createCustomer02(
+        const cData: CustomerType = {
+            customerNumber: this.customerNumber, // Kundennummer
+            customerName: this.customerName,  // Kundenname
+            country: this.country,
+            postalCode: this.postalCode,
+            city: this.city,
+            addressLine1: this.addressLine1,
+            addressLine2: this.addressLine2,
+            addressLine3: this.addressLine3,
+            customerSalesTaxNumber: this.customerSalesTaxNumber,
+            creationTime: this.creationTime,
+        }
+        this.fbInvoiceService.createCustomer01(cData);
+        /* this.fbInvoiceService.createCustomer02(
             this.customerNumber,
             this.customerName,
             this.country,
@@ -109,7 +123,7 @@ export class CustomerDetailComponent implements OnInit {
             this.addressLine3,
             this.customerSalesTaxNumber,
             this.creationTime
-        );
+        ); */
         this.router.navigateByUrl('/customer-list');
     }
 
