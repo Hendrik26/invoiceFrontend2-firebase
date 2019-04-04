@@ -76,7 +76,9 @@ export class Customer implements CustomerType {
     }
     public static normalizeCustomer(inCustomer: any): Customer {
        // this.editedCustomer = {
-        const cData : CustomerType = {
+        console.log('XXX2');
+        console.log(inCustomer);
+        const cData: CustomerType = {
             customerNumber: inCustomer.customerNumber, // Kundennummer
             customerName: inCustomer.customerName,  // Kundenname
             country: inCustomer.country,
