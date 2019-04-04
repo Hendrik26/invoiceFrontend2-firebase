@@ -98,7 +98,7 @@ export class CustomerDetailComponent implements OnInit {
 
     saveCustomer(): void {
         this.newCustomer = false;
-        this.fbInvoiceService.createCustomer01(
+        this.fbInvoiceService.createCustomer02(
             this.customerNumber,
             this.customerName,
             this.country,

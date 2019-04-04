@@ -52,7 +52,7 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
-    createCustomer01(customerNumber: string, customerName: string, country: string,
+    createCustomer02(customerNumber: string, customerName: string, country: string,
                      postalCode: string, city: string, addressLine1: string, addressLine2: string,
                      addressLine3: string, customerSalesTaxNumber: string, creationTime: Date): void {
         this.db.collection(this.dbPath).add({
