@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 // import {isNullOrUndefined} from 'util';
+import {FbCustomer} from '../fb-customer';
 import {Customer} from '../customer';
 import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
@@ -16,7 +17,7 @@ import {INVOICES} from '../mock-invoice';
 export class CustomerListComponent implements OnInit {
 
     // region other properties
-    customers: Customer[];
+    customers: FbCustomer[];
 
     // endregion
 
@@ -32,6 +33,7 @@ export class CustomerListComponent implements OnInit {
     receiveCustomers(): void {
         // this.customerService.getCustomers().subscribe(customers => this.customers = customers);
         this.fbInvoiceService.getCustomersList('xxx').subscribe(customers => this.customers = customers);
+        console.log('Method CustomerListComponent.receiveCustomers() finished!');
     }
 
     public newCustomereBtn(): void {
