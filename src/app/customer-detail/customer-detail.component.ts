@@ -112,18 +112,6 @@ export class CustomerDetailComponent implements OnInit {
             creationTime: this.creationTime,
         }
         this.fbInvoiceService.createCustomer01(cData);
-        /* this.fbInvoiceService.createCustomer02(
-            this.customerNumber,
-            this.customerName,
-            this.country,
-            this.postalCode,
-            this.city,
-            this.addressLine1,
-            this.addressLine2,
-            this.addressLine3,
-            this.customerSalesTaxNumber,
-            this.creationTime
-        ); */
         this.router.navigateByUrl('/customer-list');
     }
 
