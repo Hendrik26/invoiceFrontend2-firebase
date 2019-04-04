@@ -17,18 +17,6 @@ export class Customer implements CustomerType {
         creationTime: new Date()
     };
 
-    private static editedCustomer: CustomerType = {
-        customerNumber: '2018', // Kundennummer
-        customerName: 'neuer Kunde',  // Kundenname
-        country: 'Deutschland',
-        postalCode: '',
-        city: '',
-        addressLine1: '',
-        addressLine2: '',
-        addressLine3: '',
-        customerSalesTaxNumber: '000000',
-        creationTime: new Date()
-    };
     //endregion
     //region other properties
 
