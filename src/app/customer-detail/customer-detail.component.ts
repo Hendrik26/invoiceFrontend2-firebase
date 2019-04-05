@@ -46,6 +46,7 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit() {
         this.newCustomer = false;
         this.receivedCustomerIdError = !this.hasReceivedCustomerId();
+        console.log('receivedCustomerIdError ===' + this.receivedCustomerIdError + '!!!     ');
         if (!this.receivedCustomerIdError) {
             this.receiveCustomerById(this.customerId);
         }
@@ -55,6 +56,7 @@ export class CustomerDetailComponent implements OnInit {
         boolean {
         if (this.route.snapshot.paramMap.has('customerId') && this.route.snapshot.paramMap.has('newCustomer')) {
             this.customerId = this.route.snapshot.paramMap.get('customerId');  // get customerID???? customerId from URL
+            console.log('<<<<< CustomerID ===' + this.customerId + ' >>>>>    ');
             this.newCustomer = (this.route.snapshot.paramMap.get('newCustomer') === 'true');
             return true;
         } else {
