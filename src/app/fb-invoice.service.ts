@@ -38,6 +38,10 @@ export class FbInvoiceService {
          // console.log('Method fb-invoice.service.getCustomersList() done!!!');
     }
 
+    getCustomerById(id): Observable<any> {
+        return this.db.doc(`${this.dbPath}/${id}`).valueChanges();
+    }
+
     createCustomer(customer: Customer): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': customer.customerNumber,

@@ -4,6 +4,7 @@ import {Customer} from '../customer';
 import {CustomerType} from '../customer-type';
 import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
+import {CustomerListComponent} from '../customer-list/customer-list.component';
 import {Location} from '@angular/common';
 import {InvoiceKind} from '../invoice-kind';
 
@@ -48,7 +49,7 @@ export class CustomerDetailComponent implements OnInit {
         this.receivedCustomerIdError = !this.hasReceivedCustomerId();
         console.log('receivedCustomerIdError ===' + this.receivedCustomerIdError + '!!!     ');
         if (!this.receivedCustomerIdError) {
-            this.receiveCustomerById(this.customerId);
+            this.receiveFbCustomerById(this.customerId);
         }
     }
 
@@ -79,6 +80,23 @@ export class CustomerDetailComponent implements OnInit {
                 this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
                 this.creationTime = customer.creationTime;
             });
+    }
+
+    receiveFbCustomerById(id: string): void {
+        this.fbInvoiceService.getCustomerById(id).subscribe(customer => {
+                // this.customer = customer;
+                this.customerNumber = customer.customerNumber;
+                this.customerName = customer.customerName;
+                this.country = customer.country;
+                this.postalCode = customer.postalCode;
+                this.city = customer.city;
+                this.addressLine1 = customer.addressLine1;
+                this.addressLine2 = customer.addressLine2;
+                this.addressLine3 = customer.addressLine3;
+                this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
+                this.creationTime = customer.creationTime;
+            }
+        );
     }
 
     saveCustomerOld(): void {
@@ -112,7 +130,7 @@ export class CustomerDetailComponent implements OnInit {
             addressLine3: this.addressLine3,
             customerSalesTaxNumber: this.customerSalesTaxNumber,
             creationTime: this.creationTime,
-        }
+        };
         this.fbInvoiceService.createCustomer01(cData);
         this.router.navigateByUrl('/customer-list');
     }
@@ -120,7 +138,7 @@ export class CustomerDetailComponent implements OnInit {
     backToCustomerList(): void {
         if (this.newCustomer) {
             this.newCustomer = false;
-            this.customerService.removeCustomerById(this.customerId)
+            this.customerService.removeCustomerById(this.customerId);
         }
         this.router.navigateByUrl('/customer-list');
     }

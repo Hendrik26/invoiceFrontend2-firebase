@@ -5,8 +5,8 @@ import {Customer} from '../customer';
 import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {CUSTOMERS} from '../mock-customer';
-import {Invoice} from '../invoice';
 import {INVOICES} from '../mock-invoice';
+import {of} from 'rxjs';
 
 
 @Component({
@@ -30,6 +30,16 @@ export class CustomerListComponent implements OnInit {
 
     ngOnInit() {
         this.receiveCustomers();
+    }
+
+    getCustomerById(cId: string): Customer {
+        let customer: Customer;
+        for (let i = 0; i < this.customers.length; i++) {
+            if (this.customers[i].getCustomerId() === cId) {
+                customer = this.customers[i];
+            }
+        }
+        return customer;
     }
 
     receiveCustomers(): void {
