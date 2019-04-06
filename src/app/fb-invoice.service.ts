@@ -57,18 +57,18 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
-    createCustomer01(customer: CustomerType): void {
+    createCustomer01(data: CustomerType): void {
         this.db.collection(this.dbPath).add({
-            'customerNumber': customer.customerNumber,
-            'customerName': customer.customerName,
-            'country': customer.country,
-            'postalCode': customer.postalCode,
-            'city': customer.city,
-            'addressLine1': customer.addressLine1,
-            'addressLine2': customer.addressLine2,
-            'addressLine3': customer.addressLine3,
-            'customerSalesTaxNumber': customer.customerSalesTaxNumber,
-            'creationTime': customer.creationTime
+            'customerNumber': data.customerNumber,
+            'customerName': data.customerName,
+            'country': data.country,
+            'postalCode': data.postalCode,
+            'city': data.city,
+            'addressLine1': data.addressLine1,
+            'addressLine2': data.addressLine2,
+            'addressLine3': data.addressLine3,
+            'customerSalesTaxNumber': data.customerSalesTaxNumber,
+            'creationTime': data.creationTime
         }).catch(error => this.handleError(error));
     }
 
@@ -86,6 +86,21 @@ export class FbInvoiceService {
             'addressLine3': addressLine3,
             'customerSalesTaxNumber': customerSalesTaxNumber,
             'creationTime': creationTime
+        }).catch(error => this.handleError(error));
+    }
+
+    updateCustomer(id: string, data: CustomerType): void {
+        this.db.doc(`${this.dbPath}/${id}`).update({
+            'customerNumber': data.customerNumber,
+            'customerName': data.customerName,
+            'country': data.country,
+            'postalCode': data.postalCode,
+            'city': data.city,
+            'addressLine1': data.addressLine1,
+            'addressLine2': data.addressLine2,
+            'addressLine3': data.addressLine3,
+            'customerSalesTaxNumber': data.customerSalesTaxNumber,
+            'creationTime': data.creationTime
         }).catch(error => this.handleError(error));
     }
 

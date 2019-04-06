@@ -118,7 +118,6 @@ export class CustomerDetailComponent implements OnInit {
     }
 
     saveCustomer(): void {
-        this.newCustomer = false;
         const cData: CustomerType = {
             customerNumber: this.customerNumber, // Kundennummer
             customerName: this.customerName,  // Kundenname
@@ -131,7 +130,12 @@ export class CustomerDetailComponent implements OnInit {
             customerSalesTaxNumber: this.customerSalesTaxNumber,
             creationTime: this.creationTime,
         };
-        this.fbInvoiceService.createCustomer01(cData);
+        if (this.newCustomer) {
+            this.newCustomer = false;
+            this.fbInvoiceService.createCustomer01(cData);
+        } else {
+            this.fbInvoiceService.updateCustomer(this.customerId, cData);
+        }
         this.router.navigateByUrl('/customer-list');
     }
 
