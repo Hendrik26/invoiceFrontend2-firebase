@@ -16,7 +16,7 @@ import {of} from 'rxjs';
 })
 export class CustomerListComponent implements OnInit {
 
-    // Branch dev
+    // Branch dev ////
 
     // region other properties
     customers: Customer[];
