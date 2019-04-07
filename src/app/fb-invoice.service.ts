@@ -53,7 +53,8 @@ export class FbInvoiceService {
             'addressLine2': customer.addressLine2,
             'addressLine3': customer.addressLine3,
             'customerSalesTaxNumber': customer.customerSalesTaxNumber,
-            'creationTime': customer.creationTime
+            'creationTime': customer.creationTime,
+            'lastUpdateTime': new Date()
         }).catch(error => this.handleError(error));
     }
 
@@ -68,7 +69,8 @@ export class FbInvoiceService {
             'addressLine2': data.addressLine2,
             'addressLine3': data.addressLine3,
             'customerSalesTaxNumber': data.customerSalesTaxNumber,
-            'creationTime': data.creationTime
+            'creationTime': data.creationTime,
+            'lastUpdateTime': new Date()
         }).catch(error => this.handleError(error));
     }
 
@@ -85,7 +87,8 @@ export class FbInvoiceService {
             'addressLine2': addressLine2,
             'addressLine3': addressLine3,
             'customerSalesTaxNumber': customerSalesTaxNumber,
-            'creationTime': creationTime
+            'creationTime': creationTime,
+            'lastUpdateTime': new Date()
         }).catch(error => this.handleError(error));
     }
 
@@ -100,7 +103,8 @@ export class FbInvoiceService {
             'addressLine2': data.addressLine2,
             'addressLine3': data.addressLine3,
             'customerSalesTaxNumber': data.customerSalesTaxNumber,
-            'creationTime': data.creationTime
+            'creationTime': data.creationTime,
+            'lastUpdateTime': new Date()
         }).catch(error => this.handleError(error));
     }
 

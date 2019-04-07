@@ -3,7 +3,7 @@ import {CustomerType} from './customer-type';
 // import {InvoiceType} from './invoice-type';
 
 export class Customer implements CustomerType {
-    //region static properties
+    // region static properties
     private static emptyCustomer: CustomerType = {
         customerNumber: '2018', // Kundennummer
         customerName: 'neuer Kunde',  // Kundenname
@@ -14,11 +14,12 @@ export class Customer implements CustomerType {
         addressLine2: '',
         addressLine3: '',
         customerSalesTaxNumber: '000000',
-        creationTime: new Date()
+        creationTime: new Date(),
+        lastUpdateTime: new Date()
     };
 
-    //endregion
-    //region other properties
+    // endregion
+    // region other properties
 
     customerNumber: string; // Kundennummer
     customerName: string;  // Kundenname
@@ -30,10 +31,11 @@ export class Customer implements CustomerType {
     addressLine3: string;
     customerSalesTaxNumber: string;
     creationTime: Date;
+    lastUpdateTime: Date;
     private customerId: string; // === key
     key: string;
 
-    //endregion
+    // endregion
 
     constructor(customerId: string, data: CustomerType) {
         // IDs
@@ -48,10 +50,11 @@ export class Customer implements CustomerType {
         this.addressLine2 = data.addressLine2;
         this.addressLine3 = data.addressLine3;
         this.customerSalesTaxNumber = data.customerSalesTaxNumber;
-        this.creationTime = new Date();
+        this.creationTime = data.creationTime;
+        this.lastUpdateTime = data.lastUpdateTime ? data.lastUpdateTime : new Date();
     }
 
-    //region static methods
+    // region static methods
     public static createNewCustomerId() {
         const methDate: Date = new Date();
         return 'Cus' + methDate.getTime();
@@ -75,7 +78,8 @@ export class Customer implements CustomerType {
             addressLine2: inCustomer.addressLine2,
             addressLine3: inCustomer.addressLine3,
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
-            creationTime: inCustomer.creationTime
+            creationTime: new Date(), // new Date(inCustomer.creationTime) ? new Date(inCustomer.creationTime) : new Date(),
+            lastUpdateTime: new Date() // inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime : new Date()
         };
         return new Customer(inCustomer.key, cData);
     }
@@ -86,11 +90,11 @@ export class Customer implements CustomerType {
         return retCustomers;
     }
 
-    //endregion
-    //region getter
+    // endregion
+    // region getter
     public getCustomerId(): string {
         return this.customerId;
     }
 
-    //endregion
+    // endregion
 }

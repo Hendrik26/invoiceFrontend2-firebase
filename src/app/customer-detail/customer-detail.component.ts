@@ -34,6 +34,7 @@ export class CustomerDetailComponent implements OnInit {
     addressLine3: string;
     customerSalesTaxNumber: string;
     creationTime: Date;
+    lastUpdateTime: Date;
 
     // endregion
     constructor(
@@ -95,6 +96,7 @@ export class CustomerDetailComponent implements OnInit {
                 this.addressLine3 = customer.addressLine3;
                 this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
                 this.creationTime = customer.creationTime;
+                this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
             }
         );
     }
@@ -129,7 +131,8 @@ export class CustomerDetailComponent implements OnInit {
             addressLine3: this.addressLine3,
             customerSalesTaxNumber: this.customerSalesTaxNumber,
             creationTime: this.creationTime,
-        };
+            lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date()
+        }
         if (this.newCustomer) {
             this.newCustomer = false;
             this.fbInvoiceService.createCustomer01(cData);

@@ -9,4 +9,5 @@ export interface CustomerType {
     addressLine3:  string;
     customerSalesTaxNumber:  string;
     creationTime: Date;
+    lastUpdateTime: Date;
 }
