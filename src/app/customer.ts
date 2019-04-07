@@ -1,7 +1,5 @@
 import {CustomerType} from './customer-type';
 
-// import {InvoiceType} from './invoice-type';
-
 export class Customer implements CustomerType {
     // region static properties
     private static emptyCustomer: CustomerType = {

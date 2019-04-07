@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Customer} from '../customer';
 import {CustomerType} from '../customer-type';
-import {CustomerService} from '../customer.service';
+// import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
-import {CustomerListComponent} from '../customer-list/customer-list.component';
 import {Location} from '@angular/common';
-import {InvoiceKind} from '../invoice-kind';
 
 @Component({
     selector: 'app-customer-detail',
@@ -41,7 +38,6 @@ export class CustomerDetailComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
-        private customerService: CustomerService,
         private fbInvoiceService: FbInvoiceService) { // To Comment in
     }
 
@@ -67,22 +63,6 @@ export class CustomerDetailComponent implements OnInit {
         }
     }
 
-    receiveCustomerById(methId: string): void {
-        this.customerService.getCustomerObservableById(methId)
-            .subscribe(customer => {
-                this.customerNumber = customer.customerNumber;
-                this.customerName = customer.customerName;
-                this.country = customer.country;
-                this.postalCode = customer.postalCode;
-                this.city = customer.city;
-                this.addressLine1 = customer.addressLine1;
-                this.addressLine2 = customer.addressLine2;
-                this.addressLine3 = customer.addressLine3;
-                this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
-                this.creationTime = customer.creationTime;
-            });
-    }
-
     receiveFbCustomerById(id: string): void {
         this.fbInvoiceService.getCustomerById(id).subscribe(customer => {
                 // this.customer = customer;
@@ -99,24 +79,6 @@ export class CustomerDetailComponent implements OnInit {
                 this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
             }
         );
-    }
-
-    saveCustomerOld(): void {
-        this.newCustomer = false;
-        this.customerService.saveCustomerGlobalsByCustomerId(
-            this.customerId,
-            this.customerNumber,
-            this.customerName,
-            this.country,
-            this.postalCode,
-            this.city,
-            this.addressLine1,
-            this.addressLine2,
-            this.addressLine3,
-            this.customerSalesTaxNumber,
-            this.creationTime
-        );
-        this.router.navigateByUrl('/customer-list');
     }
 
     saveCustomer(): void {
@@ -145,7 +107,6 @@ export class CustomerDetailComponent implements OnInit {
     backToCustomerList(): void {
         if (this.newCustomer) {
             this.newCustomer = false;
-            this.customerService.removeCustomerById(this.customerId);
         }
         this.router.navigateByUrl('/customer-list');
     }
