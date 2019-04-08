@@ -48,7 +48,7 @@ export class Customer implements CustomerType {
         this.addressLine2 = data.addressLine2;
         this.addressLine3 = data.addressLine3;
         this.customerSalesTaxNumber = data.customerSalesTaxNumber;
-        this.creationTime = data.creationTime;
+        this.creationTime = data.creationTime ? data.creationTime : new Date();
         this.lastUpdateTime = data.lastUpdateTime ? data.lastUpdateTime : new Date();
     }
 
@@ -76,8 +76,8 @@ export class Customer implements CustomerType {
             addressLine2: inCustomer.addressLine2,
             addressLine3: inCustomer.addressLine3,
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
-            creationTime: new Date(), // new Date(inCustomer.creationTime) ? new Date(inCustomer.creationTime) : new Date(),
-            lastUpdateTime: new Date() // inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime : new Date()
+            creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
+            lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date()
         };
         return new Customer(inCustomer.key, cData);
     }
