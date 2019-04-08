@@ -13,7 +13,8 @@ export class Customer implements CustomerType {
         addressLine3: '',
         customerSalesTaxNumber: '000000',
         creationTime: new Date(),
-        lastUpdateTime: new Date()
+        lastUpdateTime: new Date(),
+        archived: false
     };
 
     // endregion
@@ -30,6 +31,7 @@ export class Customer implements CustomerType {
     customerSalesTaxNumber: string;
     creationTime: Date;
     lastUpdateTime: Date;
+    archived = false;
     private customerId: string; // === key
     key: string;
 
@@ -50,6 +52,7 @@ export class Customer implements CustomerType {
         this.customerSalesTaxNumber = data.customerSalesTaxNumber;
         this.creationTime = data.creationTime ? data.creationTime : new Date();
         this.lastUpdateTime = data.lastUpdateTime ? data.lastUpdateTime : new Date();
+        this.archived = data.archived;
     }
 
     // region static methods
@@ -77,7 +80,8 @@ export class Customer implements CustomerType {
             addressLine3: inCustomer.addressLine3,
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
             creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
-            lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date()
+            lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date(),
+            archived: false
         };
         return new Customer(inCustomer.key, cData);
     }

@@ -54,7 +54,8 @@ export class FbInvoiceService {
             'addressLine3': customer.addressLine3,
             'customerSalesTaxNumber': customer.customerSalesTaxNumber,
             'creationTime': customer.creationTime,
-            'lastUpdateTime': new Date()
+            'lastUpdateTime': new Date(),
+            'archived': customer.archived
         }).catch(error => this.handleError(error));
     }
 
@@ -70,13 +71,15 @@ export class FbInvoiceService {
             'addressLine3': data.addressLine3,
             'customerSalesTaxNumber': data.customerSalesTaxNumber,
             'creationTime': data.creationTime,
-            'lastUpdateTime': new Date()
+            'lastUpdateTime': new Date(),
+            'archived': data.archived
         }).catch(error => this.handleError(error));
     }
 
     createCustomer02(customerNumber: string, customerName: string, country: string,
                      postalCode: string, city: string, addressLine1: string, addressLine2: string,
-                     addressLine3: string, customerSalesTaxNumber: string, creationTime: Date): void {
+                     addressLine3: string, customerSalesTaxNumber: string, creationTime: Date,
+                     archived: boolean): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': customerNumber,
             'customerName': customerName,
@@ -88,7 +91,8 @@ export class FbInvoiceService {
             'addressLine3': addressLine3,
             'customerSalesTaxNumber': customerSalesTaxNumber,
             'creationTime': creationTime,
-            'lastUpdateTime': new Date()
+            'lastUpdateTime': new Date(),
+            'archived': archived
         }).catch(error => this.handleError(error));
     }
 
@@ -104,7 +108,8 @@ export class FbInvoiceService {
             'addressLine3': data.addressLine3,
             'customerSalesTaxNumber': data.customerSalesTaxNumber,
             'creationTime': data.creationTime,
-            'lastUpdateTime': new Date()
+            'lastUpdateTime': new Date(),
+            'archived': data.archived
         }).catch(error => this.handleError(error));
     }
 

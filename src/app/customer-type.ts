@@ -10,4 +10,5 @@ export interface CustomerType {
     customerSalesTaxNumber:  string;
     creationTime: Date;
     lastUpdateTime: Date;
+    archived: boolean;
 }

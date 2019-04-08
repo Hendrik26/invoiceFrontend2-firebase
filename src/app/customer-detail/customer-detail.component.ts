@@ -33,6 +33,7 @@ export class CustomerDetailComponent implements OnInit {
     customerSalesTaxNumber: string;
     creationTime: Date;
     lastUpdateTime: Date;
+    archived = false;
 
     // endregion
     constructor(
@@ -79,6 +80,7 @@ export class CustomerDetailComponent implements OnInit {
                     this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
                     this.creationTime = customer.creationTime ? customer.creationTime.toDate() : new Date();
                     this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime.toDate() : new Date();
+                    this.archived = false; // customer.archived;
                 }
              );
         } else {
@@ -95,6 +97,7 @@ export class CustomerDetailComponent implements OnInit {
             this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
             this.creationTime = customer.creationTime ? customer.creationTime : new Date();
             this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
+            this.archived = customer.archived;
         }
     }
 
@@ -110,7 +113,8 @@ export class CustomerDetailComponent implements OnInit {
             addressLine3: this.addressLine3,
             customerSalesTaxNumber: this.customerSalesTaxNumber,
             creationTime: this.creationTime,
-            lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date()
+            lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
+            archived: this.archived
         }
         if (this.newCustomer) {
             this.newCustomer = false;
