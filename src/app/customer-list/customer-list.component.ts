@@ -46,8 +46,9 @@ export class CustomerListComponent implements OnInit {
 
     public newCustomereBtn(): void {
         const methCustomer = Customer.createNewCustomer();
-        const customerId = methCustomer.getCustomerId();
-        this.router.navigateByUrl('customer-detail/' /* + customerId + '/true' */ );
+        // const customerId = methCustomer.getCustomerId();
+        const customerId = 'nK';
+        this.router.navigateByUrl('customer-detail/' + customerId + '/true'  );
     }
 
     deleteCustomer(customerId): void {
