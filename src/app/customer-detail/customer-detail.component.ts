@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Customer} from '../customer';
 import {CustomerType} from '../customer-type';
 // import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
@@ -64,21 +65,37 @@ export class CustomerDetailComponent implements OnInit {
     }
 
     receiveFbCustomerById(id: string): void {
-        this.fbInvoiceService.getCustomerById(id).subscribe(customer => {
-                // this.customer = customer;
-                this.customerNumber = customer.customerNumber;
-                this.customerName = customer.customerName;
-                this.country = customer.country;
-                this.postalCode = customer.postalCode;
-                this.city = customer.city;
-                this.addressLine1 = customer.addressLine1;
-                this.addressLine2 = customer.addressLine2;
-                this.addressLine3 = customer.addressLine3;
-                this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
-                this.creationTime = customer.creationTime;
-                this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
-            }
-        );
+        if (!this.newCustomer) {
+            this.fbInvoiceService.getCustomerById(id).subscribe(customer => {
+                    // this.customer = customer;
+                    this.customerNumber = customer.customerNumber;
+                    this.customerName = customer.customerName;
+                    this.country = customer.country;
+                    this.postalCode = customer.postalCode;
+                    this.city = customer.city;
+                    this.addressLine1 = customer.addressLine1;
+                    this.addressLine2 = customer.addressLine2;
+                    this.addressLine3 = customer.addressLine3;
+                    this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
+                    this.creationTime = customer.creationTime ? customer.creationTime.toDate() : new Date();
+                    this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime.toDate() : new Date();
+                }
+             );
+        } else {
+            const customer = Customer.createNewCustomer();
+            // this.customerId = customer.getCustomerId();
+            this.customerNumber = customer.customerNumber;
+            this.customerName = customer.customerName;
+            this.country = customer.country;
+            this.postalCode = customer.postalCode;
+            this.city = customer.city;
+            this.addressLine1 = customer.addressLine1;
+            this.addressLine2 = customer.addressLine2;
+            this.addressLine3 = customer.addressLine3;
+            this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
+            this.creationTime = customer.creationTime ? customer.creationTime : new Date();
+            this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
+        }
     }
 
     saveCustomer(): void {
@@ -105,9 +122,7 @@ export class CustomerDetailComponent implements OnInit {
     }
 
     backToCustomerList(): void {
-        if (this.newCustomer) {
             this.newCustomer = false;
-        }
         this.router.navigateByUrl('/customer-list');
     }
 
