@@ -29,8 +29,12 @@ export class CustomerListComponent implements OnInit {
         this.receiveCustomers();
     }
 
-    private toggleShowArchived() {
+    private toggleShowArchived(): void {
         this.showArchived = !this.showArchived;
+    }
+
+    private toShow(customerArchived): boolean {
+        return (this.showArchived === customerArchived);
     }
 
     getCustomerById(cId: string): Customer {

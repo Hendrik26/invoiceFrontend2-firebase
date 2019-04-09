@@ -81,7 +81,7 @@ export class Customer implements CustomerType {
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
             creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
             lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date(),
-            archived: false
+            archived: inCustomer.archived
         };
         return new Customer(inCustomer.key, cData);
     }
