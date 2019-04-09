@@ -14,6 +14,7 @@
     <br>
     <button (click)="saveCustomer()">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
     <button (click)="backToCustomerList()">{{newCustomer ? 'verwerfen' : 'zurück'}}</button>
+    <a routerLink="/customer-detail/{{customerId}}/false/customer-history">Kunden-Historie anzeigen</a>
   </form>
 </div>
 
