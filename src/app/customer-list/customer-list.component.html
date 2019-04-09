@@ -2,6 +2,13 @@
 
     <h1> Kundenübersicht </h1>
 
+    <label><input type="checkbox" name="showArchived" [checked]="showArchived"
+                  (change)="toggleShowArchived()"> Archivierte Anzeigen</label>
+    <br>
+    {{showArchived ? 'Nur Archivierte anzeigen!' : 'Nur Nicht-Archivierte anzeigen!'}}
+
+    <br><br><br><br><br><br>
+
 
     <div class="mobile-style">
         <table style="width:100%">

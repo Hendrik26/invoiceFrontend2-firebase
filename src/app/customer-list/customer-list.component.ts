@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {Customer} from '../customer';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {INVOICES} from '../mock-invoice';
-import {of} from 'rxjs';
 
 
 @Component({
@@ -18,6 +17,7 @@ export class CustomerListComponent implements OnInit {
 
     // region other properties
     customers: Customer[];
+    showArchived = false;
 
     // endregion
 
@@ -27,6 +27,10 @@ export class CustomerListComponent implements OnInit {
 
     ngOnInit() {
         this.receiveCustomers();
+    }
+
+    private toggleShowArchived() {
+        this.showArchived = !this.showArchived;
     }
 
     getCustomerById(cId: string): Customer {
