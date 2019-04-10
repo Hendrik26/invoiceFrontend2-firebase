@@ -17,6 +17,7 @@ export class CustomerListComponent implements OnInit {
 
     // region other properties
     customers: Customer[];
+    history = false;
     showArchived = false;
 
     // endregion
@@ -34,7 +35,7 @@ export class CustomerListComponent implements OnInit {
     }
 
     private toShow(customerArchived): boolean {
-        return (this.showArchived === customerArchived);
+        return ((this.showArchived === customerArchived) || this.history);
     }
 
     getCustomerById(cId: string): Customer {
