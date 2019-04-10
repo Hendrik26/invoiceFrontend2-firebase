@@ -42,6 +42,22 @@ export class FbInvoiceService {
         return this.db.doc(`${this.dbPath}/${id}`).valueChanges();
     }
 
+    getCustomerHistoryById(customerId: string): Observable<any> {
+        const sortDirStr = 'asc';
+        console.log(sortDirStr);
+        console.log('Method fb-invoice.service.getCustomerHistory() started!!!');
+        /* this.customersRef = this.db.collection(this.dbPath,
+            ref => ref.orderBy('customerName', sortDirStr).where('age', '>=', dbMinage)
+                .where('age', '<=', dbMaxage)); */
+        this.customersRef = this.db.collection(`${this.dbPath}/${customerId}/history`);
+        return this.customersRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
+            )
+        );
+        // console.log('Method fb-invoice.service.getCustomersList() done!!!');
+    }
+
     createCustomer(customer: Customer): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': customer.customerNumber,
