@@ -84,8 +84,13 @@ export class CustomerListComponent implements OnInit {
     }
 
     receiveCustomers(): void {
-        this.fbInvoiceService.getCustomersList('xxx')
-            .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
+        if (!this.history) {
+            this.fbInvoiceService.getCustomersList('xxx')
+                .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
+        } else {
+            this.fbInvoiceService.getCustomerHistoryById(this.customerParentId)
+                .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
+        }
     }
 
     public newCustomereBtn(): void {
