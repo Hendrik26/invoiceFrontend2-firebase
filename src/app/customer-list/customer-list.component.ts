@@ -37,25 +37,25 @@ export class CustomerListComponent implements OnInit {
 
     hasReceivedCustomerParentId(): // can NOT be deleted
         boolean {
+        let tempStr: string = 'tempStr';
         console.log('<<< Start method hasReceivedCustomerParentId()! >>>');
         if (this.route.snapshot.paramMap.has('customerId') && this.route.snapshot.paramMap.has('newCustomer')) {
             console.log('<<< Method hasReceivedCustomerParentId() if-branch! >>>');
             this.customerParentId = this.route.snapshot.paramMap.get('customerId');  // get customerID???? customerId from URL
-            console.log('Parent<<<<< CustomerID ===' + this.customerParentId + ' >>>>>    ');
+            console.log('<<<<< this.customerParentId ===' + this.customerParentId + ' >>>>>    ');
             this.newParentCustomer = (this.route.snapshot.paramMap.get('newCustomer') === 'true');
 
             const has: boolean = this.route.snapshot.paramMap.has('customer-history');
-            console.log('<<< has ===' + has + '>>>');
+            console.log('<<< has ==' + has + ' >>>');
             const get: string = this.route.snapshot.paramMap.get('customer-history');
-            console.log('<<< get ===' + get + '>>>');
+            console.log('<<< get ===' + get + ' >>>');
 
-            /* const keys: string = this.route.snapshot.paramMap.keys.toString();
-            console.log('<<< keys ===' + keys + '>>>'); */
+            console.log('TemplateStringTest ===${ 1 + 1 }')
 
             const urlToString: string = this.route.snapshot.toString();
-            console.log('<<< urlToString ===' + urlToString + '>>>');
+            console.log('<<< urlToString ===' + urlToString + ' >>>');
             this.history = (urlToString.indexOf('customer-history') != -1);
-            console.log('<<< this.history ===' + this.history + '>>>');
+            console.log('<<< this.history ===' + this.history + ' >>>');
 
             return true;
         } else {
