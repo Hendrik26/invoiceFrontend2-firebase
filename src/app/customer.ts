@@ -67,8 +67,6 @@ export class Customer implements CustomerType {
         return methCustomer;
     }
     public static normalizeCustomer(inCustomer: any): Customer {
-        console.log('XXX2');
-        console.log(inCustomer);
         const cData: CustomerType = {
             customerNumber: inCustomer.customerNumber, // Kundennummer
             customerName: inCustomer.customerName,  // Kundenname

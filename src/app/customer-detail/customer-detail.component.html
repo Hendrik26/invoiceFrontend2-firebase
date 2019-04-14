@@ -1,20 +1,34 @@
 <div class="item-detail">
-  <h1>Kundendetailansicht</h1>
-  <!-- p>erstellt am: {{creationTime | date:'yyyy-MM-dd'}}</p -->
-  <form>
-    <label><span>Kundennummer</span><input type="text" name="customerNumber" [(ngModel)]="customerNumber"></label>
-    <label><span>Firmenname des Kunden</span><input type="text" name="customerName" [(ngModel)]="customerName"></label>
-    <label><span>Adresszeile 1</span><input type="text" name="addressLine1" [(ngModel)]="addressLine1"></label>
-    <label><span>Adresszeile 2</span><input type="text" name="addressLine2" [(ngModel)]="addressLine2"></label>
-    <label><span>Adresszeile 3</span><input type="text" name="addressLine3" [(ngModel)]="addressLine3"></label>
-    <label><span>Land</span><input type="text" name="country" [(ngModel)]="country"></label>
-    <label><span>Postleitzahl</span><input type="text" name="postalCode" [(ngModel)]="postalCode"></label>
-    <label><span>Stadt</span><input type="text" name="city" [(ngModel)]="city"></label>
-    <label><span>Umsatzsteuernummer</span><input type="text" name="•	customerSalesTaxNumber" [(ngModel)]="customerSalesTaxNumber"></label>
-    <br>
-    <button (click)="saveCustomer()">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
-    <button (click)="backToCustomerList()">{{newCustomer ? 'verwerfen' : 'zurück'}}</button>
-    <a routerLink="/customer-detail/{{customerId}}/false/customer-history">Kunden-Historie anzeigen</a>
-  </form>
+    <h1>Kundendetailansicht</h1>
+    <!-- p>erstellt am: {{creationTime | date:'yyyy-MM-dd'}}</p -->
+    <form>
+        <label><span>Kundennummer</span><input type="text" name="customerNumber" [(ngModel)]="customerNumber"></label>
+        <label><span>Firmenname des Kunden</span><input type="text" name="customerName"
+                                                        [(ngModel)]="customerName"></label>
+        <label><span>Adresszeile 1</span><input type="text" name="addressLine1" [(ngModel)]="addressLine1"></label>
+        <label><span>Adresszeile 2</span><input type="text" name="addressLine2" [(ngModel)]="addressLine2"></label>
+        <label><span>Adresszeile 3</span><input type="text" name="addressLine3" [(ngModel)]="addressLine3"></label>
+        <label><span>Land</span><input type="text" name="country" [(ngModel)]="country"></label>
+        <label><span>Postleitzahl</span><input type="text" name="postalCode" [(ngModel)]="postalCode"></label>
+        <label><span>Stadt</span><input type="text" name="city" [(ngModel)]="city"></label>
+        <label><span>Umsatzsteuernummer</span><input type="text" name="•	customerSalesTaxNumber"
+                                                     [(ngModel)]="customerSalesTaxNumber"></label>
+        <br>
+        <button (click)="saveCustomer()">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
+        <button (click)="backToCustomerList()">{{newCustomer ? 'verwerfen' : 'zurück'}}</button>
+        <button (click)="receiveCustomerHistoryById(customerId)">alte Versionen</button>
+        <select *ngIf="historyDateList" [(ngModel)]="historyKey" [ngModelOptions]="{standalone: true}" >
+            <option selected [ngValue]="last">
+                aktuell
+            </option>
+            <option *ngFor="let opt of historyDateList" [ngValue]="opt.historyKey">
+                {{opt.historyLabel}}
+            </option>
+        </select>
+    </form>
+
+
+
+
 </div>
 

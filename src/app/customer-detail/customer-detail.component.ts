@@ -5,6 +5,7 @@ import {CustomerType} from '../customer-type';
 // import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
+import {combineLatest} from 'rxjs';
 
 @Component({
     selector: 'app-customer-detail',
@@ -20,6 +21,8 @@ export class CustomerDetailComponent implements OnInit {
     // region other properties
     // creatingCustomer: boolean;
     // creatingCustomerBtn: boolean;
+    historyDateList: [{ historyKey: string, historyLabel: string}] ;
+    historyKey: string;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
     customerNumber: string; // Kundennummer
@@ -49,7 +52,9 @@ export class CustomerDetailComponent implements OnInit {
         console.log('receivedCustomerIdError ===' + this.receivedCustomerIdError + '!!!     ');
         if (!this.receivedCustomerIdError) {
             this.receiveFbCustomerById(this.customerId);
+
         }
+
     }
 
     hasReceivedCustomerId(): // can NOT be deleted
@@ -67,7 +72,9 @@ export class CustomerDetailComponent implements OnInit {
 
     receiveFbCustomerById(id: string): void {
         if (!this.newCustomer) {
+
             this.fbInvoiceService.getCustomerById(id).subscribe(customer => {
+
                     // this.customer = customer;
                     this.customerNumber = customer.customerNumber;
                     this.customerName = customer.customerName;
@@ -82,7 +89,9 @@ export class CustomerDetailComponent implements OnInit {
                     this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime.toDate() : new Date();
                     this.archived = false; // customer.archived;
                 }
-             );
+
+            );
+
         } else {
             const customer = Customer.createNewCustomer();
             // this.customerId = customer.getCustomerId();
@@ -115,7 +124,7 @@ export class CustomerDetailComponent implements OnInit {
             creationTime: this.creationTime,
             lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
             archived: this.archived
-        }
+        };
         if (this.newCustomer) {
             this.newCustomer = false;
             this.fbInvoiceService.createCustomer01(cData);
@@ -126,9 +135,17 @@ export class CustomerDetailComponent implements OnInit {
     }
 
     backToCustomerList(): void {
-            this.newCustomer = false;
+        this.newCustomer = false;
         this.router.navigateByUrl('/customer-list');
     }
 
+    receiveCustomerHistoryById(id: string): void {
+        this.fbInvoiceService.getCustomerHistoryById(id)
+            .subscribe(data => {
+                this.historyDateList = data;
+                console.log('data', data);
+            });
+        console.log('HistoryDateList', this.historyDateList);
+    }
 
 }
