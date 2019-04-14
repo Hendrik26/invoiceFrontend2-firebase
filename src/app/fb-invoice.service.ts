@@ -1,6 +1,6 @@
 // responsible for connection to Firebase-DB
 
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 
 import {Customer} from './customer';
@@ -9,7 +9,7 @@ import {map} from 'rxjs/operators';
 import {Observable, combineLatest} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FbInvoiceService {
 
@@ -18,7 +18,8 @@ export class FbInvoiceService {
     customersRef: AngularFirestoreCollection<Customer> = null;
 
 
-    constructor(private db: AngularFirestore) { }
+    constructor(private db: AngularFirestore) {
+    }
 
     getCustomersList(country: string): Observable<any> {
         const sortDirStr = 'asc';
@@ -35,12 +36,17 @@ export class FbInvoiceService {
                 changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
             )
         );
-         // console.log('Method fb-invoice.service.getCustomersList() done!!!');
+        // console.log('Method fb-invoice.service.getCustomersList() done!!!');
     }
 
-    getCustomerById(customerId: string): Observable<any> {
-
-        return this.db.doc(`${this.dbPath}/${customerId}`).valueChanges();
+    getCustomerById(customerId: string, historyId: string): Observable<any> {
+        let path = '';
+        if (!historyId) {
+            path = `${this.dbPath}/${customerId}`;
+        } else  {
+            path = `${this.dbPath}/${customerId}/history/${historyId}`;
+        }
+        return this.db.doc(path).valueChanges();
     }
 
     getCustomerHistoryById(customerId: string): Observable<any> {
