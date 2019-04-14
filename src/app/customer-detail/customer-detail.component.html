@@ -14,11 +14,14 @@
         <label><span>Umsatzsteuernummer</span><input type="text" name="•	customerSalesTaxNumber"
                                                      [(ngModel)]="customerSalesTaxNumber"></label>
         <br>
-        <button (click)="saveCustomer()">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
+        <button (click)="saveCustomer(false)">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
         <button (click)="backToCustomerList()">{{newCustomer ? 'verwerfen' : 'zurück'}}</button>
+        <button *ngIf="!newCustomer" (click)="saveCustomer(true)">archivieren</button>
         <button (click)="receiveCustomerHistoryById(customerId)">alte Versionen</button>
-        <select *ngIf="historyDateList" [(ngModel)]="historyKey" [ngModelOptions]="{standalone: true}" >
-            <option selected [ngValue]="last">
+
+        <select (change)="receiveFbCustomerById(customerId,historyId)" *ngIf="historyDateList"
+                [(ngModel)]="historyId" [ngModelOptions]="{standalone: true}" >
+            <option selected [ngValue]="undefined">
                 aktuell
             </option>
             <option *ngFor="let opt of historyDateList" [ngValue]="opt.historyKey">

@@ -25,7 +25,7 @@
                 <th>Umsatzsteuernummer</th>
                 <th>erstellt am</th>
                 <th>letztes update am</th>
-                <th>Archiviert???</th>
+                <!-- th>Archiviert???</th -->
                 <th>Ändern</th>
             </tr>
             </thead>
@@ -42,10 +42,10 @@
                 <td *ngIf="toShow(customer.archived)">{{customer.customerSalesTaxNumber}}</td>
                 <td *ngIf="toShow(customer.archived)">{{customer.creationTime | date:'yyyy-MM-dd'}}</td>
                 <td *ngIf="toShow(customer.archived)">{{customer.lastUpdateTime | date:'yyyy-MM-dd'}}</td>
-                <td *ngIf="toShow(customer.archived)">Archiv: {{customer.archived}}; Show: {{toShow(customer.archived)}}</td>
+                <!-- td *ngIf="toShow(customer.archived)">Archiv: {{customer.archived}}; Show: {{toShow(customer.archived)}}</td -->
                 <td *ngIf="toShow(customer.archived)">
                     <a routerLink="/customer-detail/{{customer.getCustomerId()}}/false">Kunden bearbeiten</a>
-                    <button (click)="deleteCustomer(customer.getCustomerId())">löschen</button>
+                    <!-- <button (click)="deleteCustomer(customer.getCustomerId())">löschen</button> -->
                 </td>
             </tr>
             </tbody>

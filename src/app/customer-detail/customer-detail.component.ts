@@ -22,7 +22,7 @@ export class CustomerDetailComponent implements OnInit {
     // creatingCustomer: boolean;
     // creatingCustomerBtn: boolean;
     historyDateList: [{ historyKey: string, historyLabel: string}] ;
-    historyKey: string;
+    historyId: string;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
     customerNumber: string; // Kundennummer
@@ -51,7 +51,7 @@ export class CustomerDetailComponent implements OnInit {
         this.receivedCustomerIdError = !this.hasReceivedCustomerId();
         console.log('receivedCustomerIdError ===' + this.receivedCustomerIdError + '!!!     ');
         if (!this.receivedCustomerIdError) {
-            this.receiveFbCustomerById(this.customerId);
+            this.receiveFbCustomerById(this.customerId, null);
 
         }
 
@@ -70,10 +70,10 @@ export class CustomerDetailComponent implements OnInit {
         }
     }
 
-    receiveFbCustomerById(id: string): void {
+    receiveFbCustomerById(id: string, historyId: string): void {
         if (!this.newCustomer) {
 
-            this.fbInvoiceService.getCustomerById(id).subscribe(customer => {
+            this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customer => {
 
                     // this.customer = customer;
                     this.customerNumber = customer.customerNumber;
@@ -110,7 +110,7 @@ export class CustomerDetailComponent implements OnInit {
         }
     }
 
-    saveCustomer(): void {
+    saveCustomer(archived: boolean): void {
         const cData: CustomerType = {
             customerNumber: this.customerNumber, // Kundennummer
             customerName: this.customerName,  // Kundenname
@@ -123,7 +123,7 @@ export class CustomerDetailComponent implements OnInit {
             customerSalesTaxNumber: this.customerSalesTaxNumber,
             creationTime: this.creationTime,
             lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
-            archived: this.archived
+            archived: archived
         };
         if (this.newCustomer) {
             this.newCustomer = false;
@@ -143,9 +143,7 @@ export class CustomerDetailComponent implements OnInit {
         this.fbInvoiceService.getCustomerHistoryById(id)
             .subscribe(data => {
                 this.historyDateList = data;
-                console.log('data', data);
             });
-        console.log('HistoryDateList', this.historyDateList);
     }
 
 }

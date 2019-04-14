@@ -43,7 +43,7 @@ export class FbInvoiceService {
         let path = '';
         if (!historyId) {
             path = `${this.dbPath}/${customerId}`;
-        } else  {
+        } else {
             path = `${this.dbPath}/${customerId}/history/${historyId}`;
         }
         return this.db.doc(path).valueChanges();
@@ -53,7 +53,15 @@ export class FbInvoiceService {
         this.customersRef = this.db.collection(`${this.dbPath}/${customerId}/history`);
         return this.customersRef.snapshotChanges().pipe(
             map(changes =>
-                changes.map(c => ({historyKey: c.payload.doc.id, historyLabel: c.payload.doc.id}))
+                changes.map(c => ({
+                    historyKey: c.payload.doc.id,
+                    historyLabel: c.payload.doc.id.slice(12, 14)
+                        + '.' + c.payload.doc.id.slice(9, 11)
+                        + '.' + c.payload.doc.id.slice(4, 8)
+                        + ' ' + c.payload.doc.id.slice(15, 17)
+                        + ':' + c.payload.doc.id.slice(18, 20)
+                        + ':' + c.payload.doc.id.slice(21, 23)
+                }))
             )
         );
     }
