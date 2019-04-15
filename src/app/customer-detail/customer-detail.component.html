@@ -15,8 +15,8 @@
                                                      [(ngModel)]="customerSalesTaxNumber"></label>
         <br>
         <button (click)="saveCustomer(false)">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
-        <button (click)="backToCustomerList()">{{newCustomer ? 'verwerfen' : 'zurück'}}</button>
         <button *ngIf="!newCustomer" (click)="saveCustomer(true)">archivieren</button>
+        <button (click)="backToCustomerList()">{{newCustomer ? 'verwerfen' : 'zurück'}}</button>
         <button (click)="receiveCustomerHistoryById(customerId)">alte Versionen</button>
 
         <select (change)="receiveFbCustomerById(customerId,historyId)" *ngIf="historyDateList"

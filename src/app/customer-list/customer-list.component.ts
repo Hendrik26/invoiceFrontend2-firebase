@@ -25,6 +25,13 @@ export class CustomerListComponent implements OnInit {
     archive = 'notArchive';
     // endregion
 
+    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
+        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
+            return -1;
+        }
+        return 1;
+    }
+
     constructor(private fbInvoiceService: FbInvoiceService,
                 private router: Router,
                 private route: ActivatedRoute) {
@@ -65,10 +72,6 @@ export class CustomerListComponent implements OnInit {
         }
     }
 
-    private toggleShowArchived(): void {
-        this.showArchived = !this.showArchived;
-    }
-
     private toShow(customerArchived): boolean {
         return ((this.showArchived === customerArchived) || this.history);
     }
@@ -84,13 +87,12 @@ export class CustomerListComponent implements OnInit {
     }
 
     receiveCustomers(): void {
-       // if (!this.history) {
             this.fbInvoiceService.getCustomersList(this.archive)
-                .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
-       /* } else {
-            this.fbInvoiceService.getCustomerHistoryById(this.customerParentId)
-                .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
-        } */
+                .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x));
+                    this.customers.sort(function (a, b) {
+                        return CustomerListComponent.compareCustomersByName(a, b);
+                    });
+                });
     }
 
     public newCustomereBtn(): void {
@@ -99,10 +101,4 @@ export class CustomerListComponent implements OnInit {
         const customerId = 'nK';
         this.router.navigateByUrl('customer-detail/' + customerId + '/true'  );
     }
-
-    deleteCustomer(customerId): void {
-        const i = -11;
-    }
-
-
 }
