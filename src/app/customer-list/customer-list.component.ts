@@ -22,7 +22,7 @@ export class CustomerListComponent implements OnInit {
     hasReceivedCustomerParentIdError = false;
     history = false;
     showArchived = false;
-
+    archive = 'notArchive';
     // endregion
 
     constructor(private fbInvoiceService: FbInvoiceService,
@@ -84,13 +84,13 @@ export class CustomerListComponent implements OnInit {
     }
 
     receiveCustomers(): void {
-        if (!this.history) {
-            this.fbInvoiceService.getCustomersList('xxx')
+       // if (!this.history) {
+            this.fbInvoiceService.getCustomersList(this.archive)
                 .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
-        } else {
+       /* } else {
             this.fbInvoiceService.getCustomerHistoryById(this.customerParentId)
                 .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x)); });
-        }
+        } */
     }
 
     public newCustomereBtn(): void {

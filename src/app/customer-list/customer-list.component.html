@@ -6,7 +6,11 @@
                   (change)="toggleShowArchived()"> Archivierte Anzeigen</label>
     <br>
     {{showArchived ? 'Nur Archivierte anzeigen!' : 'Nur Nicht-Archivierte anzeigen!'}}
-
+    <form>
+        <label><input (change)="receiveCustomers()" name="archive" type="radio" value="notArchive"  [(ngModel)]="archive" checked="checked" >nur nicht archivierte &nbsp;&nbsp;</label>
+        <label><input (change)="receiveCustomers()" name="archive" type="radio" value="archive"  [(ngModel)]="archive" >nur archivierte&nbsp;&nbsp;</label>
+        <label><input (change)="receiveCustomers()" name="archive" type="radio" value="all"  [(ngModel)]="archive" >alle&nbsp;&nbsp;</label>
+    </form>
     <br><br><br><br><br><br>
 
 
@@ -25,25 +29,25 @@
                 <th>Umsatzsteuernummer</th>
                 <th>erstellt am</th>
                 <th>letztes update am</th>
-                <!-- th>Archiviert???</th -->
+                <th>Archiviert???</th>
                 <th>Ändern</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let customer of customers">
-                <td *ngIf="toShow(customer.archived)">{{customer.customerNumber}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.customerName}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.country}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.postalCode}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.city}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.addressLine1}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.addressLine2}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.addressLine3}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.customerSalesTaxNumber}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.creationTime | date:'yyyy-MM-dd'}}</td>
-                <td *ngIf="toShow(customer.archived)">{{customer.lastUpdateTime | date:'yyyy-MM-dd'}}</td>
-                <!-- td *ngIf="toShow(customer.archived)">Archiv: {{customer.archived}}; Show: {{toShow(customer.archived)}}</td -->
-                <td *ngIf="toShow(customer.archived)">
+                <td>{{customer.customerNumber}}</td>
+                <td>{{customer.customerName}}</td>
+                <td>{{customer.country}}</td>
+                <td>{{customer.postalCode}}</td>
+                <td>{{customer.city}}</td>
+                <td>{{customer.addressLine1}}</td>
+                <td>{{customer.addressLine2}}</td>
+                <td>{{customer.addressLine3}}</td>
+                <td>{{customer.customerSalesTaxNumber}}</td>
+                <td>{{customer.creationTime | date:'yyyy-MM-dd'}}</td>
+                <td>{{customer.lastUpdateTime | date:'yyyy-MM-dd'}}</td>
+                <td>{{customer.archived}}</td>
+                <td>
                     <a routerLink="/customer-detail/{{customer.getCustomerId()}}/false">Kunden bearbeiten</a>
                     <!-- <button (click)="deleteCustomer(customer.getCustomerId())">löschen</button> -->
                 </td>

@@ -5,7 +5,7 @@ import {CustomerType} from '../customer-type';
 // import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
-import {combineLatest} from 'rxjs';
+
 
 @Component({
     selector: 'app-customer-detail',

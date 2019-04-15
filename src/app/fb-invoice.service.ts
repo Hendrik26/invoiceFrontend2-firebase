@@ -21,22 +21,26 @@ export class FbInvoiceService {
     constructor(private db: AngularFirestore) {
     }
 
-    getCustomersList(country: string): Observable<any> {
-        const sortDirStr = 'asc';
-        console.log(sortDirStr);
-        country = country.trim();
+    getCustomersList(archive: string): Observable<any> {
+        console.log('Archiv', archive);
         console.log('Method fb-invoice.service.getCustomersList() started!!!');
-        /* this.customersRef = this.db.collection(this.dbPath,
-            ref => ref.orderBy('customerName', sortDirStr).where('age', '>=', dbMinage)
-                .where('age', '<=', dbMaxage)); */
-        this.customersRef = this.db.collection(this.dbPath,
-            ref => ref.orderBy('customerName', sortDirStr));
-        return this.customersRef.snapshotChanges().pipe(
+        let customersRef: AngularFirestoreCollection<Customer> = null;
+        if (archive === 'all') {
+            customersRef = this.db.collection(this.dbPath);
+        } else {
+            if (archive === 'archive') {
+               customersRef = this.db.collection(this.dbPath,
+                    ref => ref.where('archived', '==', true));
+            } else {
+                customersRef = this.db.collection(this.dbPath,
+                    ref => ref.where('archived', '==', false));
+            }
+        }
+        return customersRef.snapshotChanges().pipe(
             map(changes =>
                 changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
             )
         );
-        // console.log('Method fb-invoice.service.getCustomersList() done!!!');
     }
 
     getCustomerById(customerId: string, historyId: string): Observable<any> {
