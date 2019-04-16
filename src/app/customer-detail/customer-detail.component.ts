@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../customer';
 import {CustomerType} from '../customer-type';
-// import {CustomerService} from '../customer.service';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
 
