@@ -84,12 +84,6 @@ export class Customer implements CustomerType {
         return new Customer(inCustomer.key, cData);
     }
 
-    public static normalizeCustomerList(inCustomers: any[]): Customer[] {
-        const retCustomers: Customer[] = [];
-        // TODO: add transformation here
-        return retCustomers;
-    }
-
     // endregion
     // region getter
     public getCustomerId(): string {
