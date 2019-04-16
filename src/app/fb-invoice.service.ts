@@ -78,23 +78,6 @@ export class FbInvoiceService {
                 changes.map(c => ({historyId: c.payload.doc.id }))));
     }
 
-    createCustomer(customer: Customer): void {
-        this.db.collection(this.dbPath).add({
-            'customerNumber': customer.customerNumber,
-            'customerName': customer.customerName,
-            'country': customer.country,
-            'postalCode': customer.postalCode,
-            'city': customer.city,
-            'addressLine1': customer.addressLine1,
-            'addressLine2': customer.addressLine2,
-            'addressLine3': customer.addressLine3,
-            'customerSalesTaxNumber': customer.customerSalesTaxNumber,
-            'creationTime': customer.creationTime,
-            'lastUpdateTime': new Date(),
-            'archived': customer.archived
-        }).catch(error => this.handleError(error));
-    }
-
     createCustomer01(data: CustomerType): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': data.customerNumber,
@@ -109,26 +92,6 @@ export class FbInvoiceService {
             'creationTime': data.creationTime,
             'lastUpdateTime': new Date(),
             'archived': data.archived
-        }).catch(error => this.handleError(error));
-    }
-
-    createCustomer02(customerNumber: string, customerName: string, country: string,
-                     postalCode: string, city: string, addressLine1: string, addressLine2: string,
-                     addressLine3: string, customerSalesTaxNumber: string, creationTime: Date,
-                     archived: boolean): void {
-        this.db.collection(this.dbPath).add({
-            'customerNumber': customerNumber,
-            'customerName': customerName,
-            'country': country,
-            'postalCode': postalCode,
-            'city': city,
-            'addressLine1': addressLine1,
-            'addressLine2': addressLine2,
-            'addressLine3': addressLine3,
-            'customerSalesTaxNumber': customerSalesTaxNumber,
-            'creationTime': creationTime,
-            'lastUpdateTime': new Date(),
-            'archived': archived
         }).catch(error => this.handleError(error));
     }
 
