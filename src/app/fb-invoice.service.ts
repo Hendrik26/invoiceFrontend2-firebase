@@ -78,7 +78,7 @@ export class FbInvoiceService {
                 changes.map(c => ({historyId: c.payload.doc.id }))));
     }
 
-    createCustomer01(data: CustomerType): void {
+    createCustomer(data: CustomerType): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': data.customerNumber,
             'customerName': data.customerName,
