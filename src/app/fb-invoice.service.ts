@@ -28,7 +28,7 @@ export class FbInvoiceService {
         if (archive === 'all') {
             customersRef = this.db.collection(this.dbPath);
         } else {
-            if (archive === 'archive') {
+            if (archive === 'showArchive') {
                customersRef = this.db.collection(this.dbPath,
                     ref => ref.where('archived', '==', true));
             } else {
@@ -68,6 +68,14 @@ export class FbInvoiceService {
                 }))
             )
         );
+    }
+
+    testCustomerHistoryById(customerId: string): Observable<any> {
+        const customersRef = this.db.collection(`${this.dbPath}/${customerId}/history`,
+                ref => ref.limit(2));
+        return customersRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({historyId: c.payload.doc.id }))));
     }
 
     createCustomer(customer: Customer): void {

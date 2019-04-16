@@ -2,15 +2,17 @@
 
     <h1> Kundenübersicht </h1>
 
-    <form>
-        <label><input (change)="receiveCustomers()" name="archive" type="radio" value="notArchive"
-                      [(ngModel)]="archive" checked="checked" >nur nicht archivierte &nbsp;&nbsp;</label>
-        <label><input (change)="receiveCustomers()" name="archive" type="radio" value="archive"
-                      [(ngModel)]="archive" >nur archivierte&nbsp;&nbsp;</label>
-        <label><input (change)="receiveCustomers()" name="archive" type="radio" value="all"
-                      [(ngModel)]="archive" >alle&nbsp;&nbsp;</label>
-    </form>
-    <br>
+
+    <label><input (change)="receiveCustomers()" name="archive" type="radio" value="notArchive"
+                  [(ngModel)]="showArchive" checked="checked">nur nicht archivierte &nbsp;&nbsp;</label>
+    <label><input (change)="receiveCustomers()" name="archive" type="radio" value="showArchive"
+                  [(ngModel)]="showArchive">nur archivierte&nbsp;&nbsp;</label>
+    <label><input (change)="receiveCustomers()" name="archive" type="radio" value="all"
+                  [(ngModel)]="showArchive">alle&nbsp;&nbsp;</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <button (click)="newCustomereBtn()">Neuer Kunde</button>
+    <a routerLink="/invoice-list">Rechnungsübersicht</a>
+    <br><br>
 
 
     <div class="mobile-style">
@@ -33,7 +35,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr  *ngFor="let customer of customers">
+            <tr *ngFor="let customer of customers">
                 <td [ngStyle]="{'color':customer.archived ? 'red' : 'black' }">{{customer.customerNumber}}</td>
                 <td [ngStyle]="{'color':customer.archived ? 'red' : 'black' }">{{customer.customerName}}</td>
                 <td [ngStyle]="{'color':customer.archived ? 'red' : 'black' }">{{customer.country}}</td>
@@ -54,6 +56,12 @@
             </tbody>
         </table>
     </div>
-    <a routerLink="/invoice-list">Rechnungsübersicht</a>
+    <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="notArchive"
+                  [(ngModel)]="showArchive" checked="checked">nur nicht archivierte &nbsp;&nbsp;</label>
+    <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="showArchive"
+                  [(ngModel)]="showArchive">nur archivierte&nbsp;&nbsp;</label>
+    <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="all"
+                  [(ngModel)]="showArchive">alle&nbsp;&nbsp;</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button (click)="newCustomereBtn()">Neuer Kunde</button>
+    <a routerLink="/invoice-list">Rechnungsübersicht</a>
 </div>

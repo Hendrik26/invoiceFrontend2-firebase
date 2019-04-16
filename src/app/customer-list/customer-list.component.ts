@@ -22,7 +22,7 @@ export class CustomerListComponent implements OnInit {
     hasReceivedCustomerParentIdError = false;
     history = false;
     showArchived = false;
-    archive = 'notArchive';
+    showArchive = 'notArchive';
     // endregion
 
     private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
@@ -87,7 +87,7 @@ export class CustomerListComponent implements OnInit {
     }
 
     receiveCustomers(): void {
-            this.fbInvoiceService.getCustomersList(this.archive)
+            this.fbInvoiceService.getCustomersList(this.showArchive)
                 .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x));
                     this.customers.sort(function (a, b) {
                         return CustomerListComponent.compareCustomersByName(a, b);

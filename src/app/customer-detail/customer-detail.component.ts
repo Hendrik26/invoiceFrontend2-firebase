@@ -37,6 +37,7 @@ export class CustomerDetailComponent implements OnInit {
     creationTime: Date;
     lastUpdateTime: Date;
     archived = false;
+    historyTest: boolean;
 
     // endregion
     constructor(
@@ -74,8 +75,6 @@ export class CustomerDetailComponent implements OnInit {
         if (!this.newCustomer) {
 
             this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customer => {
-
-                    // this.customer = customer;
                     this.customerNumber = customer.customerNumber;
                     this.customerName = customer.customerName;
                     this.country = customer.country;
@@ -87,10 +86,10 @@ export class CustomerDetailComponent implements OnInit {
                     this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
                     this.creationTime = customer.creationTime ? customer.creationTime.toDate() : new Date();
                     this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime.toDate() : new Date();
-                    this.archived = false; // customer.archived;
+                    this.archived = customer.archived;
                 }
-
             );
+            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customer => {this.historyTest = customer[1]; });
 
         } else {
             const customer = Customer.createNewCustomer();
