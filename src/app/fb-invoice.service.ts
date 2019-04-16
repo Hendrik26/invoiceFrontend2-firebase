@@ -14,7 +14,6 @@ import {Observable, combineLatest} from 'rxjs';
 export class FbInvoiceService {
 
     private dbPath = '/customers';
-    private customersList: Observable<any>;
     customersRef: AngularFirestoreCollection<Customer> = null;
 
 
