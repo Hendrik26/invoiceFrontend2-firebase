@@ -127,7 +127,7 @@ export class FbInvoiceService {
     }
 
     private handleError(error) {
-        // console.log(error);
-        console.log('ErRor1223');
+        console.log(error);
+        // console.log('ErRor1223');
     }
 }
