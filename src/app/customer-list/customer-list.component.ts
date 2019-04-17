@@ -3,8 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 // import {isNullOrUndefined} from 'util';
 import {Customer} from '../customer';
 import {FbInvoiceService} from '../fb-invoice.service';
-import {INVOICES} from '../mock-invoice';
-
 
 @Component({
     selector: 'app-customer-list',
