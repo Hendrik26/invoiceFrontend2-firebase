@@ -96,7 +96,7 @@ export class FbInvoiceService {
 
     updateCustomer(id: string, data: CustomerType): void {
         console.log('Method FbInvoiceService.updateCustomer() started!');
-        let logStr = 'customerNumber: ' + data.customerNumber
+        const logStr = 'customerNumber: ' + data.customerNumber
                      + '\r\n customerName' + data.customerName
                      + '\r\n country' + data.country
                      + '\r\n postalCode' + data.postalCode
