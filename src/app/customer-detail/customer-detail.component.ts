@@ -127,7 +127,7 @@ export class CustomerDetailComponent implements OnInit {
             this.newCustomer = false;
             this.fbInvoiceService.createCustomer(cData);
         } else {
-            this.fbInvoiceService.updateCustomer(this.customerId, cData);
+            this.fbInvoiceService.updateSetCustomer(this.customerId, cData);
         }
         this.router.navigateByUrl('/customer-list');
     }

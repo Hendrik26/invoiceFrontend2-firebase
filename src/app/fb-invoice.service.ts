@@ -124,6 +124,40 @@ export class FbInvoiceService {
             'lastUpdateTime': new Date(),
             'archived': data.archived
         }).catch(error => this.handleError(error));
+        console.log('Method FbInvoiceService.updateCustomer() finished!');
+    }
+
+    updateSetCustomer(id: string, data: CustomerType): void {
+        console.log('Method FbInvoiceService.updateSetCustomer() started!');
+        const logStr = 'customerNumber: ' + data.customerNumber
+            + '\r\n customerName' + data.customerName
+            + '\r\n country' + data.country
+            + '\r\n postalCode' + data.postalCode
+            + '\r\n city' + data.city
+            + '\r\n addressLine1' +  data.addressLine1
+            + '\r\n addressLine2' + data.addressLine2
+            + '\r\n addressLine3' + data.addressLine3
+            + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
+            + '\r\n creationTime' + data.creationTime
+            + '\r\n lastUpdateTime' + new Date()
+            + '\r\n archived' + data.archived;
+        console.log(logStr);
+        console.log('Method FbInvoiceService.updateSetCustomer() continued!');
+        this.db.doc(`${this.dbPath}/${id}`).update({
+            'customerNumber': data.customerNumber,
+            'customerName': data.customerName,
+            'country': data.country,
+            'postalCode': data.postalCode,
+            'city': data.city,
+            'addressLine1': data.addressLine1,
+            'addressLine2': data.addressLine2,
+            'addressLine3': data.addressLine3,
+            'customerSalesTaxNumber': data.customerSalesTaxNumber,
+            'creationTime': data.creationTime,
+            'lastUpdateTime': new Date(),
+            'archived': data.archived
+        }).catch(error => this.handleError(error));
+        console.log('Method FbInvoiceService.updateSetCustomer() finished!');
     }
 
     private handleError(error) {
