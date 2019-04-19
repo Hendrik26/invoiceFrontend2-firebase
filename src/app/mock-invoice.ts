@@ -1,11 +1,16 @@
 import {Invoice} from './invoice';
+import {InvoiceKind} from './invoice-kind';
 
 let invoice01 = new Invoice('In001', {
   invoiceDate: new Date('2016-02-04'), invoiceNumber: '2018abcd', recipient: 'DumpfbackeGmbH',
   invoiceDueDate: new Date('2016-02-24'),
   invoiceState: 'Entwurf', wholeCost: 1111.11, countReminders: 0, timeSpan: '2017-01-01 bis 2017-12-31',
   currency: '€', salesTaxPercentage: 19, invoiceIntendedUse: 'die Rechnungsnummer 2018abcd',
-  customerTaxNumber: 'mockCcustomerTaxNumber'
+  customerTaxNumber: 'mockCustomerTaxNumber',
+
+  items:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
+  invoiceKind: InvoiceKind.create(false, false, false), timespanBegin: new Date('2017-01-01'),
+  timespanEnd: new Date('2017-12-31')
 });
 invoice01.addNewItem({
   itemDate: '2016-04-01', itemName: 'Programmieren',
@@ -18,11 +23,15 @@ invoice01.addNewItem({
 
 
 let invoice02 = new Invoice('In002', {
-  invoiceDate: new Date('2017-04-01'), invoiceNumber: '2018efgh', recipient: 'Schweizer Käse&Socken GmbH', //'Goldbroiler',
+  invoiceDate: new Date('2017-04-01'), invoiceNumber: '2018efgh', recipient: 'Goldbroiler',
   invoiceDueDate: new Date('2016-02-21'),
   invoiceState: 'Entwurf', wholeCost: 2222.221, countReminders: 0, timeSpan: '2016-01-01 bis 2016-12-31',
   currency: '€', salesTaxPercentage: 19, invoiceIntendedUse: 'die Rechnungsnummer 2018efgh',
-  customerTaxNumber: 'mockCustomerTaxNumber'
+  customerTaxNumber: 'mockCustomerTaxNumber',
+
+    items:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
+    invoiceKind: InvoiceKind.create(false, false, false), timespanBegin: new Date('2017-01-01'),
+    timespanEnd: new Date('2017-12-31')
 });
 
 invoice02.addNewItem({
@@ -39,7 +48,11 @@ let invoice03 = new Invoice('In003', {
   invoiceDueDate: new Date('2016-03-04'),
   invoiceState: 'Entwurf', wholeCost: 333.3321, countReminders: 0, timeSpan: '2015-01-01 bis 2015-12-31',
   currency: '€', salesTaxPercentage: 19, invoiceIntendedUse: 'die rechnungsnummer 2018ijkl',
-  customerTaxNumber: 'mockCustomerTaxNumber'
+  customerTaxNumber: 'mockCustomerTaxNumber',
+
+    items:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
+    invoiceKind: InvoiceKind.create(false, false, false), timespanBegin: new Date('2017-01-01'),
+    timespanEnd: new Date('2017-12-31')
 });
 
 invoice03.addNewItem({

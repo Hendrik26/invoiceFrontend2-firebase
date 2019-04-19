@@ -10,7 +10,7 @@ export class Invoice implements InvoiceType {
 
     //region static properties
     private static emptyData: InvoiceType = {
-        invoiceDate: new Date(),
+        /*invoiceDate: new Date(),
         invoiceDueDate: new Date(),
         invoiceIntendedUse: 'die Rechnungsnummer 2018',
         invoiceNumber: '2018',
@@ -20,7 +20,31 @@ export class Invoice implements InvoiceType {
         countReminders: 0,
         timeSpan: 'unknown',
         salesTaxPercentage: 19,
-        customerTaxNumber: 'standardCustomerTaxNumber'
+        customerTaxNumber: 'standardCustomerTaxNumber' */
+        countReminders: 0, // <th>Anzahl der Mahnungen</th>
+        newCreatedInvoice: true,
+        //endregion
+        currency: '€',
+
+        customerIBAN: 'bspCustomerIBAN',
+        mandateIdentification: 'bspMandateIdentification', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+
+        customerTaxNumber: 'bspCcustomerTaxNumber',
+        invoiceDate: new Date(), // <th>Rechnungsdatum</th>
+        invoiceDueDate: new Date(), // Faelligkeitsdatum
+        invoiceNumber: '2018xy', // <th>RechnungsNr</th>
+        invoiceIntendedUse: 'bspInvoiceIntendedUse', // Verwendungszweck
+        invoiceKind: InvoiceKind.create(false, false, false),
+        invoiceState: 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
+        items: [],
+        recipient: 'bspRecipient', // <th>Empfänger</th>
+        salesTaxPercentage: 19,
+        timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
+
+        timespanBegin: new Date(),
+        timespanEnd: new Date(),
+
+        wholeCost: -111 // <th>Gesamtpreis</th>
     };
     //endregion
     //region other properties
@@ -36,7 +60,7 @@ export class Invoice implements InvoiceType {
     invoiceDate: Date; // <th>Rechnungsdatum</th>
     invoiceDueDate: Date; // Faelligkeitsdatum
     invoiceNumber: string; // <th>RechnungsNr</th>
-    invoiceIntendedUse; // Verwendungszweck
+    invoiceIntendedUse: string; // Verwendungszweck
     invoiceKind: InvoiceKind;
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     items: Item[];
@@ -47,7 +71,6 @@ export class Invoice implements InvoiceType {
     timespanBegin: Date;
     timespanEnd: Date;
 
-    // type: string;
     wholeCost: number; // <th>Gesamtpreis</th>
     //region IDs
     private id: string; // <th>Ändern</th>

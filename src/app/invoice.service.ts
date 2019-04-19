@@ -25,8 +25,8 @@ export class InvoiceService {
     itemName: 'Treiberprogrammierung', partialCost: 30
   };
 
-  standardInvoice: InvoiceType = {
-    invoiceDate: new Date('04. Februar 2016'),
+  /* standardInvoice: InvoiceType = {
+    /*invoiceDate: new Date('04. Februar 2016'),
     invoiceDueDate: new Date('24. Februar 2016'),
     invoiceNumber: '2018abcd',
     invoiceIntendedUse: 'die Rechnungsnummer 2018',
@@ -37,7 +37,7 @@ export class InvoiceService {
     timeSpan: '2017-01-01 bis 2017-12-31',
     salesTaxPercentage: 19,
     customerTaxNumber: 'standardCustomerTaxNumber'
-  };
+  }; */
 
   //endregion
 

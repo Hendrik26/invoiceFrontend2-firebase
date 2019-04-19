@@ -5,6 +5,8 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 
 import {Customer} from './customer';
 import {CustomerType} from './customer-type';
+import {Invoice} from './invoice';
+import {InvoiceType} from './invoice-type';
 import {map} from 'rxjs/operators';
 import {Observable, combineLatest} from 'rxjs';
 
@@ -159,6 +161,23 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
         console.log('Method FbInvoiceService.updateSetCustomer() finished!');
     }
+
+    /* createInvoice(data: InvoiceType): void {
+        this.db.collection(this.dbPath).add({
+            'customerNumber': data.customerNumber,
+            'customerName': data.customerName,
+            'country': data.country,
+            'postalCode': data.postalCode,
+            'city': data.city,
+            'addressLine1': data.addressLine1,
+            'addressLine2': data.addressLine2,
+            'addressLine3': data.addressLine3,
+            'customerSalesTaxNumber': data.customerSalesTaxNumber,
+            'creationTime': data.creationTime,
+            'lastUpdateTime': new Date(),
+            'archived': data.archived
+        }).catch(error => this.handleError(error));
+    } */
 
     private handleError(error) {
         console.log(error);
