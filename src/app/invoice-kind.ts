@@ -34,7 +34,7 @@ export class InvoiceKind {
 
     private packedDataNumber: number;
 
-    constructor() {
+    private constructor() {
         this._international = false;
         this._timeSpanBased = false;
         this._isSEPA = false;

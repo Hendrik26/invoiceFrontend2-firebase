@@ -72,7 +72,7 @@ export class InvoiceDetailComponent implements OnInit {
         private invoiceService: InvoiceService
     ) {
         this.invoiceDate = new Date();
-        this.invoiceKind = new InvoiceKind();
+        this.invoiceKind = InvoiceKind.create(false, false, false);
     }
 
     ngOnInit() {

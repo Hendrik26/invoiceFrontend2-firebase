@@ -85,7 +85,7 @@ export class Invoice implements InvoiceType {
         this.invoiceDate = data.invoiceDate;
         this.invoiceDueDate = data.invoiceDueDate;
         this.invoiceIntendedUse = data.invoiceIntendedUse;
-        this.invoiceKind = new InvoiceKind();
+        this.invoiceKind = InvoiceKind.create(false, false, false);
         this.invoiceNumber = data.invoiceNumber;
         this.recipient = data.recipient;
         this.invoiceState = data.invoiceState;
