@@ -73,12 +73,12 @@ export class Invoice implements InvoiceType {
 
     wholeCost: number; // <th>Gesamtpreis</th>
     //region IDs
-    private id: string; // <th>Ändern</th>
+    private invoiceId: string; // <th>Ändern</th>
     //endregion
 
     constructor(id: string, data: InvoiceType) {
         // IDs
-        this.id = id; // New Commit after problems with merging
+        this.invoiceId = id; // New Commit after problems with merging
 
         // other properties
         this.newCreatedInvoice = true;
@@ -166,7 +166,7 @@ export class Invoice implements InvoiceType {
 
     //region getter
     public getID(): string {
-        return this.id;
+        return this.invoiceId;
     }
 
     //region other methods
