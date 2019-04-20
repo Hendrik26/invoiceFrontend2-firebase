@@ -18,6 +18,7 @@ import {Item} from './item';
 export class FbInvoiceService {
 
     private dbPath = '/customers';
+    private dbInvoicePath = '/invoices';
     customersRef: AngularFirestoreCollection<Customer> = null;
 
 
@@ -165,7 +166,7 @@ export class FbInvoiceService {
     }
 
    createInvoice(data: InvoiceType): void {
-        this.db.collection(this.dbPath).add({
+        this.db.collection(this.dbInvoicePath).add({
             /* 'customerNumber': data.customerNumber,
             'customerName': data.customerName,
             'country': data.country,
