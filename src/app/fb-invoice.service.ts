@@ -9,6 +9,8 @@ import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
 import {map} from 'rxjs/operators';
 import {Observable, combineLatest} from 'rxjs';
+import {InvoiceKind} from './invoice-kind';
+import {Item} from './item';
 
 @Injectable({
     providedIn: 'root'
@@ -162,9 +164,9 @@ export class FbInvoiceService {
         console.log('Method FbInvoiceService.updateSetCustomer() finished!');
     }
 
-    /* createInvoice(data: InvoiceType): void {
+   createInvoice(data: InvoiceType): void {
         this.db.collection(this.dbPath).add({
-            'customerNumber': data.customerNumber,
+            /* 'customerNumber': data.customerNumber,
             'customerName': data.customerName,
             'country': data.country,
             'postalCode': data.postalCode,
@@ -175,9 +177,28 @@ export class FbInvoiceService {
             'customerSalesTaxNumber': data.customerSalesTaxNumber,
             'creationTime': data.creationTime,
             'lastUpdateTime': new Date(),
-            'archived': data.archived
+            'archived': data.archived */
+                'countReminders': data.countReminders, // <th>Anzahl der Mahnungen</th>
+               // newCreatedInvoice: boolean
+               'currency': data.currency,
+               'customerIBAN': data.customerIBAN,
+               'mandateIdentification': data.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+               'customerTaxNumber': data.customerTaxNumber,
+               'invoiceDate': data.invoiceDate, // <th>Rechnungsdatum</th>
+               'invoiceDueDate': data.invoiceDueDate, // Faelligkeitsdatum
+               'invoiceNumber': data.invoiceNumber, // <th>RechnungsNr</th>
+               'invoiceIntendedUse': data.invoiceIntendedUse, // Verwendungszweck
+               // invoiceKind: InvoiceKind;
+               'invoiceState': data.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
+               // items: Item[];
+               'recipient': data.recipient, // <th>Empfänger</th>
+               'salesTaxPercentage': data.salesTaxPercentage,
+               // timeSpan: string; // <th>Rechnungzeitraum</th>
+               'timespanBegin': data.timespanBegin,
+               'timespanEnd': data.timespanEnd,
+               'wholeCost': data.wholeCost // <th>Gesamtpreis</th>
         }).catch(error => this.handleError(error));
-    } */
+    }
 
     private handleError(error) {
         console.log(error);
