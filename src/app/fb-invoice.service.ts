@@ -166,6 +166,7 @@ export class FbInvoiceService {
     }
 
    createInvoice(data: InvoiceType): void {
+        console.log('Method FbInvoiceService.createInvoice(...) started!');
         this.db.collection(this.dbInvoicePath).add({
             /* 'customerNumber': data.customerNumber,
             'customerName': data.customerName,
@@ -179,16 +180,16 @@ export class FbInvoiceService {
             'creationTime': data.creationTime,
             'lastUpdateTime': new Date(),
             'archived': data.archived */
-                'countReminders': data.countReminders, // <th>Anzahl der Mahnungen</th>
+                /* 'countReminders': data.countReminders, // <th>Anzahl der Mahnungen</th>
                // newCreatedInvoice: boolean
                'currency': data.currency,
                'customerIBAN': data.customerIBAN,
                'mandateIdentification': data.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
                'customerTaxNumber': data.customerTaxNumber,
                'invoiceDate': data.invoiceDate, // <th>Rechnungsdatum</th>
-               'invoiceDueDate': data.invoiceDueDate, // Faelligkeitsdatum
+               'invoiceDueDate': data.invoiceDueDate, // Faelligkeitsdatum */
                'invoiceNumber': data.invoiceNumber, // <th>RechnungsNr</th>
-               'invoiceIntendedUse': data.invoiceIntendedUse, // Verwendungszweck
+               /* 'invoiceIntendedUse': data.invoiceIntendedUse, // Verwendungszweck
                // invoiceKind: InvoiceKind;
                'invoiceState': data.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
                // items: Item[];
@@ -197,7 +198,7 @@ export class FbInvoiceService {
                // timeSpan: string; // <th>Rechnungzeitraum</th>
                'timespanBegin': data.timespanBegin,
                'timespanEnd': data.timespanEnd,
-               'wholeCost': data.wholeCost // <th>Gesamtpreis</th>
+               'wholeCost': data.wholeCost // <th>Gesamtpreis</th> */
         }).catch(error => this.handleError(error));
     }
 
