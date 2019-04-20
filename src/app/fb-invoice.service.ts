@@ -192,7 +192,7 @@ export class FbInvoiceService {
                'invoiceDueDate': data.invoiceDueDate, // Faelligkeitsdatum
                'invoiceNumber': data.invoiceNumber, // <th>RechnungsNr</th>
                 'invoiceIntendedUse': data.invoiceIntendedUse, // Verwendungszweck
-               // invoiceKind: InvoiceKind;
+               'invoiceKind': data.invoiceKind,
                'invoiceState': data.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
                // items: Item[];
                'recipient': data.recipient, // <th>Empfänger</th>
