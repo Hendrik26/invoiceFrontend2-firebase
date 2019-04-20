@@ -81,7 +81,7 @@ export class Invoice implements InvoiceType {
         this.invoiceId = id; // New Commit after problems with merging
 
         // other properties
-        this.newCreatedInvoice = true;
+        /* this.newCreatedInvoice = true;
         this.invoiceDate = data.invoiceDate;
         this.invoiceDueDate = data.invoiceDueDate;
         this.invoiceIntendedUse = data.invoiceIntendedUse;
@@ -95,7 +95,33 @@ export class Invoice implements InvoiceType {
         this.currency = data.currency || '€';
         this.salesTaxPercentage = data.salesTaxPercentage;
         this.items = [];
-        this.customerTaxNumber = data.customerTaxNumber;
+        this.customerTaxNumber = data.customerTaxNumber; */
+        this.countReminders = data.countReminders; // <th>Anzahl der Mahnungen</th>
+        this.newCreatedInvoice = data.newCreatedInvoice;
+        //endregion
+        this.currency = data.currency;
+
+        this.customerIBAN = data.customerIBAN;
+
+        this.customerTaxNumber =  data.customerTaxNumber;
+        this.invoiceDate = data.invoiceDate; // <th>Rechnungsdatum</th>
+        this.invoiceDueDate = data.invoiceDueDate; // Faelligkeitsdatum
+        this.invoiceNumber = data.invoiceNumber; // <th>RechnungsNr</th>
+        this.invoiceIntendedUse = data.invoiceIntendedUse; // Verwendungszweck
+        this.invoiceKind = data.invoiceKind;
+        this.invoiceState = data.invoiceState; // <th>Status (Entwurf, bezahlt, ...)</th>
+        this.items = data.items;
+
+        this.mandateIdentification = data.mandateIdentification; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+
+        this.recipient = data.recipient; // <th>Empfänger</th>
+        this.salesTaxPercentage = data.salesTaxPercentage;
+        this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
+
+        this.timespanBegin = data.timespanBegin;
+        this.timespanEnd = data.timespanEnd;
+
+        this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
     }
 
 
@@ -196,6 +222,9 @@ export class Invoice implements InvoiceType {
     }
 
     public exportInvoiceData(): InvoiceType {
+        console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
+        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
+        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
         return {
             countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
             newCreatedInvoice: this.newCreatedInvoice,
