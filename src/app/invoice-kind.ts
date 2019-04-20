@@ -79,7 +79,8 @@ export class InvoiceKind {
   }
 
   public printToString(): string {
-      return `_international ===${this._international}, _timeSpanBased ==={this._timeSpanBased}, _isSEPA ===${this._isSEPA}`;
+      return `this.,nvoiceKind  ==={ _international ===${this._international}, _timeSpanBased ==={this._timeSpanBased}, 
+      _isSEPA ===${this._isSEPA}, !!!}`;
   }
 
 
