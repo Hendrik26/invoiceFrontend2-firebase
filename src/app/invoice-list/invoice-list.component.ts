@@ -56,7 +56,7 @@ export class InvoiceListComponent implements OnInit {
         this.sortStartDueDate = new ThreeStateButton('DueDate');
         this.sortStartDate = new ThreeStateButton('Date');
         this.sortCompanyName = new ThreeStateButton('CompanyName');
-
+        this.initialSaveInvoicesToDB01();
     }
 
     initialSaveInvoicesToDB(){
@@ -64,6 +64,12 @@ export class InvoiceListComponent implements OnInit {
         for (invoice in INVOICES) {
             this.fbInvoiceService.createInvoice(invoice.exportInvoiceData());
         }
+    }
+
+    initialSaveInvoicesToDB01(){
+        INVOICES.forEach(function(invoice) {
+            this.fbInvoiceService.createInvoice(invoice.exportInvoiceData());
+        });
     }
 
     sortStartDueDateClick(): void {
