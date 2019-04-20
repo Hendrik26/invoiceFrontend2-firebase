@@ -195,6 +195,31 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
+    public exportInvoiceData(): InvoiceType {
+        return {
+            countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
+            newCreatedInvoice: this.newCreatedInvoice,
+            //endregion
+            currency: this.currency,
+            customerIBAN: this.customerIBAN,
+            mandateIdentification: this.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+            customerTaxNumber: this.customerTaxNumber,
+            invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
+            invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
+            invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
+            invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
+            invoiceKind: this.invoiceKind,
+            invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
+            items: this.items,
+            recipient: this.recipient, // <th>Empfänger</th>
+            salesTaxPercentage: this.salesTaxPercentage,
+            timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
+            timespanBegin: this.timespanBegin,
+            timespanEnd: this.timespanEnd,
+            wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+        }
+    }
+
     private getMaxItemId(): number {
         if (this.items === undefined) {
             return -1;

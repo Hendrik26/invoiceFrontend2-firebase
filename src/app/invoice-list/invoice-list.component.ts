@@ -6,6 +6,7 @@ import {ThreeStateButton} from '../three-state-button';
 import {INVOICES} from '../mock-invoice';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
+import {FbInvoiceService} from '../fb-invoice.service';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class InvoiceListComponent implements OnInit {
 
     //endregion
 
-    constructor(private invoiceService: InvoiceService,
+    constructor(private fbInvoiceService: FbInvoiceService,
+                private invoiceService: InvoiceService,
                 private router: Router) {
     }
 
@@ -56,6 +58,11 @@ export class InvoiceListComponent implements OnInit {
         this.sortCompanyName = new ThreeStateButton('CompanyName');
 
     }
+    /* saveAllInvoicesToDB(){
+        for (let invoice in INVOICES) {
+
+        }
+    } */
 
     sortStartDueDateClick(): void {
         this.sortStartDate.reset();
