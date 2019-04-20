@@ -78,6 +78,10 @@ export class InvoiceKind {
     this._isSEPA = !this._isSEPA;
   }
 
+  public printToString(): string {
+      return `_international ===${this._international}, _timeSpanBased ==={this._timeSpanBased}, _isSEPA ===${this._isSEPA}`;
+  }
+
 
 
 
