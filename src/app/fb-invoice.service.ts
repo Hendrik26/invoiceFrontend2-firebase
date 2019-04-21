@@ -167,7 +167,7 @@ export class FbInvoiceService {
 
    createInvoice(data: InvoiceType): void {
         console.log('Method FbInvoiceService.createInvoice(...) started!');
-        console.log(data.invoiceKind.printToString());
+        // console.log(data.invoiceKind.printToString());
         this.db.collection(this.dbInvoicePath).add({
             /* 'customerNumber': data.customerNumber,
             'customerName': data.customerName,

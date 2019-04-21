@@ -1,4 +1,5 @@
 import {InvoiceKind} from './invoice-kind';
+import {InvoiceKindType} from './invoice-kind-type';
 import {Item} from './item';
 
 export interface InvoiceType {
@@ -28,7 +29,7 @@ export interface InvoiceType {
     invoiceDueDate: Date; // Faelligkeitsdatum
     invoiceNumber: string; // <th>RechnungsNr</th>
     invoiceIntendedUse: string; // Verwendungszweck
-    invoiceKind: InvoiceKind;
+    invoiceKind: InvoiceKindType;
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     items: Item[];
     recipient: string; // <th>Empfänger</th>

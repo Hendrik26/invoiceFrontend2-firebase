@@ -1,6 +1,7 @@
 import {Item} from './item';
 import {InvoiceType} from './invoice-type';
 import {InvoiceKind} from './invoice-kind';
+import {InvoiceKindType} from './invoice-kind-type';
 import {ItemType} from './item-type';
 import {INVOICES} from './mock-invoice';
 
@@ -108,7 +109,7 @@ export class Invoice implements InvoiceType {
         this.invoiceDueDate = data.invoiceDueDate; // Faelligkeitsdatum
         this.invoiceNumber = data.invoiceNumber; // <th>RechnungsNr</th>
         this.invoiceIntendedUse = data.invoiceIntendedUse; // Verwendungszweck
-        this.invoiceKind = data.invoiceKind;
+        this.invoiceKind = InvoiceKind.create01(data.invoiceKind);
         this.invoiceState = data.invoiceState; // <th>Status (Entwurf, bezahlt, ...)</th>
         this.items = data.items;
 
@@ -225,6 +226,7 @@ export class Invoice implements InvoiceType {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
         console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
         console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
+        const invKind = this.invoiceKind.exportInvoiceKindData();
         return {
             countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
             newCreatedInvoice: this.newCreatedInvoice,
@@ -237,7 +239,7 @@ export class Invoice implements InvoiceType {
             invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
             invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
             invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
-            invoiceKind: this.invoiceKind,
+            invoiceKind: this.invoiceKind.exportInvoiceKindData(),
             invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
             items: this.items,
             recipient: this.recipient, // <th>Empfänger</th>
