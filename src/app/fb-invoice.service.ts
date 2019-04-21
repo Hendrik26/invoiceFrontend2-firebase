@@ -95,7 +95,7 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
-    createCustomer01(data: CustomerType): void {
+    createCustomer01_old(data: CustomerType): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': data.customerNumber,
             'customerName': data.customerName,
@@ -110,6 +110,12 @@ export class FbInvoiceService {
             'lastUpdateTime': new Date(),
             'archived': data.archived
         }).catch(error => this.handleError(error));
+    }
+
+    createCustomer01(data: CustomerType): void {
+        data.lastUpdateTime =  new Date();
+        this.db.collection(this.dbPath).add(data)
+            .catch(error => this.handleError(error));
     }
 
     createCustomer02(customerNumber: string, customerName: string, country: string,
