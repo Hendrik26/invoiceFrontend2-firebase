@@ -8,6 +8,12 @@ import {INVOICES} from './mock-invoice';
 export class Invoice implements InvoiceType {
     // //////////////////////
 
+    private static createItemTypeArray(items: Item[]): ItemType[] {
+        // let itemTypes: ItemType[] = [];
+        return items.map(item => {
+            return item.exportItemData();
+        });
+    }
 
     //region static properties
     private static emptyData: InvoiceType = {
@@ -222,13 +228,6 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
-    private static createItemTypeArray(items: Item[]): ItemType[] {
-       // let itemTypes: ItemType[] = [];
-       return items.map(item => {
-           return item.exportItemData();
-       });
-    }
-
     public exportInvoiceData(): InvoiceType {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
         console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
@@ -255,7 +254,7 @@ export class Invoice implements InvoiceType {
             timespanBegin: this.timespanBegin,
             timespanEnd: this.timespanEnd,
             wholeCost: this.wholeCost // <th>Gesamtpreis</th>
-        }
+        };
     }
 
     private getMaxItemId(): number {
