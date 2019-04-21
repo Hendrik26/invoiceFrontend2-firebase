@@ -222,6 +222,13 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
+    private createItemTypeArray(items: Item[]): ItemType[] {
+       // let itemTypes: ItemType[] = [];
+       return items.map(item => {
+           return item.exportItemData();
+       });
+    }
+
     public exportInvoiceData(): InvoiceType {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
         console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
