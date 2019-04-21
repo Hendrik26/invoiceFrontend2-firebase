@@ -1,5 +1,6 @@
 import {Invoice} from './invoice';
 import {ItemType} from './item-type';
+import {InvoiceType} from './invoice-type';
 
 export class Item implements ItemType {
 
@@ -61,6 +62,16 @@ export class Item implements ItemType {
     public partialCostString(currency: string): string {
       return this.hourPayment ? (this.partialCost.toString() + currency + '/h') : (this.partialCost.toString() + currency);
   }
+    public exportItemData(): ItemType {
+      return {
+          itemDate: this.itemDate, /// <th>Leistungsdatum</th>
+          itemName: this.itemName,  // <th>Leistungsbeschreibung</th>
+          partialCost: this.partialCost, // <th>Stückpreis</th>
+          count: this.count, // <th>Anzahl</th>
+          hourPayment: this.hourPayment,
+          currency: this.currency
+      };
+    }
 
   //endregion
 
