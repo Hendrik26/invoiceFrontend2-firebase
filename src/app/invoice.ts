@@ -222,7 +222,7 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
-    private createItemTypeArray(items: Item[]): ItemType[] {
+    private static createItemTypeArray(items: Item[]): ItemType[] {
        // let itemTypes: ItemType[] = [];
        return items.map(item => {
            return item.exportItemData();
