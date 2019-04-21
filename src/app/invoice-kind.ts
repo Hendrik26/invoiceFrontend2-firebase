@@ -1,4 +1,7 @@
-export class InvoiceKind {
+import {InvoiceType} from './invoice-type';
+import {InvoiceKindType} from './invoice-kind-type';
+
+export class InvoiceKind implements InvoiceKindType {
   get international(): boolean {
     return this._international;
   }
@@ -83,7 +86,13 @@ export class InvoiceKind {
       _isSEPA ===${this._isSEPA}, !!!}`;
   }
 
-
+    public exportInvoiceKindData(): InvoiceKindType {
+      return {
+        international: this._international, // Inlandsrechnung, Bit0
+        timeSpanBased: this._timeSpanBased, // UZeitraumbasierter Rechnung, Bit1
+        isSEPA: this.isSEPA // ist SEPA-Lastschrift, Bit2
+      };
+    }
 
 
 
