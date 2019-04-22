@@ -8,13 +8,6 @@ import {INVOICES} from './mock-invoice';
 export class Invoice implements InvoiceType {
     // //////////////////////
 
-    private static createItemTypeArray(items: Item[]): ItemType[] {
-        // let itemTypes: ItemType[] = [];
-        return items.map(item => {
-            return item.exportItemData();
-        });
-    }
-
     //region static properties
     private static emptyData: InvoiceType = {
         /*invoiceDate: new Date(),
@@ -117,7 +110,7 @@ export class Invoice implements InvoiceType {
         this.invoiceIntendedUse = data.invoiceIntendedUse; // Verwendungszweck
         this.invoiceKind = InvoiceKind.create01(data.invoiceKind);
         this.invoiceState = data.invoiceState; // <th>Status (Entwurf, bezahlt, ...)</th>
-        this.items = data.items;
+        this.items = [];
 
         this.mandateIdentification = data.mandateIdentification; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
@@ -133,6 +126,13 @@ export class Invoice implements InvoiceType {
 
 
     //region static methods
+    private static createItemTypeArray(items: Item[]): ItemType[] {
+        // let itemTypes: ItemType[] = [];
+        return items.map(item => {
+            return item.exportItemData();
+        });
+    }
+
     public static createNewInvoiceId(): string {
         const methDate: Date = new Date();
         return 'Inv' + methDate.getTime();
@@ -142,6 +142,13 @@ export class Invoice implements InvoiceType {
         let methInvoice: Invoice;
         methInvoice = new Invoice(this.createNewInvoiceId(), this.emptyData);
         return methInvoice;
+    }
+
+     public static createNewInvoice01(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
+        let invoice: Invoice;
+        invoice = new Invoice(invId, data);
+
+        return invoice;
     }
 
     public static firstLine(inString: string): string {
@@ -222,6 +229,14 @@ export class Invoice implements InvoiceType {
 
     public computeNextItemId(): number {
         return this.getMaxItemId() + 1;
+    }
+
+    private  createItemArray(itemTypes: ItemType[]): Item[] {
+        // let itemTypes: ItemType[] = [];
+        // const cId = this.g
+        return itemTypes.map(itemType => {
+            return new Item(this, itemType);
+        });
     }
 
     public firstSave(): void {
