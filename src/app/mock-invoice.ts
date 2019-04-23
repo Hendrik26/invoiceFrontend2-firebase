@@ -8,7 +8,7 @@ let invoice01 = new Invoice('In001', {
   currency: '€', salesTaxPercentage: 19, invoiceIntendedUse: 'die Rechnungsnummer 2018abcd',
   customerTaxNumber: 'mockCustomerTaxNumber',
 
-  items:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
+  itemTypes:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
   invoiceKind: InvoiceKind.create(false, false, false), timespanBegin: new Date('2017-01-01'),
   timespanEnd: new Date('2017-12-31')
 });
@@ -29,7 +29,7 @@ let invoice02 = new Invoice('In002', {
   currency: '€', salesTaxPercentage: 19, invoiceIntendedUse: 'die Rechnungsnummer 2018efgh',
   customerTaxNumber: 'mockCustomerTaxNumber',
 
-    items:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
+    itemTypes:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
     invoiceKind: InvoiceKind.create(false, false, false), timespanBegin: new Date('2017-01-01'),
     timespanEnd: new Date('2017-12-31')
 });
@@ -50,7 +50,7 @@ let invoice03 = new Invoice('In003', {
   currency: '€', salesTaxPercentage: 19, invoiceIntendedUse: 'die rechnungsnummer 2018ijkl',
   customerTaxNumber: 'mockCustomerTaxNumber',
 
-    items:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
+    itemTypes:[], newCreatedInvoice: true, customerIBAN: 'bspCustomerIBAN', mandateIdentification: 'bspMandateIdentification',
     invoiceKind: InvoiceKind.create(false, false, false), timespanBegin: new Date('2017-01-01'),
     timespanEnd: new Date('2017-12-31')
 });

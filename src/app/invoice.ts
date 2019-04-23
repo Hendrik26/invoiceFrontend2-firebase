@@ -64,6 +64,7 @@ export class Invoice implements InvoiceType {
     invoiceKind: InvoiceKind;
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     items: Item[];
+    itemTypes: ItemType[];
     recipient: string; // <th>Empfänger</th>
     salesTaxPercentage: number;
     timeSpan: string; // <th>Rechnungzeitraum</th>
@@ -111,6 +112,7 @@ export class Invoice implements InvoiceType {
         this.invoiceKind = InvoiceKind.create01(data.invoiceKind);
         this.invoiceState = data.invoiceState; // <th>Status (Entwurf, bezahlt, ...)</th>
         this.items = [];
+        this.itemTypes = [];
 
         this.mandateIdentification = data.mandateIdentification; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
@@ -147,6 +149,9 @@ export class Invoice implements InvoiceType {
      public static createNewInvoice01(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
         let invoice: Invoice;
         invoice = new Invoice(invId, data);
+        data.itemTypes.forEach( iT => {
+            invoice.addNewItem(iT);
+        })
 
         return invoice;
     }
