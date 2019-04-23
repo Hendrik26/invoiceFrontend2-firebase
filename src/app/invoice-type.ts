@@ -32,7 +32,7 @@ export interface InvoiceType {
     invoiceIntendedUse: string; // Verwendungszweck
     invoiceKind: InvoiceKindType;
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
-    items: ItemType[];
+    itemTypes: ItemType[];
     recipient: string; // <th>Empfänger</th>
     salesTaxPercentage: number;
     timeSpan: string; // <th>Rechnungzeitraum</th>

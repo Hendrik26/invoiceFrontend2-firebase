@@ -36,7 +36,7 @@ export class Invoice implements InvoiceType {
         invoiceIntendedUse: 'bspInvoiceIntendedUse', // Verwendungszweck
         invoiceKind: InvoiceKind.create(false, false, false),
         invoiceState: 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
-        items: [],
+        itemTypes: [],
         recipient: 'bspRecipient', // <th>Empfänger</th>
         salesTaxPercentage: 19,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
@@ -262,7 +262,7 @@ export class Invoice implements InvoiceType {
             invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
             invoiceKind: this.invoiceKind.exportInvoiceKindData(),
             invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
-            items: this.items,
+            itemTypes: this.items,
             recipient: this.recipient, // <th>Empfänger</th>
             salesTaxPercentage: this.salesTaxPercentage,
             timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
