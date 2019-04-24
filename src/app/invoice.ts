@@ -11,17 +11,7 @@ export class Invoice implements InvoiceType {
 
     //region static properties
     private static emptyData: InvoiceType = {
-        /*invoiceDate: new Date(),
-        invoiceDueDate: new Date(),
-        invoiceIntendedUse: 'die Rechnungsnummer 2018',
-        invoiceNumber: '2018',
-        recipient: '',
-        invoiceState: 'Entwurf',
-        wholeCost: 0,
-        countReminders: 0,
-        timeSpan: 'unknown',
-        salesTaxPercentage: 19,
-        customerTaxNumber: 'standardCustomerTaxNumber' */
+
         countReminders: 0, // <th>Anzahl der Mahnungen</th>
         newCreatedInvoice: true,
         //endregion
@@ -83,21 +73,7 @@ export class Invoice implements InvoiceType {
         this.invoiceId = id; // New Commit after problems with merging
 
         // other properties
-        /* this.newCreatedInvoice = true;
-        this.invoiceDate = data.invoiceDate;
-        this.invoiceDueDate = data.invoiceDueDate;
-        this.invoiceIntendedUse = data.invoiceIntendedUse;
-        this.invoiceKind = InvoiceKind.create(false, false, false);
-        this.invoiceNumber = data.invoiceNumber;
-        this.recipient = data.recipient;
-        this.invoiceState = data.invoiceState;
-        this.wholeCost = data.wholeCost;
-        this.countReminders = data.countReminders;
-        this.timeSpan = data.timeSpan;
-        this.currency = data.currency || '€';
-        this.salesTaxPercentage = data.salesTaxPercentage;
-        this.items = [];
-        this.customerTaxNumber = data.customerTaxNumber; */
+
         this.countReminders = data.countReminders; // <th>Anzahl der Mahnungen</th>
         this.newCreatedInvoice = data.newCreatedInvoice;
         //endregion
@@ -237,8 +213,6 @@ export class Invoice implements InvoiceType {
     }
 
     private  createItemArray(itemTypes: ItemType[]): Item[] {
-        // let itemTypes: ItemType[] = [];
-        // const cId = this.g
         return itemTypes.map(itemType => {
             return new Item(this, itemType);
         });

@@ -19,9 +19,6 @@ export class InvoiceListComponent implements OnInit {
 
     // invoicesNew: Invoice[] = [{...this.invoiceService.standardInvoice}]; // clones this.standardInvoice
 
-
-    // invoicesNew: Invoice[] = [new Invoice('In001', this.)]; // clones this.standardInvoice
-
     //region other properties
     invoices: Invoice[];
     filterStartDate: Date;

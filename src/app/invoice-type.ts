@@ -4,19 +4,6 @@ import {Item} from './item';
 import {ItemType} from './item-type';
 
 export interface InvoiceType {
-  /* invoiceDate: Date;
-  invoiceDueDate: Date; // Faelligkeitsdatum
-  invoiceIntendedUse: string;
-  invoiceNumber: string;
-  recipient: string;
-  invoiceState: string;
-  wholeCost: number;
-  countReminders: number;
-  customerTaxNumber: string;
-  timeSpan: string;
-  currency?: string; // Fragezeichen ? heisst optional
-  salesTaxPercentage: number; */
-
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
     //endregion
