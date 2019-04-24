@@ -194,6 +194,7 @@ export class FbInvoiceService {
                'invoiceKind': data.invoiceKind,
                'invoiceState': data.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
                // items: Item[];
+                'itemTypes': data.itemTypes,
                'recipient': data.recipient, // <th>Empfänger</th>
                'salesTaxPercentage': data.salesTaxPercentage,
                // 'timeSpan': data.timeSpan // <th>Rechnungzeitraum</th>
