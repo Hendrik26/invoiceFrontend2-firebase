@@ -267,7 +267,7 @@ export class Invoice implements InvoiceType {
             invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
             invoiceKind: this.invoiceKind.exportInvoiceKindData(),
             invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
-            itemTypes: this.items,
+            itemTypes: Invoice.createItemTypeArray(this.items),
             recipient: this.recipient, // <th>Empfänger</th>
             salesTaxPercentage: this.salesTaxPercentage,
             timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
