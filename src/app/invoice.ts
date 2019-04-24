@@ -77,7 +77,7 @@ export class Invoice implements InvoiceType {
     private invoiceId: string; // <th>Ändern</th>
     //endregion
 
-    constructor(id: string, data: InvoiceType) {
+    private constructor(id: string, data: InvoiceType) {
         // IDs
         this.invoiceId = id; // New Commit after problems with merging
 
