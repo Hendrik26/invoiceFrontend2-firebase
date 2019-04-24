@@ -7,7 +7,7 @@ import {INVOICES} from './mock-invoice';
 
 export class Invoice implements InvoiceType {
     // //////////////////////
-    ///////////////////////
+    ////////////////
 
     //region static properties
     private static emptyData: InvoiceType = {
