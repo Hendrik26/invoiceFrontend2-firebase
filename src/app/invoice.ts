@@ -142,17 +142,16 @@ export class Invoice implements InvoiceType {
 
     public static createNewInvoice(): Invoice { // factory pattern, prime example
         let methInvoice: Invoice;
-        methInvoice = this.createNewInvoice01(this.createNewInvoiceId(), this.emptyData);
+        methInvoice = this.createInvoiceFromExistingId(this.createNewInvoiceId(), this.emptyData);
         return methInvoice;
     }
 
-     public static createNewInvoice01(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
+     public static createInvoiceFromExistingId(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
         let invoice: Invoice;
         invoice = new Invoice(invId, data);
         data.itemTypes.forEach( iT => {
             invoice.addNewItem(iT);
-        })
-
+        });
         return invoice;
     }
 
