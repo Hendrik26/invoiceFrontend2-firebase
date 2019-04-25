@@ -17,7 +17,7 @@ import {Item} from './item';
 })
 export class FbInvoiceService {
 
-    private dbPath = '/customers';
+    private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
     customersRef: AngularFirestoreCollection<Customer> = null;
 
@@ -30,13 +30,13 @@ export class FbInvoiceService {
         console.log('Method fb-invoice.service.getCustomersList() started!!!');
         let customersRef: AngularFirestoreCollection<Customer> = null;
         if (archive === 'all') {
-            customersRef = this.db.collection(this.dbPath);
+            customersRef = this.db.collection(this.dbCustomerPath);
         } else {
             if (archive === 'showArchive') {
-               customersRef = this.db.collection(this.dbPath,
+               customersRef = this.db.collection(this.dbCustomerPath,
                     ref => ref.where('archived', '==', true));
             } else {
-                customersRef = this.db.collection(this.dbPath,
+                customersRef = this.db.collection(this.dbCustomerPath,
                     ref => ref.where('archived', '==', false));
             }
         }
@@ -50,15 +50,15 @@ export class FbInvoiceService {
     getCustomerById(customerId: string, historyId: string): Observable<any> {
         let path = '';
         if (!historyId) {
-            path = `${this.dbPath}/${customerId}`;
+            path = `${this.dbCustomerPath}/${customerId}`;
         } else {
-            path = `${this.dbPath}/${customerId}/history/${historyId}`;
+            path = `${this.dbCustomerPath}/${customerId}/history/${historyId}`;
         }
         return this.db.doc(path).valueChanges();
     }
 
     getCustomerHistoryById(customerId: string): Observable<any> {
-        this.customersRef = this.db.collection(`${this.dbPath}/${customerId}/history`);
+        this.customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`);
         return this.customersRef.snapshotChanges().pipe(
             map(changes =>
                 changes.map(c => ({
@@ -75,7 +75,7 @@ export class FbInvoiceService {
     }
 
     testCustomerHistoryById(customerId: string): Observable<any> {
-        const customersRef = this.db.collection(`${this.dbPath}/${customerId}/history`,
+        const customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`,
                 ref => ref.limit(2));
         return customersRef.snapshotChanges().pipe(
             map(changes =>
@@ -83,7 +83,7 @@ export class FbInvoiceService {
     }
 
     createCustomer_old(data: CustomerType): void {
-        this.db.collection(this.dbPath).add({
+        this.db.collection(this.dbCustomerPath).add({
             'customerNumber': data.customerNumber,
             'customerName': data.customerName,
             'country': data.country,
@@ -100,7 +100,7 @@ export class FbInvoiceService {
     }
 
     createCustomer(data: CustomerType): void {
-        this.db.collection(this.dbPath).add(data)
+        this.db.collection(this.dbCustomerPath).add(data)
             .catch(error => this.handleError(error));
     }
 
@@ -120,7 +120,7 @@ export class FbInvoiceService {
                          + '\r\n archived' + data.archived;
         console.log(logStr);
         console.log('Method FbInvoiceService.updateCustomer() continued!');
-        this.db.doc(`${this.dbPath}/${id}`).update({
+        this.db.doc(`${this.dbCustomerPath}/${id}`).update({
             'customerNumber': data.customerNumber,
             'customerName': data.customerName,
             'country': data.country,
@@ -153,7 +153,7 @@ export class FbInvoiceService {
             + '\r\n archived' + data.archived;
         console.log(logStr);
         console.log('Method FbInvoiceService.updateCustomer() continued!');
-        this.db.doc(`${this.dbPath}/${id}`).update(data).catch(error => this.handleError(error));
+        this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
         console.log('Method FbInvoiceService.updateCustomer() finished!');
     }
 
@@ -173,7 +173,7 @@ export class FbInvoiceService {
             + '\r\n archived' + data.archived;
         console.log(logStr);
         console.log('Method FbInvoiceService.updateSetCustomer() continued!');
-        this.db.doc(`${this.dbPath}/${id}`).update(data).catch(error => this.handleError(error));
+        this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
         console.log('Method FbInvoiceService.updateSetCustomer() finished!');
     }
 
