@@ -181,18 +181,6 @@ export class FbInvoiceService {
         console.log('Method FbInvoiceService.createInvoice(...) started!');
         // console.log(data.invoiceKind.printToString()); ///
         this.db.collection(this.dbInvoicePath).add({
-            /* 'customerNumber': data.customerNumber,
-            'customerName': data.customerName,
-            'country': data.country,
-            'postalCode': data.postalCode,
-            'city': data.city,
-            'addressLine1': data.addressLine1,
-            'addressLine2': data.addressLine2,
-            'addressLine3': data.addressLine3,
-            'customerSalesTaxNumber': data.customerSalesTaxNumber,
-            'creationTime': data.creationTime,
-            'lastUpdateTime': new Date(),
-            'archived': data.archived */
                 'countReminders': data.countReminders, // <th>Anzahl der Mahnungen</th>
                // newCreatedInvoice: boolean
                'currency': data.currency,
