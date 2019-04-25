@@ -82,7 +82,7 @@ export class FbInvoiceService {
                 changes.map(c => ({historyId: c.payload.doc.id }))));
     }
 
-    createCustomer(data: CustomerType): void {
+    createCustomer_old(data: CustomerType): void {
         this.db.collection(this.dbPath).add({
             'customerNumber': data.customerNumber,
             'customerName': data.customerName,
@@ -97,6 +97,11 @@ export class FbInvoiceService {
             'lastUpdateTime': new Date(),
             'archived': data.archived
         }).catch(error => this.handleError(error));
+    }
+
+    createCustomer(data: CustomerType): void {
+        this.db.collection(this.dbPath).add(data)
+            .catch(error => this.handleError(error));
     }
 
     updateCustomer(id: string, data: CustomerType): void {
