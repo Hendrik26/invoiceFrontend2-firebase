@@ -110,18 +110,18 @@ export class CustomerDetailComponent implements OnInit {
 
     saveCustomer(archived: boolean): void {
         const cData: CustomerType = {
-            customerNumber: this.customerNumber, // Kundennummer
-            customerName: this.customerName,  // Kundenname
-            country: this.country,
-            postalCode: this.postalCode,
-            city: this.city,
-            addressLine1: this.addressLine1,
-            addressLine2: this.addressLine2,
-            addressLine3: this.addressLine3,
-            customerSalesTaxNumber: this.customerSalesTaxNumber,
-            creationTime: this.creationTime,
+            customerNumber: this.customerNumber ? this.customerNumber : '', // Kundennummer
+            customerName: this.customerName ? this.customerName : '',  // Kundenname
+            country: this.country ? this.country : '',
+            postalCode: this.postalCode ? this.postalCode : '',
+            city: this.city ? this.city : '',
+            addressLine1: this.addressLine1 ? this.addressLine1 : '',
+            addressLine2: this.addressLine2 ? this.addressLine2 : '',
+            addressLine3: this.addressLine3 ? this.addressLine3 : '',
+            customerSalesTaxNumber: this.customerSalesTaxNumber ? this.customerSalesTaxNumber : '',
+            creationTime: this.creationTime ? this.creationTime : new Date(),
             lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
-            archived: archived
+            archived: !!archived
         };
         if (this.newCustomer) {
             this.newCustomer = false;
