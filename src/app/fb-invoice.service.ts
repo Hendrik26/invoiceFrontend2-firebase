@@ -183,6 +183,28 @@ export class FbInvoiceService {
         this.db.collection(this.dbInvoicePath).add(data).catch(error => this.handleError(error));
     }
 
+    getInvoiceList(archive: string): Observable<any> {
+        console.log('Archiv', archive);
+        console.log('Method fb-invoice.service.getInvoiceList() started!!!');
+        let invoiceRef: AngularFirestoreCollection<Customer> = null;
+        if (archive === 'all') {
+            invoiceRef = this.db.collection(this.dbInvoicePath);
+        } else {
+            if (archive === 'showArchive') {
+                invoiceRef = this.db.collection(this.dbInvoicePath,
+                    ref => ref.where('archived', '==', true));
+            } else {
+                invoiceRef = this.db.collection(this.dbInvoicePath,
+                    ref => ref.where('archived', '==', false));
+            }
+        }
+        return invoiceRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
+            )
+        );
+    }
+
     private handleError(error) {
         console.log(error);
     }
