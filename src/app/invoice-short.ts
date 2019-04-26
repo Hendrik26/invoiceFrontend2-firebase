@@ -17,4 +17,8 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
     public companyName(): string {
         return InvoiceShort.firstLine(this.recipient);
     }
+
+    public getID(): string {
+        return this.invoiceId;
+    }
 }
