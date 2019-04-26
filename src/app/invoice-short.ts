@@ -19,6 +19,6 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
     }
 
     public getID(): string {
-        return this.invoiceId;
+        return this.invoiceId ? this.invoiceId : 'InvoiceId undefined!  ';
     }
 }

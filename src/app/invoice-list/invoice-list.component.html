@@ -6,23 +6,23 @@
         <th>RechnungsId</th>
         <th>
             Fälligkeitsdatum
-            <button name="sort" id="sortStartDueDate" (click)="sortStartDueDateClick()">
+            <!-- button name="sort" id="sortStartDueDate" (click)="sortStartDueDateClick()">
                 Sortierung {{sortStartDueDate.getSortingOrderName()}}
-            </button>
+            </button -->
         </th>
         <th>
             Rechnungsdatum
-            <button name="sort" id="sortStartDate" (click)="sortStartDateClick()">
+            <!-- button name="sort" id="sortStartDate" (click)="sortStartDateClick()">
                 Sortierung {{sortStartDate.getSortingOrderName()}}
-            </button>
+            </button -->
 
         </th>
         <th>Rechnungsnr</th>
         <th>
             Empfänger
-            <button name="sort" id="sortCompanyName" (click)="sortCompanyNameClick()">
+            <!-- button name="sort" id="sortCompanyName" (click)="sortCompanyNameClick()">
                 Sortierung {{sortCompanyName.getSortingOrderName()}}
-            </button>
+            </button -->
 
         </th>
         <th>Status (Entwurf, bezahlt, ...)</th>
@@ -34,7 +34,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let invoice of invoicesShort">
-        <td>{{invoice.getID()}}</td>
+        <td><!-- {{invoice.getID()}} --> place for invoiceId</td>
         <td>{{invoice.invoiceDueDate | date:'yyyy-MM-dd'}}</td>
         <td>{{invoice.invoiceDate | date:'yyyy-MM-dd'}}</td>
         <td>{{invoice.invoiceNumber}}</td>
