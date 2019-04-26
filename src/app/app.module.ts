@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {InvoiceListComponent} from './invoice-list/invoice-list.component';
+import {InvoiceListComponent_old} from './invoice-list/invoice-list.component';
 import {InvoiceDetailComponent} from './invoice-detail/invoice-detail.component';
 import {ItemDetailComponent} from './item-detail/item-detail.component';
 import {InvoiceRouterModule} from './/invoice-router.module';
@@ -18,7 +18,7 @@ import {FbInvoiceService} from './fb-invoice.service'; // line must be addesd
 @NgModule({
   declarations: [
     AppComponent,
-    InvoiceListComponent,
+    InvoiceListComponent_old,
     InvoiceDetailComponent,
     ItemDetailComponent,
     CustomerListComponent,
