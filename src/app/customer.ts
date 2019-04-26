@@ -66,6 +66,7 @@ export class Customer implements CustomerType {
         methCustomer = new Customer(this.createNewCustomerId(), this.emptyCustomer);
         return methCustomer;
     }
+
     public static normalizeCustomer(inCustomer: any): Customer {
         const cData: CustomerType = {
             customerNumber: inCustomer.customerNumber, // Kundennummer

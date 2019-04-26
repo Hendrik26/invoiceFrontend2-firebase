@@ -1,7 +1,9 @@
+// import {InvoicerType} from './invoice-type';
+
 export class InvoiceShort { // used to show invoice in invoice-list.component.html
-    countReminders: number
+    countReminders: number;
     currency: string;
-    invoiceId: string = 'InvoiceShort';
+    invoiceId = 'InvoiceShort';
     invoiceDueDate: Date;
     invoiceDate: Date;
     invoiceNumber: string;
@@ -12,6 +14,21 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
     public static firstLine(inString: string): string {
         const lines = inString.split('\n');
         return lines[0];
+    }
+
+    public static normalizeInvoiceShort(inputInvoice: any): InvoiceShort {
+        const returnInvoiceShort = new InvoiceShort();
+        returnInvoiceShort.countReminders = inputInvoice.countReminders;
+        returnInvoiceShort.currency = inputInvoice.currency;
+        returnInvoiceShort.invoiceId = inputInvoice.key ? inputInvoice.key : 'InvoiceShort undefined!   ';
+        returnInvoiceShort.invoiceDueDate = inputInvoice.invoiceDueDate;
+        returnInvoiceShort.invoiceDate = inputInvoice.invoiceDate;
+        returnInvoiceShort.invoiceNumber = inputInvoice.invoiceNumber;
+        returnInvoiceShort.recipient = inputInvoice.recipient; // <th>Empfänger</th>
+        returnInvoiceShort.invoiceState = inputInvoice.invoiceState;
+        returnInvoiceShort.wholeCost = inputInvoice.wholeCost;
+
+        return returnInvoiceShort;
     }
 
     public companyName(): string {
