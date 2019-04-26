@@ -18,15 +18,16 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
 
     public static normalizeInvoiceShort(inputInvoice: any): InvoiceShort {
         const returnInvoiceShort = new InvoiceShort();
-        returnInvoiceShort.countReminders = inputInvoice.countReminders;
-        returnInvoiceShort.currency = inputInvoice.currency;
+        returnInvoiceShort.countReminders = inputInvoice.countReminders ? inputInvoice.countReminders : -1;
+        returnInvoiceShort.currency = inputInvoice.currency ? inputInvoice.currency : 'Unknown currency! ';
         returnInvoiceShort.invoiceId = inputInvoice.key ? inputInvoice.key : 'InvoiceShort undefined!   ';
-        returnInvoiceShort.invoiceDueDate = inputInvoice.invoiceDueDate;
-        returnInvoiceShort.invoiceDate = inputInvoice.invoiceDate;
-        returnInvoiceShort.invoiceNumber = inputInvoice.invoiceNumber;
-        returnInvoiceShort.recipient = inputInvoice.recipient; // <th>Empfänger</th>
-        returnInvoiceShort.invoiceState = inputInvoice.invoiceState;
-        returnInvoiceShort.wholeCost = inputInvoice.wholeCost;
+        returnInvoiceShort.invoiceDueDate = inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date();
+        returnInvoiceShort.invoiceDate = inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date();
+        returnInvoiceShort.invoiceNumber = inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : 'Unkown InvoiceNumber!  ';
+        returnInvoiceShort.recipient = inputInvoice.recipient ? inputInvoice.recipient : 'Unknown inputInvoice.recipient!  ';
+        // <th>Empfänger</th>
+        returnInvoiceShort.invoiceState = inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Unknown InvoiceState!  ';
+        returnInvoiceShort.wholeCost = inputInvoice.wholeCost ? inputInvoice.wholeCost : -99;
 
         return returnInvoiceShort;
     }

@@ -8,6 +8,7 @@ import {INVOICES} from '../mock-invoice';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
+import {Customer} from '../customer';
 
 
 @Component({
@@ -61,8 +62,9 @@ export class InvoiceListComponent implements OnInit {
     receiveInvoices(): void {
         this.fbInvoiceService.getInvoiceList('all')
             .subscribe(invoices => {
-                this.invoices = invoices;
-                this.invoicesShort = invoices;
+                // this.invoices = invoices;
+                // this.invoicesShort = invoices;
+                this.invoicesShort = invoices.map(invoice => InvoiceShort.normalizeInvoiceShort(invoice));
                 console.log('Next Invoice received!', this.invoices);
             });
     }
