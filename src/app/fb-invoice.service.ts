@@ -33,7 +33,7 @@ export class FbInvoiceService {
             customersRef = this.db.collection(this.dbCustomerPath);
         } else {
             if (archive === 'showArchive') {
-               customersRef = this.db.collection(this.dbCustomerPath,
+                customersRef = this.db.collection(this.dbCustomerPath,
                     ref => ref.where('archived', '==', true));
             } else {
                 customersRef = this.db.collection(this.dbCustomerPath,
@@ -48,13 +48,13 @@ export class FbInvoiceService {
     }
 
     getInvoiceList(archive: string): Observable<any> {
-       console.log('Method fb-invoice.service.getInvoiceList() started!!!');
+        console.log('Method fb-invoice.service.getInvoiceList() started!!!');
         console.log('Archiv', archive);
         let invoiceRef: AngularFirestoreCollection<Invoice> = null;
         if (archive === 'all') {
             console.log('Pfad all!   ');
             invoiceRef = this.db.collection(this.dbInvoicePath);
-            console.log('Local propoerty invoiceRef set!   ')
+            console.log('Local propoerty invoiceRef set!   ');
         } else {
             if (archive === 'showArchive') {
                 console.log('Pfad showArchive!   ');
@@ -69,9 +69,28 @@ export class FbInvoiceService {
         console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
         return invoiceRef.snapshotChanges().pipe(
             map(changes =>
-                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
+                changes.map(c => ({
+                    key: c.payload.doc.id,
+                    invoiceNumber: c.payload.doc.data().invoiceNumber,
+                    countReminders: c.payload.doc.data().countReminders,
+                    currency: c.payload.doc.data().currency,
+                    invoiceDate: c.payload.doc.data().invoiceDate,
+                    invoiceDueDate: c.payload.doc.data().invoiceDueDate,
+                    invoiceIntendedUse: c.payload.doc.data().invoiceIntendedUse,
+                    invoiceKind: c.payload.doc.data().invoiceKind,
+                    invoiceState: c.payload.doc.data().invoiceState,
+                    salesTaxPercentage: c.payload.doc.data().salesTaxPercentage,
+                    timespanBegin: c.payload.doc.data().timespanBegin,
+                    timespanEnd: c.payload.doc.data().timespanEnd,
+                    wholeCost: (c.payload.doc.data().itemTypes
+                        ? c.payload.doc.data().itemTypes.reduce((sum, current) => sum + current.partialCost, 0 ) : 0)
+                }))
             )
-        );
+            // map(changes =>
+            // changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
+            // );
+        )
+            ;
     }
 
     getCustomerById(customerId: string, historyId: string): Observable<any> {
@@ -103,10 +122,10 @@ export class FbInvoiceService {
 
     testCustomerHistoryById(customerId: string): Observable<any> {
         const customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`,
-                ref => ref.limit(2));
+            ref => ref.limit(2));
         return customersRef.snapshotChanges().pipe(
             map(changes =>
-                changes.map(c => ({historyId: c.payload.doc.id }))));
+                changes.map(c => ({historyId: c.payload.doc.id}))));
     }
 
     createCustomer_old(data: CustomerType): void {
@@ -134,17 +153,17 @@ export class FbInvoiceService {
     updateCustomer_old(id: string, data: CustomerType): void {
         console.log('Method FbInvoiceService.updateCustomer() started!');
         const logStr = 'customerNumber: ' + data.customerNumber
-                     + '\r\n customerName' + data.customerName
-                     + '\r\n country' + data.country
-                     + '\r\n postalCode' + data.postalCode
-                      + '\r\n city' + data.city
-                        + '\r\n addressLine1' +  data.addressLine1
-                        + '\r\n addressLine2' + data.addressLine2
-                        + '\r\n addressLine3' + data.addressLine3
-                        + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
-                         + '\r\n creationTime' + data.creationTime
-                         + '\r\n lastUpdateTime' + new Date()
-                         + '\r\n archived' + data.archived;
+            + '\r\n customerName' + data.customerName
+            + '\r\n country' + data.country
+            + '\r\n postalCode' + data.postalCode
+            + '\r\n city' + data.city
+            + '\r\n addressLine1' + data.addressLine1
+            + '\r\n addressLine2' + data.addressLine2
+            + '\r\n addressLine3' + data.addressLine3
+            + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
+            + '\r\n creationTime' + data.creationTime
+            + '\r\n lastUpdateTime' + new Date()
+            + '\r\n archived' + data.archived;
         console.log(logStr);
         console.log('Method FbInvoiceService.updateCustomer() continued!');
         this.db.doc(`${this.dbCustomerPath}/${id}`).update({
@@ -171,7 +190,7 @@ export class FbInvoiceService {
             + '\r\n country' + data.country
             + '\r\n postalCode' + data.postalCode
             + '\r\n city' + data.city
-            + '\r\n addressLine1' +  data.addressLine1
+            + '\r\n addressLine1' + data.addressLine1
             + '\r\n addressLine2' + data.addressLine2
             + '\r\n addressLine3' + data.addressLine3
             + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
@@ -191,7 +210,7 @@ export class FbInvoiceService {
             + '\r\n country' + data.country
             + '\r\n postalCode' + data.postalCode
             + '\r\n city' + data.city
-            + '\r\n addressLine1' +  data.addressLine1
+            + '\r\n addressLine1' + data.addressLine1
             + '\r\n addressLine2' + data.addressLine2
             + '\r\n addressLine3' + data.addressLine3
             + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
@@ -204,13 +223,13 @@ export class FbInvoiceService {
         console.log('Method FbInvoiceService.updateSetCustomer() finished!');
     }
 
-   createInvoice(data: InvoiceType): void {
+    createInvoice(data: InvoiceType): void {
         console.log('Method FbInvoiceService.createInvoice(...) started!');
         // console.log(data.invoiceKind.printToString()); ///
         this.db.collection(this.dbInvoicePath).add(data).catch(error => this.handleError(error));
     }
 
-       private handleError(error) {
+    private handleError(error) {
         console.log(error);
     }
 }
