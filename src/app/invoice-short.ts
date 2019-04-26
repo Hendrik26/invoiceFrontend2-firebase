@@ -5,7 +5,16 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
     invoiceDueDate: Date;
     invoiceDate: Date;
     invoiceNumber: string;
-    recipien: string;
+    recipient: string; // <th>Empfänger</th>
     invoiceState: string;
     wholeCost: number;
+
+    public static firstLine(inString: string): string {
+        const lines = inString.split('\n');
+        return lines[0];
+    }
+
+    public companyName(): string {
+        return InvoiceShort.firstLine(this.recipient);
+    }
 }

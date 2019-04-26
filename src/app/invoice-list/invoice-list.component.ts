@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Invoice} from '../invoice';
+import {InvoiceShort} from '../invoice-short';
 import {InvoiceService} from '../invoice.service';
 import {isNullOrUndefined} from 'util';
 import {ThreeStateButton} from '../three-state-button';
@@ -21,6 +22,7 @@ export class InvoiceListComponent implements OnInit {
 
     //region other properties
     invoices: Invoice[];
+    invoicesShort: InvoiceShort[];
     filterStartDate: Date;
     filterEndDate: Date;
     filterStartDueDate: Date;
@@ -60,6 +62,7 @@ export class InvoiceListComponent implements OnInit {
         this.fbInvoiceService.getInvoiceList('all')
             .subscribe(invoices => {
                 this.invoices = invoices;
+                this.invoicesShort = invoices;
                 console.log('Next Invoice received!', this.invoices);
             });
     }
