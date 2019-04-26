@@ -14,7 +14,7 @@ import {FbInvoiceService} from '../fb-invoice.service';
     templateUrl: './invoice-list.component.html',
     styleUrls: ['./invoice-list.component.css']
 })
-export class InvoiceListComponent implements OnInit {
+export class InvoiceListComponent_old implements OnInit {
 
 
     // invoicesNew: Invoice[] = [{...this.invoiceService.standardInvoice}]; // clones this.standardInvoice
@@ -56,12 +56,22 @@ export class InvoiceListComponent implements OnInit {
         // this.initialSaveInvoicesToDB02();
     }
 
-    receiveInvoices(): void {
+    receiveInvoices_old(): void {
         // TODO merging
         this.fbInvoiceService.getInvoiceList('all')
             .subscribe(invoices => {
                 this.invoices = invoices;
                 console.log('Next Invoice received!', invoices);
+            });
+    }
+
+    receiveInvoices(): void {
+        this.fbInvoiceService.getInvoiceList('all')
+            .subscribe(invoices => {
+                // this.invoices = invoices;
+                // this.invoicesShort = invoices;
+                this.invoicesShort = invoices.map(invoice => InvoiceShort.normalizeInvoiceShort(invoice));
+                console.log('Next Invoice received!', this.invoices);
             });
     }
 
