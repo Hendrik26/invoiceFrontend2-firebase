@@ -1,0 +1,108 @@
+<div class="invoice-list">
+
+
+  <div class="flex-container">
+    <div>
+      Fälligkeitsdatum von<br>
+      <input type="date" name="fStartDueDate"
+                                        [ngModel]="filterStartDueDate | date:'yyyy-MM-dd'"
+                                        (ngModelChange)="changeFilterStartDueDate($event)">
+
+    </div>
+    <div>Fälligkeitsdatum bis<br><input type="date" name="fEndDueDate" [ngModel]="filterEndDueDate | date:'yyyy-MM-dd'"
+                                        (ngModelChange)="changeFilterEndDueDate($event)"></div>
+    <div>
+      Rechnungsdatum von <br><input type="date" name="fStartDate" [ngModel]="filterStartDate | date:'yyyy-MM-dd'"
+                                      (ngModelChange)="changeFilterStartDate($event)">
+
+    </div>
+    <div>Rechnungsdatum bis<br><input type="date" name="fEndDate" [ngModel]="filterEndDate | date:'yyyy-MM-dd'"
+                                      (ngModelChange)="changeFilterEndDate($event)"></div>
+    <div>Status<br>
+      <select [(ngModel)]="invoiceFilterState">
+        <option value="none">Kein</option>
+        <option value="Entwurf">Entwurf</option>
+        <option value="offen">offen</option>
+        <option value="teilweise bezahlt">teilweise bezahlt</option>
+        <option value="bezahlt">bezahlt</option>
+      </select>
+    </div>
+    <div>Emfpänger<br>
+      <select [(ngModel)]="invoiceFilterCompany" >
+        <!--option value="007">Mustermann GmbH</option>
+        <option value="008">Restaurant Goldbroiler</option>
+        <option value="009">Carwash GmbH</option -->
+        <option *ngFor="let opt of companySelectOptions2" [ngValue]="opt">
+          {{opt}}
+        </option>
+      </select>
+
+    </div>
+
+  </div>
+  <div class="mobile-style">
+    <table style="width:100%">
+      <thead>
+      <tr>
+        <th>RechnungsId</th>
+        <th>
+          Fälligkeitsdatum
+          <button name="sort" id="sortStartDueDate" (click)="sortStartDueDateClick()">
+            Sortierung {{sortStartDueDate.getSortingOrderName()}}
+          </button>
+        </th>
+        <th>
+          Rechnungsdatum
+          <button name="sort" id="sortStartDate" (click)="sortStartDateClick()">
+            Sortierung {{sortStartDate.getSortingOrderName()}}
+          </button>
+
+        </th>
+        <th>Rechnungsnr</th>
+        <th>
+          Empfänger
+          <button name="sort" id="sortCompanyName" (click)="sortCompanyNameClick()">
+            Sortierung {{sortCompanyName.getSortingOrderName()}}
+          </button>
+
+        </th>
+        <th>Status (Entwurf, bezahlt, ...)</th>
+        <th>Gesamtpreis</th>
+        <th>Anzahl der Mahnungen</th>
+        <!--th>Rechnungzeitraum</th-->
+        <th>Ändern</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let invoice of filterInvoice(invoices)">
+        <td>{{invoice.getID()}}</td>
+        <td>{{invoice.invoiceDueDate | date:'yyyy-MM-dd'}}</td>
+        <td>{{invoice.invoiceDate | date:'yyyy-MM-dd'}}</td>
+        <td>{{invoice.invoiceNumber}}</td>
+        <td>{{invoice.companyName()}}</td>
+        <td>{{invoice.invoiceState}}</td>
+        <td>{{invoice.wholeCost}}{{invoice.currency}}</td>
+        <td>{{invoice.countReminders}}</td>
+        <!--td>{{invoice.timeSpan}}</td-->
+        <td>
+          <!-- button type="button">Rechnung bearbeiten</button -->
+
+          <a routerLink="/invoice-detail/{{invoice.getID()}}">Rechnung bearbeiten</a>
+          <!-- link to the details of a dedicated invoice -->
+
+        </td>
+      </tr>
+      <!-- ///////////////////////////// -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- button type="button">Neuer Rechnungsentwurf</button -->
+  <button (click)="newInvoiceBtn()">Neuer Rechnungsentwurf Btn</button>
+  <button>Speichern</button>
+  <button>Zurück</button>
+
+  <a routerLink="/customer-list">Kunden bearbeiten</a>
+
+
+</div>

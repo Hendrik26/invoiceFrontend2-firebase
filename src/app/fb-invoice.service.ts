@@ -47,6 +47,33 @@ export class FbInvoiceService {
         );
     }
 
+    getInvoiceList(archive: string): Observable<any> {
+       console.log('Method fb-invoice.service.getInvoiceList() started!!!');
+        console.log('Archiv', archive);
+        let invoiceRef: AngularFirestoreCollection<Invoice> = null;
+        if (archive === 'all') {
+            console.log('Pfad all!   ');
+            invoiceRef = this.db.collection(this.dbInvoicePath);
+            console.log('Local propoerty invoiceRef set!   ')
+        } else {
+            if (archive === 'showArchive') {
+                console.log('Pfad showArchive!   ');
+                invoiceRef = this.db.collection(this.dbInvoicePath,
+                    ref => ref.where('archived', '==', true));
+            } else {
+                console.log('Pfad else!   ');
+                invoiceRef = this.db.collection(this.dbInvoicePath,
+                    ref => ref.where('archived', '==', false));
+            }
+        }
+        console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
+        return invoiceRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
+            )
+        );
+    }
+
     getCustomerById(customerId: string, historyId: string): Observable<any> {
         let path = '';
         if (!historyId) {
@@ -183,34 +210,7 @@ export class FbInvoiceService {
         this.db.collection(this.dbInvoicePath).add(data).catch(error => this.handleError(error));
     }
 
-    getInvoiceList(archive: string): Observable<any> {
-        console.log('Method fb-invoice.service.getInvoiceList() started!!!');
-        console.log('Archiv', archive);
-        let invoiceRef: AngularFirestoreCollection<Customer> = null;
-        if (archive === 'all') {
-            console.log('Pfad all!   ');
-            invoiceRef = this.db.collection(this.dbInvoicePath);
-            console.log('Local propoerty invoiceRef set!   ')
-        } else {
-            if (archive === 'showArchive') {
-                console.log('Pfad showArchive!   ');
-                invoiceRef = this.db.collection(this.dbInvoicePath,
-                    ref => ref.where('archived', '==', true));
-            } else {
-                console.log('Pfad else!   ');
-                invoiceRef = this.db.collection(this.dbInvoicePath,
-                    ref => ref.where('archived', '==', false));
-            }
-        }
-        console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
-        return invoiceRef.snapshotChanges().pipe(
-            map(changes =>
-                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
-            )
-        );
-    }
-
-    private handleError(error) {
+       private handleError(error) {
         console.log(error);
     }
 }

@@ -48,12 +48,20 @@ export class InvoiceListComponent implements OnInit {
 
     ngOnInit() {
         this.receiveInvoices();
-        this.companySelectOptions = this.calculateCompanySelectOptions(this.invoices);
-        this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
-        this.sortStartDueDate = new ThreeStateButton('DueDate');
-        this.sortStartDate = new ThreeStateButton('Date');
-        this.sortCompanyName = new ThreeStateButton('CompanyName');
+        //this.companySelectOptions = this.calculateCompanySelectOptions(this.invoices);
+        //this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
+        //this.sortStartDueDate = new ThreeStateButton('DueDate');
+        //this.sortStartDate = new ThreeStateButton('Date');
+        //this.sortCompanyName = new ThreeStateButton('CompanyName');
         // this.initialSaveInvoicesToDB02();
+    }
+
+    receiveInvoices(): void {
+        this.fbInvoiceService.getInvoiceList('all')
+            .subscribe(invoices => {
+                this.invoices = invoices;
+                console.log('Next Invoice received!', this.invoices);
+            });
     }
 
     initialSaveInvoicesToDB(){
@@ -185,14 +193,6 @@ export class InvoiceListComponent implements OnInit {
         let sortedInvoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
             retInvoices);
         return sortedInvoices;
-    }
-
-    receiveInvoices(): void {
-        this.fbInvoiceService.getInvoiceList('all')
-            .subscribe(invoices => {
-                this.invoices = invoices;
-                console.log('Next Invoice received!');
-            });
     }
 
     //region getter
