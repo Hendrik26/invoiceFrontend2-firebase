@@ -51,11 +51,11 @@ export class InvoiceListComponent implements OnInit {
 
     ngOnInit() {
         this.receiveInvoices();
-        //this.companySelectOptions = this.calculateCompanySelectOptions(this.invoices);
-        //this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
-        //this.sortStartDueDate = new ThreeStateButton('DueDate');
-        //this.sortStartDate = new ThreeStateButton('Date');
-        //this.sortCompanyName = new ThreeStateButton('CompanyName');
+        // this.companySelectOptions = this.calculateCompanySelectOptions(this.invoices);
+        // this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
+        // this.sortStartDueDate = new ThreeStateButton('DueDate');
+        // this.sortStartDate = new ThreeStateButton('Date');
+        // this.sortCompanyName = new ThreeStateButton('CompanyName');
         // this.initialSaveInvoicesToDB02();
     }
 
