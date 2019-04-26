@@ -57,6 +57,7 @@ export class InvoiceListComponent implements OnInit {
     }
 
     receiveInvoices(): void {
+        // TODO merging
         this.fbInvoiceService.getInvoiceList('all')
             .subscribe(invoices => {
                 this.invoices = invoices;
