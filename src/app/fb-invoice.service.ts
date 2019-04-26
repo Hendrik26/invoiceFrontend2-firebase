@@ -26,8 +26,8 @@ export class FbInvoiceService {
     }
 
     getCustomersList(archive: string): Observable<any> {
-        console.log('Archiv', archive);
         console.log('Method fb-invoice.service.getCustomersList() started!!!');
+        console.log('Archiv', archive);
         let customersRef: AngularFirestoreCollection<Customer> = null;
         if (archive === 'all') {
             customersRef = this.db.collection(this.dbCustomerPath);
@@ -184,20 +184,25 @@ export class FbInvoiceService {
     }
 
     getInvoiceList(archive: string): Observable<any> {
-        console.log('Archiv', archive);
         console.log('Method fb-invoice.service.getInvoiceList() started!!!');
+        console.log('Archiv', archive);
         let invoiceRef: AngularFirestoreCollection<Customer> = null;
         if (archive === 'all') {
+            console.log('Pfad all!   ');
             invoiceRef = this.db.collection(this.dbInvoicePath);
+            console.log('Local propoerty invoiceRef set!   ')
         } else {
             if (archive === 'showArchive') {
+                console.log('Pfad showArchive!   ');
                 invoiceRef = this.db.collection(this.dbInvoicePath,
                     ref => ref.where('archived', '==', true));
             } else {
+                console.log('Pfad else!   ');
                 invoiceRef = this.db.collection(this.dbInvoicePath,
                     ref => ref.where('archived', '==', false));
             }
         }
+        console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
         return invoiceRef.snapshotChanges().pipe(
             map(changes =>
                 changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))

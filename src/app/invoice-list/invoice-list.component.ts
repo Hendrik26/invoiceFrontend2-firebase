@@ -136,10 +136,12 @@ export class InvoiceListComponent implements OnInit {
     }
 
     calculateCompanySelectOptions(invoices: Invoice[]): object[] {
+        console.log('Method calculateCompanySelectOptions(...) started! ');
         const retList: object[] = [];
         invoices.forEach(function (fktInvoice) {
             retList.push({value: fktInvoice.companyName(), name: fktInvoice.companyName()});
         });
+        console.log('Method calculateCompanySelectOptions(...) finished! ');
         return retList;
     }
 
@@ -186,8 +188,11 @@ export class InvoiceListComponent implements OnInit {
     }
 
     receiveInvoices(): void {
-        this.invoiceService.getInvoices()
-            .subscribe(invoices => this.invoices = invoices);
+        this.fbInvoiceService.getInvoiceList('all')
+            .subscribe(invoices => {
+                this.invoices = invoices;
+                console.log('Next Invoice received!');
+            });
     }
 
     //region getter
