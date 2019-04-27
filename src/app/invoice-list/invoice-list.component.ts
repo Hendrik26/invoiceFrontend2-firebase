@@ -17,7 +17,7 @@ import {Customer} from '../customer';
     styleUrls: ['./invoice-list.component.css']
 })
 export class InvoiceListComponent implements OnInit {
-
+    ////////////
 
     // invoicesNew: Invoice[] = [{...this.invoiceService.standardInvoice}]; // clones this.standardInvoice
 
