@@ -1,12 +1,10 @@
-import {InvoiceKind} from './invoice-kind';
 import {InvoiceKindType} from './invoice-kind-type';
-import {Item} from './item';
+import {CustomerType} from './customer-type';
 import {ItemType} from './item-type';
 
 export interface InvoiceType {
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
-    //endregion
     currency: string;
 
     customerIBAN: string;

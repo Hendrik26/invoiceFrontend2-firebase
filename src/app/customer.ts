@@ -12,6 +12,8 @@ export class Customer implements CustomerType {
         addressLine2: '',
         addressLine3: '',
         customerSalesTaxNumber: '000000',
+        customerIBAN: '',
+        mandateIdentification: '', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
         creationTime: new Date(),
         lastUpdateTime: new Date(),
         archived: false
@@ -29,6 +31,8 @@ export class Customer implements CustomerType {
     addressLine2: string;
     addressLine3: string;
     customerSalesTaxNumber: string;
+    customerIBAN: string;
+    mandateIdentification: string; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
     creationTime: Date;
     lastUpdateTime: Date;
     archived = false;
@@ -50,6 +54,8 @@ export class Customer implements CustomerType {
         this.addressLine2 = data.addressLine2;
         this.addressLine3 = data.addressLine3;
         this.customerSalesTaxNumber = data.customerSalesTaxNumber;
+        this.customerIBAN = data.customerIBAN;
+        this.mandateIdentification = data.mandateIdentification;
         this.creationTime = data.creationTime ? data.creationTime : new Date();
         this.lastUpdateTime = data.lastUpdateTime ? data.lastUpdateTime : new Date();
         this.archived = data.archived;
@@ -78,6 +84,8 @@ export class Customer implements CustomerType {
             addressLine2: inCustomer.addressLine2,
             addressLine3: inCustomer.addressLine3,
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
+            customerIBAN: inCustomer.customerIBAN,
+            mandateIdentification: inCustomer.mandateIdentification,
             creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
             lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date(),
             archived: inCustomer.archived

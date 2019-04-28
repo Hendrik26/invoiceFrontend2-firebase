@@ -33,6 +33,8 @@ export class CustomerDetailComponent implements OnInit {
     addressLine2: string;
     addressLine3: string;
     customerSalesTaxNumber: string;
+    customerIBAN: string;
+    mandateIdentification: string;
     creationTime: Date;
     lastUpdateTime: Date;
     archived = false;
@@ -83,6 +85,8 @@ export class CustomerDetailComponent implements OnInit {
                     this.addressLine2 = customer.addressLine2;
                     this.addressLine3 = customer.addressLine3;
                     this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
+                    this.customerIBAN = customer.customerIBAN;
+                    this.mandateIdentification = customer.mandateIdentification;
                     this.creationTime = customer.creationTime ? customer.creationTime.toDate() : new Date();
                     this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime.toDate() : new Date();
                     this.archived = customer.archived;
@@ -102,6 +106,8 @@ export class CustomerDetailComponent implements OnInit {
             this.addressLine2 = customer.addressLine2;
             this.addressLine3 = customer.addressLine3;
             this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
+            this.customerIBAN = customer.customerIBAN;
+            this.mandateIdentification = customer.mandateIdentification;
             this.creationTime = customer.creationTime ? customer.creationTime : new Date();
             this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
             this.archived = customer.archived;
@@ -119,6 +125,8 @@ export class CustomerDetailComponent implements OnInit {
             addressLine2: this.addressLine2 ? this.addressLine2 : '',
             addressLine3: this.addressLine3 ? this.addressLine3 : '',
             customerSalesTaxNumber: this.customerSalesTaxNumber ? this.customerSalesTaxNumber : '',
+            customerIBAN: this.customerIBAN ? this.customerIBAN : '',
+            mandateIdentification: this.mandateIdentification ? this.mandateIdentification : '',
             creationTime: this.creationTime ? this.creationTime : new Date(),
             lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
             archived: !!archived

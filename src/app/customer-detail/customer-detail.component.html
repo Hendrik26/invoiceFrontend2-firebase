@@ -13,6 +13,9 @@
         <label><span>Stadt</span><input type="text" name="city" [(ngModel)]="city"></label>
         <label><span>Umsatzsteuernummer</span><input type="text" name="•	customerSalesTaxNumber"
                                                      [(ngModel)]="customerSalesTaxNumber"></label>
+        <label><span>IBAN</span><input type="text" name="IBAN" [(ngModel)]="customerIBAN"></label>
+        <label><span>Mandatsreferenz</span><input type="text" name="mandateIdentification"
+                                                  [(ngModel)]="mandateIdentification"></label>
         <br>
         <button (click)="saveCustomer(false)">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
         <button *ngIf="!newCustomer" (click)="saveCustomer(true)">archivieren</button>

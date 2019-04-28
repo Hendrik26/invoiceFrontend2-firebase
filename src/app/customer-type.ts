@@ -8,6 +8,8 @@ export interface CustomerType {
     addressLine2:  string;
     addressLine3:  string;
     customerSalesTaxNumber:  string;
+    customerIBAN: string;
+    mandateIdentification: string; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
     creationTime: Date;
     lastUpdateTime: Date;
     archived: boolean;

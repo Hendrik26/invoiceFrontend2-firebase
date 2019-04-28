@@ -103,7 +103,7 @@ export class FbInvoiceService {
     }
 
 
-    getInvoiceList(archive: string): Observable<any> {
+    getInvoiceList_old(archive: string): Observable<any> {
         console.log('Method fb-invoice.service.getInvoiceList() started!!!');
         console.log('Archiv', archive);
         let invoiceRef: AngularFirestoreCollection<Invoice> = null;
@@ -130,7 +130,7 @@ export class FbInvoiceService {
         );
     }
 
-    getInvoiceList_mod(archive: string): Observable<any> {
+    getInvoiceList(archive: string): Observable<any> {
         console.log('Method fb-invoice.service.getInvoiceList() started!!!');
         console.log('Archiv', archive);
         let invoiceRef: AngularFirestoreCollection<Invoice> = null;
