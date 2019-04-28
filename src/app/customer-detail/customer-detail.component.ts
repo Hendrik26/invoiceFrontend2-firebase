@@ -18,17 +18,15 @@ export class CustomerDetailComponent implements OnInit {
     // endregion
 
     // region other properties
-
     customer: Customer;
-
     historyDateList: [{ historyKey: string, historyLabel: string}] ;
     historyId: string;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
     archived = false;
     historyTest: boolean;
-
     // endregion
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -43,7 +41,6 @@ export class CustomerDetailComponent implements OnInit {
         if (!this.receivedCustomerIdError) {
             this.receiveFbCustomerById(this.customerId, null);
         }
-
     }
 
     hasReceivedCustomerId(): // can NOT be deleted
@@ -61,13 +58,9 @@ export class CustomerDetailComponent implements OnInit {
 
     receiveFbCustomerById(id: string, historyId: string): void {
         if (!this.newCustomer) {
-
             this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customerType => {
-                  this.customer = new Customer(id, customerType);
-                }
-            );
+                  this.customer = new Customer(id, customerType); });
             this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customerTest => {this.historyTest = customerTest[1]; });
-
         } else {
             this.customer = Customer.createNewCustomer();
         }
@@ -88,7 +81,7 @@ export class CustomerDetailComponent implements OnInit {
             mandateIdentification: this.customer.mandateIdentification ? this.customer.mandateIdentification : '',
             creationTime: this.customer.creationTime ? this.customer.creationTime : new Date(),
             lastUpdateTime: new Date(),
-            archived: !!archived
+            archived: archived
         };
         if (this.newCustomer) {
             this.newCustomer = false;
@@ -106,9 +99,7 @@ export class CustomerDetailComponent implements OnInit {
 
     receiveCustomerHistoryById(id: string): void {
         this.fbInvoiceService.getCustomerHistoryById(id)
-            .subscribe(data => {
-                this.historyDateList = data;
-            });
+            .subscribe(data => {this.historyDateList = data; });
     }
 
 }
