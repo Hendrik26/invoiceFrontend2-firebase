@@ -18,25 +18,13 @@ export class CustomerDetailComponent implements OnInit {
     // endregion
 
     // region other properties
-    // creatingCustomer: boolean;
-    // creatingCustomerBtn: boolean;
+
+    customer: Customer;
+
     historyDateList: [{ historyKey: string, historyLabel: string}] ;
     historyId: string;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
-    customerNumber: string; // Kundennummer
-    customerName: string;  // Kundenname
-    country: string;
-    postalCode: string;
-    city: string;
-    addressLine1: string;
-    addressLine2: string;
-    addressLine3: string;
-    customerSalesTaxNumber: string;
-    customerIBAN: string;
-    mandateIdentification: string;
-    creationTime: Date;
-    lastUpdateTime: Date;
     archived = false;
     historyTest: boolean;
 
@@ -54,7 +42,6 @@ export class CustomerDetailComponent implements OnInit {
         console.log('receivedCustomerIdError ===' + this.receivedCustomerIdError + '!!!     ');
         if (!this.receivedCustomerIdError) {
             this.receiveFbCustomerById(this.customerId, null);
-
         }
 
     }
@@ -75,67 +62,39 @@ export class CustomerDetailComponent implements OnInit {
     receiveFbCustomerById(id: string, historyId: string): void {
         if (!this.newCustomer) {
 
-            this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customer => {
-                    this.customerNumber = customer.customerNumber;
-                    this.customerName = customer.customerName;
-                    this.country = customer.country;
-                    this.postalCode = customer.postalCode;
-                    this.city = customer.city;
-                    this.addressLine1 = customer.addressLine1;
-                    this.addressLine2 = customer.addressLine2;
-                    this.addressLine3 = customer.addressLine3;
-                    this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
-                    this.customerIBAN = customer.customerIBAN;
-                    this.mandateIdentification = customer.mandateIdentification;
-                    this.creationTime = customer.creationTime ? customer.creationTime.toDate() : new Date();
-                    this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime.toDate() : new Date();
-                    this.archived = customer.archived;
+            this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customerType => {
+                  this.customer = new Customer(id, customerType);
                 }
             );
-            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customer => {this.historyTest = customer[1]; });
+            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customerTest => {this.historyTest = customerTest[1]; });
 
         } else {
-            const customer = Customer.createNewCustomer();
-            // this.customerId = customer.getCustomerId();
-            this.customerNumber = customer.customerNumber;
-            this.customerName = customer.customerName;
-            this.country = customer.country;
-            this.postalCode = customer.postalCode;
-            this.city = customer.city;
-            this.addressLine1 = customer.addressLine1;
-            this.addressLine2 = customer.addressLine2;
-            this.addressLine3 = customer.addressLine3;
-            this.customerSalesTaxNumber = customer.customerSalesTaxNumber;
-            this.customerIBAN = customer.customerIBAN;
-            this.mandateIdentification = customer.mandateIdentification;
-            this.creationTime = customer.creationTime ? customer.creationTime : new Date();
-            this.lastUpdateTime = customer.lastUpdateTime ? customer.lastUpdateTime : new Date();
-            this.archived = customer.archived;
+            this.customer = Customer.createNewCustomer();
         }
     }
 
     saveCustomer(archived: boolean): void {
-        const cData: CustomerType = {
-            customerNumber: this.customerNumber ? this.customerNumber : '', // Kundennummer
-            customerName: this.customerName ? this.customerName : '',  // Kundenname
-            country: this.country ? this.country : '',
-            postalCode: this.postalCode ? this.postalCode : '',
-            city: this.city ? this.city : '',
-            addressLine1: this.addressLine1 ? this.addressLine1 : '',
-            addressLine2: this.addressLine2 ? this.addressLine2 : '',
-            addressLine3: this.addressLine3 ? this.addressLine3 : '',
-            customerSalesTaxNumber: this.customerSalesTaxNumber ? this.customerSalesTaxNumber : '',
-            customerIBAN: this.customerIBAN ? this.customerIBAN : '',
-            mandateIdentification: this.mandateIdentification ? this.mandateIdentification : '',
-            creationTime: this.creationTime ? this.creationTime : new Date(),
-            lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
+        const customerType: CustomerType = {
+            customerNumber: this.customer.customerNumber ? this.customer.customerNumber : '', // Kundennummer
+            customerName: this.customer.customerName ? this.customer.customerName : '',  // Kundenname
+            country: this.customer.country ? this.customer.country : '',
+            postalCode: this.customer.postalCode ? this.customer.postalCode : '',
+            city: this.customer.city ? this.customer.city : '',
+            addressLine1: this.customer.addressLine1 ? this.customer.addressLine1 : '',
+            addressLine2: this.customer.addressLine2 ? this.customer.addressLine2 : '',
+            addressLine3: this.customer.addressLine3 ? this.customer.addressLine3 : '',
+            customerSalesTaxNumber: this.customer.customerSalesTaxNumber ? this.customer.customerSalesTaxNumber : '',
+            customerIBAN: this.customer.customerIBAN ? this.customer.customerIBAN : '',
+            mandateIdentification: this.customer.mandateIdentification ? this.customer.mandateIdentification : '',
+            creationTime: this.customer.creationTime ? this.customer.creationTime : new Date(),
+            lastUpdateTime: new Date(),
             archived: !!archived
         };
         if (this.newCustomer) {
             this.newCustomer = false;
-            this.fbInvoiceService.createCustomer(cData);
+            this.fbInvoiceService.createCustomer(customerType);
         } else {
-            this.fbInvoiceService.updateCustomer(this.customerId, cData);
+            this.fbInvoiceService.updateCustomer(this.customer.getCustomerId(), customerType);
         }
         this.router.navigateByUrl('/customer-list');
     }

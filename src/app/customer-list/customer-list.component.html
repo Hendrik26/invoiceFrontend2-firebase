@@ -14,9 +14,9 @@
     <a routerLink="/invoice-list">Rechnungsübersicht</a>
     <br><br>
 
-
+<div>
     <div class="mobile-style">
-        <table style="width:100%">
+        <table>
             <thead>
             <tr>
                 <th>Kundennummer</th>
@@ -56,6 +56,7 @@
             </tbody>
         </table>
     </div>
+</div>
     <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="notArchive"
                   [(ngModel)]="showArchive" checked="checked">nur nicht archivierte &nbsp;&nbsp;</label>
     <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="showArchive"

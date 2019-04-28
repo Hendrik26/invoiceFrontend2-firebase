@@ -1,21 +1,21 @@
 <div class="item-detail">
-    <h1 [ngStyle]="{'color': archived ? 'red' : 'black' }">Kundendetailansicht</h1>
+    <h1 [ngStyle]="{'color': customer.archived ? 'red' : 'black' }">Kundendetailansicht</h1>
     <!-- p>erstellt am: {{creationTime | date:'yyyy-MM-dd'}}</p -->
     <form>
-        <label><span>Kundennummer</span><input type="text" name="customerNumber" [(ngModel)]="customerNumber"></label>
+        <label><span>Kundennummer</span><input type="text" name="customerNumber" [(ngModel)]="customer.customerNumber"></label>
         <label><span>Firmenname des Kunden</span><input type="text" name="customerName"
-                                                        [(ngModel)]="customerName"></label>
-        <label><span>Adresszeile 1</span><input type="text" name="addressLine1" [(ngModel)]="addressLine1"></label>
-        <label><span>Adresszeile 2</span><input type="text" name="addressLine2" [(ngModel)]="addressLine2"></label>
-        <label><span>Adresszeile 3</span><input type="text" name="addressLine3" [(ngModel)]="addressLine3"></label>
-        <label><span>Land</span><input type="text" name="country" [(ngModel)]="country"></label>
-        <label><span>Postleitzahl</span><input type="text" name="postalCode" [(ngModel)]="postalCode"></label>
-        <label><span>Stadt</span><input type="text" name="city" [(ngModel)]="city"></label>
+                                                        [(ngModel)]="customer.customerName"></label>
+        <label><span>Adresszeile 1</span><input type="text" name="addressLine1" [(ngModel)]="customer.addressLine1"></label>
+        <label><span>Adresszeile 2</span><input type="text" name="addressLine2" [(ngModel)]="customer.addressLine2"></label>
+        <label><span>Adresszeile 3</span><input type="text" name="addressLine3" [(ngModel)]="customer.addressLine3"></label>
+        <label><span>Land</span><input type="text" name="country" [(ngModel)]="customer.country"></label>
+        <label><span>Postleitzahl</span><input type="text" name="postalCode" [(ngModel)]="customer.postalCode"></label>
+        <label><span>Stadt</span><input type="text" name="city" [(ngModel)]="customer.city"></label>
         <label><span>Umsatzsteuernummer</span><input type="text" name="•	customerSalesTaxNumber"
-                                                     [(ngModel)]="customerSalesTaxNumber"></label>
-        <label><span>IBAN</span><input type="text" name="IBAN" [(ngModel)]="customerIBAN"></label>
+                                                     [(ngModel)]="customer.customerSalesTaxNumber"></label>
+        <label><span>IBAN</span><input type="text" name="IBAN" [(ngModel)]="customer.customerIBAN"></label>
         <label><span>Mandatsreferenz</span><input type="text" name="mandateIdentification"
-                                                  [(ngModel)]="mandateIdentification"></label>
+                                                  [(ngModel)]="customer.mandateIdentification"></label>
         <br>
         <button (click)="saveCustomer(false)">{{newCustomer ? 'erstellen' : 'speichern'}}</button>
         <button *ngIf="!newCustomer" (click)="saveCustomer(true)">archivieren</button>
