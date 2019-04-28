@@ -13,11 +13,11 @@ label:nth-child(even) {
 
 label span, p span {
     display: inline-block;
-    width: 10%;
+    width: 15%;
 }
 
 input[type=text] {
-    width: 89%;
+    width: 84%;
 }
 
 input[type=checkbox] {

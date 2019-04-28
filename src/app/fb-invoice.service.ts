@@ -20,15 +20,13 @@ export class FbInvoiceService {
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
-    customersRef: AngularFirestoreCollection<Customer> = null;
-
 
     constructor(private db: AngularFirestore) {
     }
 
+    // receives the of the customers with archive or not
     getCustomersList(archive: string): Observable<any> {
-        console.log('Method fb-invoice.service.getCustomersList() started!!!');
-        console.log('Archiv', archive);
+        // create the database reference/query witch depends on the value of the "archive" parameter
         let customersRef: AngularFirestoreCollection<Customer> = null;
         if (archive === 'all') {
             customersRef = this.db.collection(this.dbCustomerPath);
@@ -41,12 +39,69 @@ export class FbInvoiceService {
                     ref => ref.where('archived', '==', false));
             }
         }
+        // return of the observable
         return customersRef.snapshotChanges().pipe(
             map(changes =>
                 changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
             )
         );
     }
+
+    // receives one specific customers document
+    getCustomerById(customerId: string, historyId: string): Observable<any> {
+        // create the database path witch depends from the value of the "historyId" parameter
+        let path = '';
+        if (!historyId) {
+            path = `${this.dbCustomerPath}/${customerId}`;
+        } else {
+            path = `${this.dbCustomerPath}/${customerId}/history/${historyId}`;
+        }
+        // return of the observable
+        return this.db.doc(path).valueChanges();
+    }
+
+    // receives the history list of one specific customers - used in the select element
+    getCustomerHistoryById(customerId: string): Observable<any> {
+        // create the database reference
+        const customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`);
+        // return of the observable
+        return customersRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({
+                    historyKey: c.payload.doc.id,
+                    historyLabel: c.payload.doc.id.slice(12, 14)
+                        + '.' + c.payload.doc.id.slice(9, 11)
+                        + '.' + c.payload.doc.id.slice(4, 8)
+                        + ' ' + c.payload.doc.id.slice(15, 17)
+                        + ':' + c.payload.doc.id.slice(18, 20)
+                        + ':' + c.payload.doc.id.slice(21, 23)
+                }))
+            )
+        );
+    }
+
+    // receives te first two documents of the history - necessary to test the existence of the customer history
+    testCustomerHistoryById(customerId: string): Observable<any> {
+        // create the database reference
+        const customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`,
+            ref => ref.limit(2));
+        // return of the observable
+        return customersRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({historyId: c.payload.doc.id}))));
+    }
+
+    // creates a new customer document
+    createCustomer(data: CustomerType): void {
+        this.db.collection(this.dbCustomerPath).add(data)
+            .catch(error => this.handleError(error));
+    }
+
+    // updates an existing customer document
+    updateCustomer(id: string, data: CustomerType): void {
+        this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
+    }
+
 
     getInvoiceList(archive: string): Observable<any> {
         console.log('Method fb-invoice.service.getInvoiceList() started!!!');
@@ -55,7 +110,7 @@ export class FbInvoiceService {
         if (archive === 'all') {
             console.log('Pfad all!   ');
             invoiceRef = this.db.collection(this.dbInvoicePath);
-            console.log('Local propoerty invoiceRef set!   ')
+            console.log('Local propoerty invoiceRef set!   ');
         } else {
             if (archive === 'showArchive') {
                 console.log('Pfad showArchive!   ');
@@ -111,7 +166,7 @@ export class FbInvoiceService {
                     timespanBegin: c.payload.doc.data().timespanBegin,
                     timespanEnd: c.payload.doc.data().timespanEnd,
                     wholeCost: (c.payload.doc.data().itemTypes
-                        ? c.payload.doc.data().itemTypes.reduce((sum, current) => sum + current.partialCost, 0 ) : 0)
+                        ? c.payload.doc.data().itemTypes.reduce((sum, current) => sum + current.partialCost, 0) : 0)
                 }))
             )
             // map(changes =>
@@ -121,135 +176,6 @@ export class FbInvoiceService {
             ;
     }
 
-    getCustomerById(customerId: string, historyId: string): Observable<any> {
-        let path = '';
-        if (!historyId) {
-            path = `${this.dbCustomerPath}/${customerId}`;
-        } else {
-            path = `${this.dbCustomerPath}/${customerId}/history/${historyId}`;
-        }
-        return this.db.doc(path).valueChanges();
-    }
-
-    getCustomerHistoryById(customerId: string): Observable<any> {
-        this.customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`);
-        return this.customersRef.snapshotChanges().pipe(
-            map(changes =>
-                changes.map(c => ({
-                    historyKey: c.payload.doc.id,
-                    historyLabel: c.payload.doc.id.slice(12, 14)
-                        + '.' + c.payload.doc.id.slice(9, 11)
-                        + '.' + c.payload.doc.id.slice(4, 8)
-                        + ' ' + c.payload.doc.id.slice(15, 17)
-                        + ':' + c.payload.doc.id.slice(18, 20)
-                        + ':' + c.payload.doc.id.slice(21, 23)
-                }))
-            )
-        );
-    }
-
-    testCustomerHistoryById(customerId: string): Observable<any> {
-        const customersRef = this.db.collection(`${this.dbCustomerPath}/${customerId}/history`,
-            ref => ref.limit(2));
-        return customersRef.snapshotChanges().pipe(
-            map(changes =>
-                changes.map(c => ({historyId: c.payload.doc.id}))));
-    }
-
-    createCustomer_old(data: CustomerType): void {
-        this.db.collection(this.dbCustomerPath).add({
-            'customerNumber': data.customerNumber,
-            'customerName': data.customerName,
-            'country': data.country,
-            'postalCode': data.postalCode,
-            'city': data.city,
-            'addressLine1': data.addressLine1,
-            'addressLine2': data.addressLine2,
-            'addressLine3': data.addressLine3,
-            'customerSalesTaxNumber': data.customerSalesTaxNumber,
-            'creationTime': data.creationTime,
-            'lastUpdateTime': new Date(),
-            'archived': data.archived
-        }).catch(error => this.handleError(error));
-    }
-
-    createCustomer(data: CustomerType): void {
-        this.db.collection(this.dbCustomerPath).add(data)
-            .catch(error => this.handleError(error));
-    }
-
-    updateCustomer_old(id: string, data: CustomerType): void {
-        console.log('Method FbInvoiceService.updateCustomer() started!');
-        const logStr = 'customerNumber: ' + data.customerNumber
-            + '\r\n customerName' + data.customerName
-            + '\r\n country' + data.country
-            + '\r\n postalCode' + data.postalCode
-            + '\r\n city' + data.city
-            + '\r\n addressLine1' + data.addressLine1
-            + '\r\n addressLine2' + data.addressLine2
-            + '\r\n addressLine3' + data.addressLine3
-            + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
-            + '\r\n creationTime' + data.creationTime
-            + '\r\n lastUpdateTime' + new Date()
-            + '\r\n archived' + data.archived;
-        console.log(logStr);
-        console.log('Method FbInvoiceService.updateCustomer() continued!');
-        this.db.doc(`${this.dbCustomerPath}/${id}`).update({
-            'customerNumber': data.customerNumber,
-            'customerName': data.customerName,
-            'country': data.country,
-            'postalCode': data.postalCode,
-            'city': data.city,
-            'addressLine1': data.addressLine1,
-            'addressLine2': data.addressLine2,
-            'addressLine3': data.addressLine3,
-            'customerSalesTaxNumber': data.customerSalesTaxNumber,
-            'creationTime': data.creationTime,
-            'lastUpdateTime': new Date(),
-            'archived': data.archived
-        }).catch(error => this.handleError(error));
-        console.log('Method FbInvoiceService.updateCustomer() finished!');
-    }
-
-    updateCustomer(id: string, data: CustomerType): void {
-        console.log('Method FbInvoiceService.updateCustomer() started!');
-        const logStr = 'customerNumber: ' + data.customerNumber
-            + '\r\n customerName' + data.customerName
-            + '\r\n country' + data.country
-            + '\r\n postalCode' + data.postalCode
-            + '\r\n city' + data.city
-            + '\r\n addressLine1' + data.addressLine1
-            + '\r\n addressLine2' + data.addressLine2
-            + '\r\n addressLine3' + data.addressLine3
-            + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
-            + '\r\n creationTime' + data.creationTime
-            + '\r\n lastUpdateTime' + new Date()
-            + '\r\n archived' + data.archived;
-        console.log(logStr);
-        console.log('Method FbInvoiceService.updateCustomer() continued!');
-        this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
-        console.log('Method FbInvoiceService.updateCustomer() finished!');
-    }
-
-    updateSetCustomer(id: string, data: CustomerType): void {
-        console.log('Method FbInvoiceService.updateSetCustomer() started!');
-        const logStr = 'customerNumber: ' + data.customerNumber
-            + '\r\n customerName' + data.customerName
-            + '\r\n country' + data.country
-            + '\r\n postalCode' + data.postalCode
-            + '\r\n city' + data.city
-            + '\r\n addressLine1' + data.addressLine1
-            + '\r\n addressLine2' + data.addressLine2
-            + '\r\n addressLine3' + data.addressLine3
-            + '\r\n customerSalesTaxNumber' + data.customerSalesTaxNumber
-            + '\r\n creationTime' + data.creationTime
-            + '\r\n lastUpdateTime' + new Date()
-            + '\r\n archived' + data.archived;
-        console.log(logStr);
-        console.log('Method FbInvoiceService.updateSetCustomer() continued!');
-        this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
-        console.log('Method FbInvoiceService.updateSetCustomer() finished!');
-    }
 
     createInvoice(data: InvoiceType): void {
         console.log('Method FbInvoiceService.createInvoice(...) started!');
