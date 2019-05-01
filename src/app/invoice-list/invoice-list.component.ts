@@ -60,7 +60,7 @@ export class InvoiceListComponent implements OnInit {
     }
 
     receiveInvoices(): void {
-        this.fbInvoiceService.getInvoiceList('all')
+        this.fbInvoiceService.getInvoiceListMod('all')
             .subscribe(invoices => {
                 // this.invoices = invoices;
                 // this.invoicesShort = invoices;
