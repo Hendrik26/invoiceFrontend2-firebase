@@ -14,9 +14,8 @@
     <a routerLink="/invoice-list">Rechnungsübersicht</a>
     <br><br>
 
-<div>
-    <div class="mobile-style">
-        <table>
+    <div>
+        <table style="display: block; max-height: 80vh; overflow-y: scroll">
             <thead>
             <tr>
                 <th>Kundennummer</th>
@@ -56,13 +55,12 @@
             </tbody>
         </table>
     </div>
-</div>
-    <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="notArchive"
+    <!--label><input (change)="receiveCustomers()" name="archive2" type="radio" value="notArchive"
                   [(ngModel)]="showArchive" checked="checked">nur nicht archivierte &nbsp;&nbsp;</label>
     <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="showArchive"
                   [(ngModel)]="showArchive">nur archivierte&nbsp;&nbsp;</label>
     <label><input (change)="receiveCustomers()" name="archive2" type="radio" value="all"
                   [(ngModel)]="showArchive">alle&nbsp;&nbsp;</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button (click)="newCustomereBtn()">Neuer Kunde</button>
-    <a routerLink="/invoice-list">Rechnungsübersicht</a>
+    <a routerLink="/invoice-list">Rechnungsübersicht</a -->
 </div>
