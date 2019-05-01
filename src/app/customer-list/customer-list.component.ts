@@ -74,16 +74,6 @@ export class CustomerListComponent implements OnInit {
         return ((this.showArchived === customerArchived) || this.history);
     }
 
-    getCustomerById(cId: string): Customer {
-        let customer: Customer;
-        for (let i = 0; i < this.customers.length; i++) {
-            if (this.customers[i].getCustomerId() === cId) {
-                customer = this.customers[i];
-            }
-        }
-        return customer;
-    }
-
     receiveCustomers(): void {
             this.fbInvoiceService.getCustomersList(this.showArchive)
                 .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x));
