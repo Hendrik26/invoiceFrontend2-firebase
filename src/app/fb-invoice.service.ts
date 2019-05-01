@@ -16,7 +16,7 @@ import {Item} from './item';
     providedIn: 'root'
 })
 export class FbInvoiceService {
-    ///////////////////////////////
+    //////////////////////
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
