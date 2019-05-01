@@ -162,6 +162,7 @@ export class FbInvoiceService {
                     invoiceIntendedUse: c.payload.doc.data().invoiceIntendedUse,
                     invoiceKind: c.payload.doc.data().invoiceKind,
                     invoiceState: c.payload.doc.data().invoiceState,
+                    recipient: c.payload.doc.data().recipient,
                     salesTaxPercentage: c.payload.doc.data().salesTaxPercentage,
                     timespanBegin: c.payload.doc.data().timespanBegin,
                     timespanEnd: c.payload.doc.data().timespanEnd,
