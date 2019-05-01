@@ -26,5 +26,8 @@ export interface InvoiceType {
     timespanEnd: Date;
 
     wholeCost: number; // <th>Gesamtpreis</th>
+
+    customerId: string;
+    customerData: CustomerType;
     //customer: CustomerType;
 }

@@ -1,4 +1,5 @@
 import {CustomerType} from './customer-type';
+import {ItemType} from './item-type';
 
 export class Customer implements CustomerType {
     // region static properties
@@ -97,6 +98,25 @@ export class Customer implements CustomerType {
     // region getter
     public getCustomerId(): string {
         return this.customerId;
+    }
+
+    public exportCustomerData(): CustomerType {
+        return {
+            customerNumber: this.customerNumber, // Kundennummer
+            customerName: this.customerName,  // Kundenname
+            country: this.country,
+            postalCode: this.postalCode,
+            city: this.city,
+            addressLine1: this.addressLine1,
+            addressLine2: this.addressLine2,
+            addressLine3: this.addressLine3,
+            customerSalesTaxNumber: this.customerSalesTaxNumber,
+            customerIBAN: this.customerIBAN,
+            mandateIdentification: this.mandateIdentification,
+            creationTime: this.creationTime ? this.creationTime : new Date(),
+            lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
+            archived: this.archived
+        };
     }
 
     // endregion

@@ -1,3 +1,5 @@
+import {CustomerType} from './customer-type';
+import {Customer} from './customer';
 import {Item} from './item';
 import {InvoiceType} from './invoice-type';
 import {InvoiceKind} from './invoice-kind';
@@ -35,13 +37,32 @@ export class Invoice implements InvoiceType {
         timespanBegin: new Date(),
         timespanEnd: new Date(),
 
-        wholeCost: -111 // <th>Gesamtpreis</th>
+        wholeCost: -111, // <th>Gesamtpreis</th>
+
+        customerId: 'emptyCustomerId',
+        customerData: {
+            customerNumber: '2018', // Kundennummer
+            customerName: 'emptyCustomer',  // Kundenname
+            country: 'Deutschland',
+            postalCode: '',
+            city: '',
+            addressLine1: '',
+            addressLine2: '',
+            addressLine3: '',
+            customerSalesTaxNumber: '000000',
+            customerIBAN: '',
+            mandateIdentification: '', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+            creationTime: new Date(),
+            lastUpdateTime: new Date(),
+            archived: false
+        }
     };
     //endregion
     //region other properties
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
     //endregion
+    customer: Customer;
     currency = '€';
 
     customerIBAN = 'Invoice-Bsp-IBAN';
@@ -64,6 +85,9 @@ export class Invoice implements InvoiceType {
     timespanEnd: Date;
 
     wholeCost: number; // <th>Gesamtpreis</th>
+
+    customerId: string;
+    customerData: CustomerType;
     //region IDs
     private invoiceId: string; // <th>Ändern</th>
     //endregion
@@ -101,6 +125,8 @@ export class Invoice implements InvoiceType {
         this.timespanEnd = data.timespanEnd;
 
         this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
+
+        this.customer = new Customer(data.customerId, data.customerData);
     }
 
 
@@ -247,7 +273,9 @@ export class Invoice implements InvoiceType {
             timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
             timespanBegin: this.timespanBegin,
             timespanEnd: this.timespanEnd,
-            wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+            wholeCost: this.wholeCost, // <th>Gesamtpreis</th>
+            customerId: this.customer.getCustomerId(),
+            customerData: this.customer.exportCustomerData()
         };
     }
 
