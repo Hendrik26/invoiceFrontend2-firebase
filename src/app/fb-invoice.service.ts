@@ -154,27 +154,11 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     key: c.payload.doc.id,
-                    invoiceNumber: c.payload.doc.data().invoiceNumber,
-                    countReminders: c.payload.doc.data().countReminders,
-                    currency: c.payload.doc.data().currency,
-                    invoiceDate: c.payload.doc.data().invoiceDate,
-                    invoiceDueDate: c.payload.doc.data().invoiceDueDate,
-                    invoiceIntendedUse: c.payload.doc.data().invoiceIntendedUse,
-                    invoiceKind: c.payload.doc.data().invoiceKind,
-                    invoiceState: c.payload.doc.data().invoiceState,
-                    recipient: c.payload.doc.data().recipient,
-                    salesTaxPercentage: c.payload.doc.data().salesTaxPercentage,
-                    timespanBegin: c.payload.doc.data().timespanBegin,
-                    timespanEnd: c.payload.doc.data().timespanEnd,
+                    ...c.payload.doc.data(),
                     wholeCost: (c.payload.doc.data().itemTypes
                         ? c.payload.doc.data().itemTypes.reduce((sum, current) => sum + current.partialCost, 0) : 0)
                 }))
-            )
-            // map(changes =>
-            // changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
-            // );
-        )
-            ;
+            ));
     }
 
 
