@@ -31,6 +31,17 @@ export class Item implements ItemType {
     this.currency = data.currency || '€';
   }
 
+  public static normalizeItem(motherInvoice: Invoice, inputItem: any): Item {
+    const itemData: ItemType = {
+        itemDate: inputItem.itemDate ? inputItem.itemDate.toDate() : new Date(), /// <th>Leistungsdatum</th>
+        itemName: inputItem.itemName ? inputItem.itemName : 'bspItemName',  // <th>Leistungsbeschreibung</th>
+        partialCost: inputItem.partialCost ? inputItem.partialCost : -99, // <th>Stückpreis</th>
+        count: inputItem.count ? inputItem.count : -11, // <th>Anzahl</th>
+        hourPayment: !!inputItem.hourPayment,
+        currency: inputItem.currency ? inputItem.currency : 'bspCurrency'
+    };
+    return new Item(motherInvoice, itemData);
+  }
 
   //region getter
   public getData(): ItemType {
@@ -57,7 +68,6 @@ export class Item implements ItemType {
     public countString(): string {
         return this.hourPayment ? (this.count.toString() + 'h') : (this.count.toString() + ' Stück');
     }
-
 
     public partialCostString(currency: string): string {
       return this.hourPayment ? (this.partialCost.toString() + currency + '/h') : (this.partialCost.toString() + currency);
