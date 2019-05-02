@@ -89,7 +89,7 @@ export class InvoiceKind implements InvoiceKindType {
   }
 
   public printToString(): string {
-      return `this.invoiceKind  ==={ _international ===${this._international}, _timeSpanBased ===${this._timeSpanBased}, 
+      return `this.invoiceKind  ==={ _international ===${this._international}, _timeSpanBased ===${this._timeSpanBased},
       _isSEPA ===${this._isSEPA}, !!!}`;
   }
 

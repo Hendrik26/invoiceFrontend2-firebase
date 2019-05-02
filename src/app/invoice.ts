@@ -11,12 +11,12 @@ export class Invoice implements InvoiceType {
     // //////////////////////
     ////////////////
 
-    //region static properties
+    // region static properties
     private static emptyData: InvoiceType = {
 
         countReminders: 0, // <th>Anzahl der Mahnungen</th>
         newCreatedInvoice: true,
-        //endregion
+        // endregion
         currency: '€',
 
         customerIBAN: 'bspCustomerIBAN',
@@ -57,11 +57,11 @@ export class Invoice implements InvoiceType {
             archived: false
         }
     };
-    //endregion
-    //region other properties
+    // endregion
+    // region other properties
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
-    //endregion
+    // endregion
     customer: Customer;
     currency = '€';
 
@@ -88,9 +88,9 @@ export class Invoice implements InvoiceType {
 
     customerId: string;
     customerData: CustomerType;
-    //region IDs
+    // region IDs
     private invoiceId: string; // <th>Ändern</th>
-    //endregion
+    // endregion
 
     private constructor(id: string, data: InvoiceType) {
         // IDs
@@ -100,7 +100,7 @@ export class Invoice implements InvoiceType {
 
         this.countReminders = data.countReminders; // <th>Anzahl der Mahnungen</th>
         this.newCreatedInvoice = data.newCreatedInvoice;
-        //endregion
+        // endregion
         this.currency = data.currency;
 
         this.customerIBAN = data.customerIBAN;
@@ -130,7 +130,7 @@ export class Invoice implements InvoiceType {
     }
 
 
-    //region static methods
+    // region static methods
     private static createItemTypeArray(items: Item[]): ItemType[] {
         // let itemTypes: ItemType[] = [];
         return items.map(item => {
@@ -156,6 +156,59 @@ export class Invoice implements InvoiceType {
             invoice.addNewItem(iT);
         });
         return invoice;
+    }
+
+    public static normalizeInvoice(inputInvoice: any): Invoice {
+        const invoiceData: InvoiceType = {
+            countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
+            newCreatedInvoice: !!inputInvoice.newCreatedInvoice,
+            // endregion
+            currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
+
+            customerIBAN: inputInvoice.customerIBAN ? inputInvoice.customerIBAN : 'bspCustomerIBAN',
+            mandateIdentification: inputInvoice.mandateIdentification ? inputInvoice.mandateIdentification : 'bspMandateIdentification',
+            // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+            customerTaxNumber: inputInvoice.customerTaxNumber ? inputInvoice.customerTaxNumber : 'bspCustomerTaxNumber',
+            invoiceDate: inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
+            invoiceDueDate: inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
+            invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
+            invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
+            // Verwendungszweck
+            invoiceKind: InvoiceKind.create(inputInvoice.invoiceKind.international,
+                inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA),
+            invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
+            itemTypes: [],
+            recipient: inputInvoice.recipient ? inputInvoice.recipient : 'bspRecipient', // <th>Empfänger</th>
+            salesTaxPercentage: inputInvoice.salesTaxPercentage ? inputInvoice.salesTaxPercentage : 19,
+            timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
+
+            timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() :  new Date(),
+            timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
+
+            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111, // <th>Gesamtpreis</th>
+
+            customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
+            customerData: {
+                customerNumber: inputInvoice.customer.customerNumber ? inputInvoice.customer.customerNumber : '2018', // Kundennummer
+                customerName: inputInvoice.customer.customerName ? inputInvoice.customer.customerName : 'emptyCustomer',  // Kundenname
+                country: inputInvoice.customer.country ? inputInvoice.customer.country : 'Deutschland',
+                postalCode: inputInvoice.customer.postalCode ? inputInvoice.customer.postalCode : '',
+                city: inputInvoice.customer.city ? inputInvoice.customer.city : '',
+                addressLine1: inputInvoice.customer.addressLine1 ? inputInvoice.customer.addressLine1 : '',
+                addressLine2: inputInvoice.customer.addressLine2 ? inputInvoice.customer.addressLine2 : '',
+                addressLine3: inputInvoice.customer.addressLine3 ? inputInvoice.customer.addressLine3 : '',
+                customerSalesTaxNumber: inputInvoice.customer.customerSalesTaxNumber ? inputInvoice.customer.customerSalesTaxNumber
+                    : '000000',
+                customerIBAN: inputInvoice.customer.customerIBAN ? inputInvoice.customer.customerIBAN : '',
+                mandateIdentification: inputInvoice.customer.mandateIdentification ? inputInvoice.customer.mandateIdentification : '',
+                // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+                creationTime: inputInvoice.customer.creationTime ? inputInvoice.customer.creationTime.toDate() : new Date(),
+                lastUpdateTime: inputInvoice.customer.lastUpdateTimey ? inputInvoice.customer.lastUpdateTime.toDate() : new Date(),
+                archived: inputInvoice.customer.country ? inputInvoice.customer.country : false
+            }
+        };
+        // return new Customer(inputInvoice.key, invoiceData);
+        return Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
     }
 
     public static firstLine(inString: string): string {
@@ -208,15 +261,15 @@ export class Invoice implements InvoiceType {
 
 
 
-    //endregion
+    // endregion
 
 
-    //region getter
+    // region getter
     public getID(): string {
         return this.invoiceId;
     }
 
-    //region other methods
+    // region other methods
     public addNewItem(itemType: ItemType): number {
         // TODO add new Item
         const createdItem = new Item(this, itemType);
@@ -225,7 +278,7 @@ export class Invoice implements InvoiceType {
         return createdItem.getItemId();
     }
 
-    //endregion
+    // endregion
 
     // setter
 
@@ -256,7 +309,7 @@ export class Invoice implements InvoiceType {
         return {
             countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
             newCreatedInvoice: this.newCreatedInvoice,
-            //endregion
+            // endregion
             currency: this.currency,
             customerIBAN: this.customerIBAN,
             mandateIdentification: this.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
@@ -289,7 +342,7 @@ export class Invoice implements InvoiceType {
         }
     }
 
-    //endregion
+    // endregion
 
 
 

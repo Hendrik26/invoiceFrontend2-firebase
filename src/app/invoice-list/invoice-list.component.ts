@@ -21,7 +21,7 @@ export class InvoiceListComponent implements OnInit {
 
     // invoicesNew: Invoice[] = [{...this.invoiceService.standardInvoice}]; // clones this.standardInvoice
 
-    //region other properties
+    // region other properties
     invoices: Invoice[];
     invoicesShort: InvoiceShort[];
     filterStartDate: Date;
@@ -33,16 +33,16 @@ export class InvoiceListComponent implements OnInit {
     companySelectOptions2: string[];
     invoiceFilterCompany = '--alle--';
 
-    //endregion
+    // endregion
 
-    //region ThreeStateButtons
+    // region ThreeStateButtons
     sortStartDueDate: ThreeStateButton;
     sortEndDueDate: ThreeStateButton;
     sortStartDate: ThreeStateButton;
     sortEndDate: ThreeStateButton;
     sortCompanyName: ThreeStateButton;
 
-    //endregion
+    // endregion
 
     constructor(private fbInvoiceService: FbInvoiceService,
                 private invoiceService: InvoiceService,
