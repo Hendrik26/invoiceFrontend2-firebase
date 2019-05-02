@@ -45,17 +45,17 @@ export class InvoiceKind implements InvoiceKindType {
 
     public static create(international: boolean, timeSpanBased: boolean, isSEPA: boolean): InvoiceKind {
       const invoiceKind = new InvoiceKind();
-      invoiceKind.international = international;
-      invoiceKind.timeSpanBased = timeSpanBased;
-      invoiceKind.isSEPA = isSEPA;
+      invoiceKind.international = !!international;
+      invoiceKind.timeSpanBased = !!timeSpanBased;
+      invoiceKind.isSEPA = !!isSEPA;
       return invoiceKind;
     }
 
     public static create01(data: InvoiceKindType): InvoiceKind {
         const invoiceKind = new InvoiceKind();
-        invoiceKind.international = data.international;
-        invoiceKind.timeSpanBased = data.timeSpanBased;
-        invoiceKind.isSEPA = data.isSEPA;
+        invoiceKind.international = !!data.international;
+        invoiceKind.timeSpanBased = !!data.timeSpanBased;
+        invoiceKind.isSEPA = !!data.isSEPA;
         return invoiceKind;
     }
 

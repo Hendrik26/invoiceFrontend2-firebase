@@ -174,7 +174,7 @@ export class Invoice implements InvoiceType {
             invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
             invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
             // Verwendungszweck
-            invoiceKind: InvoiceKind.create(!!inputInvoice.invoiceKind.international,
+            invoiceKind: InvoiceKind.create(inputInvoice.invoiceKind.international,
                 inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA),
             invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
             itemTypes: [],
