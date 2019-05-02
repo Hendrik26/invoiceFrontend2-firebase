@@ -174,8 +174,10 @@ export class Invoice implements InvoiceType {
             invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
             invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
             // Verwendungszweck
-            invoiceKind: InvoiceKind.create(inputInvoice.invoiceKind.international,
-                inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA),
+            /* invoiceKind: InvoiceKind.create(inputInvoice.invoiceKind.international,
+                inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA), */
+            invoiceKind: InvoiceKind.create(false,
+                false, false),
             invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
             itemTypes: [],
             recipient: inputInvoice.recipient ? inputInvoice.recipient : 'bspRecipient', // <th>Empfänger</th>
@@ -188,7 +190,7 @@ export class Invoice implements InvoiceType {
             wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111, // <th>Gesamtpreis</th>
 
             customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
-            customerData: {
+            customerData: inputInvoice.customer ? {
                 customerNumber: inputInvoice.customer.customerNumber ? inputInvoice.customer.customerNumber : '2018', // Kundennummer
                 customerName: inputInvoice.customer.customerName ? inputInvoice.customer.customerName : 'emptyCustomer',  // Kundenname
                 country: inputInvoice.customer.country ? inputInvoice.customer.country : 'Deutschland',
@@ -205,7 +207,7 @@ export class Invoice implements InvoiceType {
                 creationTime: inputInvoice.customer.creationTime ? inputInvoice.customer.creationTime.toDate() : new Date(),
                 lastUpdateTime: inputInvoice.customer.lastUpdateTimey ? inputInvoice.customer.lastUpdateTime.toDate() : new Date(),
                 archived: inputInvoice.customer.country ? inputInvoice.customer.country : false
-            }
+            } : Customer.getEmptyCustomer()
         };
         // return new Customer(inputInvoice.key, invoiceData);
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);

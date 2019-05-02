@@ -63,6 +63,10 @@ export class Customer implements CustomerType {
     }
 
     // region static methods
+    public static getEmptyCustomer(): CustomerType {
+        return Customer.emptyCustomer;
+    }
+
     public static createNewCustomerId() {
         const methDate: Date = new Date();
         return 'Cus' + methDate.getTime();
