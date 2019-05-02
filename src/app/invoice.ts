@@ -277,6 +277,10 @@ export class Invoice implements InvoiceType {
         return this.invoiceId;
     }
 
+    public getCustomerName(): string {
+        return this.customer.customerName;
+    }
+
     // region other methods
     public addNewItem(itemType: ItemType): number {
         // TODO add new Item
