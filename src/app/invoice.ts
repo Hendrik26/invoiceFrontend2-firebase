@@ -208,7 +208,12 @@ export class Invoice implements InvoiceType {
             }
         };
         // return new Customer(inputInvoice.key, invoiceData);
-        return Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
+        const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
+        inputInvoice.itemTypes.forEach(function (itemType) {
+            retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
+        });
+
+        return retInvoice;
     }
 
     public static firstLine(inString: string): string {
