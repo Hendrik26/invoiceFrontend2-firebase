@@ -176,7 +176,8 @@ export class Invoice implements InvoiceType {
             // Verwendungszweck
             /* invoiceKind: InvoiceKind.create(inputInvoice.invoiceKind.international,
                 inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA), */
-            invoiceKind: InvoiceKind.create(false,
+            invoiceKind: inputInvoice.invoiceKind ? InvoiceKind.create(inputInvoice.invoiceKind.international,
+                inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA) : InvoiceKind.create(false,
                 false, false),
             invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
             itemTypes: [],
