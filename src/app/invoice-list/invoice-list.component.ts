@@ -50,6 +50,7 @@ export class InvoiceListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.testBool();
         this.receiveInvoices();
         // this.companySelectOptions = this.calculateCompanySelectOptions(this.invoices);
         // this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
@@ -59,12 +60,23 @@ export class InvoiceListComponent implements OnInit {
         // this.initialSaveInvoicesToDB02();
     }
 
+    testBool() {
+        let myTestBool: boolean;
+        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
+        myTestBool = !myTestBool;
+        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
+        myTestBool = !myTestBool;
+        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
+    }
+
     receiveInvoices(): void {
         this.fbInvoiceService.getInvoiceList('all')
             .subscribe(invoices => {
                 // this.invoices = invoices;
                 // this.invoicesShort = invoices;
                 this.invoicesShort = invoices.map(invoice => InvoiceShort.normalizeInvoiceShort(invoice));
+                console.log('Next InvoiceShort received!', this.invoicesShort);
+                this.invoices = invoices.map(invoice => Invoice.normalizeInvoice(invoice));
                 console.log('Next Invoice received!', this.invoices);
             });
     }
