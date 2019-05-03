@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Customer} from '../customer';
+import {map} from 'rxjs/operators';
 
 
 @Component({
@@ -30,18 +31,17 @@ export class InvoiceListComponent implements OnInit {
     minDate = new Date(1900, 1, 1);
     invoiceFilterDateOption = 0;
 
-    // filterStartDate = new Date(this.minDate);
-    // filterEndDate = new Date(this.maxDate);
     filterStartDate: Date;
     filterEndDate: Date;
-    filterStartDueDate: Date;
-    filterEndDueDate: Date;
     invoiceFilterStateOption = 0;
-    invoiceFilterState = 'none';
-    companySelectOptions: object[];
-    companySelectOptions2: string[];
-    invoiceFilterCompany = '--alle--';
-
+    invoiceFilterState = 'Kein';
+    // customers: object[];
+    // companySelectOptions2: Customer[];
+    invoiceFilterCompany = undefined;
+    customers: Customer[];
+    invoiceFilterCompanyOption = 0;
+    invoiceFilterArchive = 'notArchive';
+    invoiceFilterArchiveOption = 16;
     // endregion
 
     // region ThreeStateButtons
@@ -53,6 +53,13 @@ export class InvoiceListComponent implements OnInit {
 
     // endregion
 
+    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
+        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
+            return -1;
+        }
+        return 1;
+    }
+
     constructor(private fbInvoiceService: FbInvoiceService,
                 private invoiceService: InvoiceService,
                 private router: Router) {
@@ -61,7 +68,8 @@ export class InvoiceListComponent implements OnInit {
     ngOnInit() {
         this.testBool();
         this.receiveInvoices();
-        // this.companySelectOptions = this.calculateCompanySelectOptions(this.invoices);
+        this.receiveCustomers();
+        // this.customers = this.calculateCompanySelectOptions(this.invoices);
         // this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
         // this.sortStartDueDate = new ThreeStateButton('DueDate');
         // this.sortStartDate = new ThreeStateButton('Date');
@@ -95,20 +103,31 @@ export class InvoiceListComponent implements OnInit {
             });
     }
 
-    initialSaveInvoicesToDB(){
+
+    receiveCustomers(): void {
+        this.fbInvoiceService.getCustomersList('notArchive')
+            .subscribe(data => {
+                this.customers = data.map(x => Customer.normalizeCustomer(x));
+                this.customers.sort(function (a, b) {
+                    return InvoiceListComponent.compareCustomersByName(a, b);
+                });
+            });
+    }
+
+    initialSaveInvoicesToDB() {
         let invoice: any;
         for (invoice in INVOICES) {
             this.fbInvoiceService.createInvoice(invoice.exportInvoiceData());
         }
     }
 
-    initialSaveInvoicesToDB01(){
-        INVOICES.forEach(function(invoice) {
+    initialSaveInvoicesToDB01() {
+        INVOICES.forEach(function (invoice) {
             this.fbInvoiceService.createInvoice(invoice.exportInvoiceData());
         });
     }
 
-    initialSaveInvoicesToDB02(){
+    initialSaveInvoicesToDB02() {
         for (let i = 0; i < INVOICES.length; i++) {
             this.fbInvoiceService.createInvoice(INVOICES[i].exportInvoiceData());
         }
@@ -133,7 +152,6 @@ export class InvoiceListComponent implements OnInit {
     }
 
 
-
     // region other methods
 
     changeFilterStartDate(e: string) {
@@ -152,7 +170,17 @@ export class InvoiceListComponent implements OnInit {
     }
 
     changeFilterState(e: string) {
-        this.invoiceFilterStateOption = e == 'none' ? 0 : 4;
+        this.invoiceFilterStateOption = e == 'Kein'  ? 0 : 4;
+        this.receiveInvoices();
+    }
+
+    changeFilterCompany(e: string) {
+        this.invoiceFilterCompanyOption = e ? 8 : 0;
+        this.receiveInvoices();
+    }
+
+    changeFilterArchive(e: string) {
+        this.invoiceFilterArchiveOption = e == 'all'  ? 0 : 16;
         this.receiveInvoices();
     }
 
@@ -197,7 +225,7 @@ export class InvoiceListComponent implements OnInit {
 
 
     sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
-    // sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
+        // sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
         let retInvoices: Invoice[] = invoices;
         if (!sortButtons) {
             return invoices;
@@ -214,33 +242,44 @@ export class InvoiceListComponent implements OnInit {
         return retInvoices;
     }
 
-/*
-    filterInvoice(invoices: Invoice[]): Invoice[] {
-        // TODO filter
-        let retInvoices = invoices
-            .filter(invoice => this.dateGreaterEqualThen(invoice.invoiceDate, this.filterStartDate))
-            .filter(invoice => this.dateGreaterEqualThen(this.filterEndDate, invoice.invoiceDate))
-            .filter(invoice => this.dateGreaterEqualThen(invoice.invoiceDueDate, this.filterStartDueDate))
-            .filter(invoice => this.dateGreaterEqualThen(this.filterEndDueDate, invoice.invoiceDueDate))
-            .filter(invoice => this.checkInvoiceState(invoice, this.invoiceFilterState))
-            .filter(invoice => this.checkInvoiceCompanyName(invoice, this.invoiceFilterCompany))
-        ;
-        let sortedInvoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
-            retInvoices);
-        return sortedInvoices;
-    }
-*/
+    /*
+        filterInvoice(invoices: Invoice[]): Invoice[] {
+            // TODO filter
+            let retInvoices = invoices
+                .filter(invoice => this.dateGreaterEqualThen(invoice.invoiceDate, this.filterStartDate))
+                .filter(invoice => this.dateGreaterEqualThen(this.filterEndDate, invoice.invoiceDate))
+                .filter(invoice => this.dateGreaterEqualThen(invoice.invoiceDueDate, this.filterStartDueDate))
+                .filter(invoice => this.dateGreaterEqualThen(this.filterEndDueDate, invoice.invoiceDueDate))
+                .filter(invoice => this.checkInvoiceState(invoice, this.invoiceFilterState))
+                .filter(invoice => this.checkInvoiceCompanyName(invoice, this.invoiceFilterCompany))
+            ;
+            let sortedInvoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
+                retInvoices);
+            return sortedInvoices;
+        }
+    */
+
     // region getter
     private getGreatPastDate(): Date {
         return new Date('1871-01-18');
     }
 
     private checkInvoiceState(invoice: Invoice, filterState: string): boolean {
-        if (filterState == undefined) return true;
-        if (filterState == null) return true;
-        if (filterState.trim() == '') return true;
-        if (filterState.trim().toLowerCase() == 'none') return true;
-        if (filterState.trim().toLocaleLowerCase() == 'kein') return true;
+        if (filterState == undefined) {
+            return true;
+        }
+        if (filterState == null) {
+            return true;
+        }
+        if (filterState.trim() == '') {
+            return true;
+        }
+        if (filterState.trim().toLowerCase() == 'none') {
+            return true;
+        }
+        if (filterState.trim().toLocaleLowerCase() == 'kein') {
+            return true;
+        }
 
         if (filterState.trim() == invoice.invoiceState) {
             return true;
@@ -251,10 +290,16 @@ export class InvoiceListComponent implements OnInit {
 
     private checkInvoiceCompanyName(invoice: Invoice, filterCompanyName: string): boolean {
         // Fragezeichen vor Doppelpunkt in ParamListe: Dieser Parameter kann Null werden
-        if (isNullOrUndefined(filterCompanyName)) return true;
-        if (filterCompanyName.trim().toLowerCase() == '') return true;
+        if (isNullOrUndefined(filterCompanyName)) {
+            return true;
+        }
+        if (filterCompanyName.trim().toLowerCase() == '') {
+            return true;
+        }
 
-        if (filterCompanyName.trim().toLowerCase() == '--alle--') return true;
+        if (filterCompanyName.trim().toLowerCase() == '--alle--') {
+            return true;
+        }
         if (filterCompanyName.trim() == invoice.companyName()) {
             return true;
         } else {
