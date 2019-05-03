@@ -18,7 +18,6 @@ import {Customer} from '../customer';
 })
 export class InvoiceListComponent implements OnInit {
     ////////////
-    // branch dev2019-04-26a_sortingInvoices
 
     // invoicesNew: Invoice[] = [{...this.invoiceService.standardInvoice}]; // clones this.standardInvoice
 
