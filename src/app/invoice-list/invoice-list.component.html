@@ -1,5 +1,41 @@
 <h1>Test</h1>
+<div class="flex-container">
+    <div>
+        Datumsbereich<br>
+        <select [(ngModel)]="invoiceFilterDateOption" (ngModelChange)="changeFilterDateOption($event)">
+            <option value="0">Kein</option>
+            <option value="2">Rechnungsdatum</option>
+            <option value="3">Fälligkeitsdatum</option>
+        </select>
 
+
+    </div>
+    <div>
+        Datum von <br><input type="date" name="fStartDate" [ngModel]="filterStartDate | date:'yyyy-MM-dd'"
+                                      (ngModelChange)="changeFilterStartDate($event)"></div>
+    <div>Datum bis<br><input type="date" name="fEndDate" [ngModel]="filterEndDate | date:'yyyy-MM-dd'"
+                                      (ngModelChange)="changeFilterEndDate($event)"></div>
+    <!--
+    <div>Status<br>
+        <select [(ngModel)]="invoiceFilterState">
+            <option value="none">Kein</option>
+            <option value="Entwurf">Entwurf</option>
+            <option value="offen">offen</option>
+            <option value="teilweise bezahlt">teilweise bezahlt</option>
+            <option value="bezahlt">bezahlt</option>
+        </select>
+    </div>
+    <div>Emfpänger<br>
+        <select [(ngModel)]="invoiceFilterCompany" >
+
+            <option *ngFor="let opt of companySelectOptions2" [ngValue]="opt">
+                {{opt}}
+            </option>
+        </select>
+
+    </div> -->
+
+</div>
 <table style="width:100%">
     <thead>
     <tr>
