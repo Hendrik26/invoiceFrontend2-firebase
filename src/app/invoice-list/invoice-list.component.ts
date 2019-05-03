@@ -16,6 +16,8 @@ import {Customer} from '../customer';
     templateUrl: './invoice-list.component.html',
     styleUrls: ['./invoice-list.component.css']
 })
+
+
 export class InvoiceListComponent implements OnInit {
     ////////////
 
@@ -24,6 +26,11 @@ export class InvoiceListComponent implements OnInit {
     // region other properties
     invoices: Invoice[];
     invoicesShort: InvoiceShort[];
+    maxDate = new Date(2100, 1, 1);
+    minDate = new Date(1900, 1, 1);
+    invoiceFilterDateOption = 0;
+    // filterStartDate = new Date(this.minDate);
+    // filterEndDate = new Date(this.maxDate);
     filterStartDate: Date;
     filterEndDate: Date;
     filterStartDueDate: Date;
@@ -122,17 +129,17 @@ export class InvoiceListComponent implements OnInit {
 
 
 
-    //region other methods
+    // region other methods
     changeFilterStartDate(e: string) {
-        this.filterStartDate = e ? new Date(e) : null;
+        this.filterStartDate = e ? new Date(e) : this.minDate;
     }
 
     changeFilterEndDate(e: string) {
-        this.filterEndDate = e ? new Date(e) : null;
+        this.filterEndDate = e ? new Date(e) : this.maxDate;
     }
 
 
-    changeFilterStartDueDate(e: string) {
+    changeFilterDateOption(e: string) {
         this.filterStartDueDate = e ? new Date(e) : null;
     }
 
@@ -148,7 +155,7 @@ export class InvoiceListComponent implements OnInit {
     }
 
 
-    //endregion
+    // endregion
 
 
     public dateGreaterEqualThen(date1: Date, date2: Date): boolean {
@@ -198,7 +205,7 @@ export class InvoiceListComponent implements OnInit {
         return retInvoices;
     }
 
-
+/*
     filterInvoice(invoices: Invoice[]): Invoice[] {
         // TODO filter
         let retInvoices = invoices
@@ -213,8 +220,8 @@ export class InvoiceListComponent implements OnInit {
             retInvoices);
         return sortedInvoices;
     }
-
-    //region getter
+*/
+    // region getter
     private getGreatPastDate(): Date {
         return new Date('1871-01-18');
     }
@@ -256,6 +263,6 @@ export class InvoiceListComponent implements OnInit {
         return ret;
     }
 
-    //endregion
+    // endregion
 
 }
