@@ -212,9 +212,11 @@ export class Invoice implements InvoiceType {
         };
         // return new Customer(inputInvoice.key, invoiceData);
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
-        /* inputInvoice.itemTypes.forEach(function (itemType) {
-            retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
-        }); */
+        if (inputInvoice.itemTypes) {
+                inputInvoice.itemTypes.forEach(function (itemType) {
+                    retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
+                });
+        }
 
         return retInvoice;
     }

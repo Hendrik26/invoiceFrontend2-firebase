@@ -33,7 +33,7 @@ export class Item implements ItemType {
 
   public static normalizeItem(motherInvoice: Invoice, inputItem: any): Item {
     const itemData: ItemType = {
-        itemDate: inputItem.itemDate ? inputItem.itemDate.toDate() : new Date(), /// <th>Leistungsdatum</th>
+        itemDate: inputItem.itemDate ? inputItem.itemDate : new Date(), /// <th>Leistungsdatum</th>
         itemName: inputItem.itemName ? inputItem.itemName : 'bspItemName',  // <th>Leistungsbeschreibung</th>
         partialCost: inputItem.partialCost ? inputItem.partialCost : -99, // <th>Stückpreis</th>
         count: inputItem.count ? inputItem.count : -11, // <th>Anzahl</th>
