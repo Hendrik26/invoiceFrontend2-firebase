@@ -29,12 +29,14 @@ export class InvoiceListComponent implements OnInit {
     maxDate = new Date(2100, 1, 1);
     minDate = new Date(1900, 1, 1);
     invoiceFilterDateOption = 0;
+
     // filterStartDate = new Date(this.minDate);
     // filterEndDate = new Date(this.maxDate);
     filterStartDate: Date;
     filterEndDate: Date;
     filterStartDueDate: Date;
     filterEndDueDate: Date;
+    invoiceFilterStateOption = 0;
     invoiceFilterState = 'none';
     companySelectOptions: object[];
     companySelectOptions2: string[];
@@ -79,14 +81,17 @@ export class InvoiceListComponent implements OnInit {
     }
 
     receiveInvoices(): void {
-        this.fbInvoiceService.getInvoiceList('all')
+        const refIndex: number = Number(this.invoiceFilterDateOption) + Number(this.invoiceFilterStateOption);
+        const filterStartDate = this.filterStartDate ? this.filterStartDate : this.minDate;
+        const filterEndDate = this.filterEndDate ? this.filterEndDate : this.maxDate;
+        this.fbInvoiceService.getInvoiceList(refIndex, filterStartDate, filterEndDate, this.invoiceFilterState, 'all')
             .subscribe(invoices => {
                 // this.invoices = invoices;
                 // this.invoicesShort = invoices;
                 this.invoicesShort = invoices.map(invoice => InvoiceShort.normalizeInvoiceShort(invoice));
                 console.log('Next InvoiceShort received!', this.invoicesShort);
                 this.invoices = invoices.map(invoice => Invoice.normalizeInvoice(invoice));
-                console.log('Next Invoice received!', this.invoices);
+                // console.log('Next Invoice received!', this.invoices);
             });
     }
 
@@ -130,21 +135,25 @@ export class InvoiceListComponent implements OnInit {
 
 
     // region other methods
+
     changeFilterStartDate(e: string) {
-        this.filterStartDate = e ? new Date(e) : this.minDate;
+        this.filterStartDate = e ? new Date(e) : null;
+        this.receiveInvoices();
     }
 
     changeFilterEndDate(e: string) {
-        this.filterEndDate = e ? new Date(e) : this.maxDate;
+        this.filterEndDate = e ? new Date(e) : null;
+        this.receiveInvoices();
     }
 
 
-    changeFilterDateOption(e: string) {
-        this.filterStartDueDate = e ? new Date(e) : null;
+    changeFilterDateOption() {
+        this.receiveInvoices();
     }
 
-    changeFilterEndDueDate(e: string) {
-        this.filterEndDueDate = e ? new Date(e) : null;
+    changeFilterState(e: string) {
+        this.invoiceFilterStateOption = e == 'none' ? 0 : 4;
+        this.receiveInvoices();
     }
 
     public newInvoiceBtn(): void {

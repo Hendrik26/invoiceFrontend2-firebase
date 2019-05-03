@@ -130,7 +130,30 @@ export class FbInvoiceService {
         );
     }
 
-    getInvoiceList(archive: string): Observable<any> {
+    getInvoiceList(refIndex: number, filterStartDate: Date, filterEndDate: Date, filterState: string, archive: string): Observable<any> {
+        // let invoiceRef: AngularFirestoreCollection<Invoice> = null;
+        const invoiceRefs: AngularFirestoreCollection<Invoice>[] = [
+          this.db.collection(this.dbInvoicePath),
+          null,
+          this.db.collection(this.dbInvoicePath,
+              ref => ref.where('invoiceDate', '>=', filterStartDate)
+                  .where('invoiceDate', '<=', filterEndDate)),
+          this.db.collection(this.dbInvoicePath,
+              ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                  .where('invoiceDueDate', '<=', filterEndDate)),
+          this.db.collection(this.dbInvoicePath,
+              ref => ref.where('invoiceState', '==', filterState)),
+          null,
+          this.db.collection(this.dbInvoicePath,
+              ref => ref.where('invoiceDate', '>=', filterStartDate)
+                  .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+          this.db.collection(this.dbInvoicePath,
+              ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                  .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState))
+
+      ]
+
+        /*
         console.log('Method fb-invoice.service.getInvoiceList() started!!!');
         console.log('Archiv', archive);
         let invoiceRef: AngularFirestoreCollection<Invoice> = null;
@@ -150,7 +173,9 @@ export class FbInvoiceService {
             }
         }
         console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
-        return invoiceRef.snapshotChanges().pipe(
+        */
+        // const invoiceRef: AngularFirestoreCollection<Invoice> = invoiceRefs[refIndex];
+        return invoiceRefs[refIndex].snapshotChanges().pipe(
             map(changes =>
                 changes.map(c => ({
                     key: c.payload.doc.id,

@@ -2,7 +2,7 @@
 <div class="flex-container">
     <div>
         Datumsbereich<br>
-        <select [(ngModel)]="invoiceFilterDateOption" (ngModelChange)="changeFilterDateOption($event)">
+        <select [(ngModel)]="invoiceFilterDateOption" (ngModelChange)="changeFilterDateOption()">
             <option value="0">Kein</option>
             <option value="2">Rechnungsdatum</option>
             <option value="3">Fälligkeitsdatum</option>
@@ -12,12 +12,13 @@
     </div>
     <div>
         Datum von <br><input type="date" name="fStartDate" [ngModel]="filterStartDate | date:'yyyy-MM-dd'"
-                                      (ngModelChange)="changeFilterStartDate($event)"></div>
+                             (ngModelChange)="changeFilterStartDate($event)">
+    </div>
     <div>Datum bis<br><input type="date" name="fEndDate" [ngModel]="filterEndDate | date:'yyyy-MM-dd'"
-                                      (ngModelChange)="changeFilterEndDate($event)"></div>
-    <!--
+                             (ngModelChange)="changeFilterEndDate($event)">
+    </div>
     <div>Status<br>
-        <select [(ngModel)]="invoiceFilterState">
+        <select [(ngModel)]="invoiceFilterState" (ngModelChange)="changeFilterState($event)">
             <option value="none">Kein</option>
             <option value="Entwurf">Entwurf</option>
             <option value="offen">offen</option>
@@ -25,6 +26,7 @@
             <option value="bezahlt">bezahlt</option>
         </select>
     </div>
+    <!--
     <div>Emfpänger<br>
         <select [(ngModel)]="invoiceFilterCompany" >
 
