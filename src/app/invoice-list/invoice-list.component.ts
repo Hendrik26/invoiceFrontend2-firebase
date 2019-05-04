@@ -67,13 +67,13 @@ export class InvoiceListComponent implements OnInit {
 
     ngOnInit() {
         this.testBool();
+        this.sortStartDueDate = new ThreeStateButton('DueDate');
+        this.sortStartDate = new ThreeStateButton('Date');
+        this.sortCompanyName = new ThreeStateButton('CompanyName');
         this.receiveInvoices();
         this.receiveCustomers();
         // this.customers = this.calculateCompanySelectOptions(this.invoices);
         // this.companySelectOptions2 = this.calculateCompanySelectOptions2(this.invoices);
-        // this.sortStartDueDate = new ThreeStateButton('DueDate');
-        // this.sortStartDate = new ThreeStateButton('Date');
-        // this.sortCompanyName = new ThreeStateButton('CompanyName');
         // this.initialSaveInvoicesToDB02();
     }
 
@@ -105,6 +105,7 @@ export class InvoiceListComponent implements OnInit {
                 this.invoices = invoices.map(invoice => Invoice.normalizeInvoice(invoice));
                 // console.log('Next Invoice received!', this.invoices);
             });
+        this.sortInvoice();
     }
 
 
@@ -141,18 +142,21 @@ export class InvoiceListComponent implements OnInit {
         this.sortStartDate.reset();
         this.sortCompanyName.reset();
         this.sortStartDueDate.switch();
+        this.sortInvoice();
     }
 
     sortStartDateClick(): void {
         this.sortStartDueDate.reset();
         this.sortCompanyName.reset();
         this.sortStartDate.switch();
+        this.sortInvoice();
     }
 
     sortCompanyNameClick(): void {
         this.sortStartDueDate.reset();
         this.sortStartDate.reset();
         this.sortCompanyName.switch();
+        this.sortInvoice();
     }
 
 
@@ -246,22 +250,16 @@ export class InvoiceListComponent implements OnInit {
         return retInvoices;
     }
 
-    /*
-        filterInvoice(invoices: Invoice[]): Invoice[] {
+
+        sortInvoice(): void {
             // TODO filter
-            let retInvoices = invoices
-                .filter(invoice => this.dateGreaterEqualThen(invoice.invoiceDate, this.filterStartDate))
-                .filter(invoice => this.dateGreaterEqualThen(this.filterEndDate, invoice.invoiceDate))
-                .filter(invoice => this.dateGreaterEqualThen(invoice.invoiceDueDate, this.filterStartDueDate))
-                .filter(invoice => this.dateGreaterEqualThen(this.filterEndDueDate, invoice.invoiceDueDate))
-                .filter(invoice => this.checkInvoiceState(invoice, this.invoiceFilterState))
-                .filter(invoice => this.checkInvoiceCompanyName(invoice, this.invoiceFilterCompany))
-            ;
-            let sortedInvoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
+            let retInvoices = this.invoices;
+
+            this.invoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
                 retInvoices);
-            return sortedInvoices;
+
         }
-    */
+
 
     // region getter
     private getGreatPastDate(): Date {

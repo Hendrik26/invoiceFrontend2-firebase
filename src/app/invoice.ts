@@ -107,7 +107,7 @@ export class Invoice implements InvoiceType {
 
         this.customerIBAN = data.customerIBAN;
 
-        this.customerTaxNumber =  data.customerTaxNumber;
+        this.customerTaxNumber = data.customerTaxNumber;
         this.invoiceDate = data.invoiceDate; // <th>Rechnungsdatum</th>
         this.invoiceDueDate = data.invoiceDueDate; // Faelligkeitsdatum
         this.invoiceNumber = data.invoiceNumber; // <th>RechnungsNr</th>
@@ -151,10 +151,10 @@ export class Invoice implements InvoiceType {
         return methInvoice;
     }
 
-     public static createInvoiceFromExistingId(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
+    public static createInvoiceFromExistingId(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
         let invoice: Invoice;
         invoice = new Invoice(invId, data);
-        data.itemTypes.forEach( iT => {
+        data.itemTypes.forEach(iT => {
             invoice.addNewItem(iT);
         });
         return invoice;
@@ -188,7 +188,7 @@ export class Invoice implements InvoiceType {
             salesTaxPercentage: inputInvoice.salesTaxPercentage ? inputInvoice.salesTaxPercentage : 19,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
 
-            timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() :  new Date(),
+            timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
 
             wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111, // <th>Gesamtpreis</th>
@@ -216,9 +216,9 @@ export class Invoice implements InvoiceType {
         // return new Customer(inputInvoice.key, invoiceData);
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
         if (inputInvoice.itemTypes) {
-                inputInvoice.itemTypes.forEach(function (itemType) {
-                    retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
-                });
+            inputInvoice.itemTypes.forEach(function (itemType) {
+                retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
+            });
         }
 
         return retInvoice;
@@ -238,7 +238,7 @@ export class Invoice implements InvoiceType {
     }
 
     public static compareInvoicesByCompanyName(invoice01: Invoice, invoice02: Invoice): number {
-        if (invoice01.companyName().trim().toLowerCase() < invoice02.companyName().trim().toLowerCase()) {
+        if (invoice01.customerData.customerName.trim().toLowerCase() < invoice02.customerData.customerName.trim().toLowerCase()) {
             return -1;
         }
         return 1;
@@ -271,7 +271,6 @@ export class Invoice implements InvoiceType {
         }
         return invoices;
     }
-
 
 
     // endregion
@@ -308,7 +307,7 @@ export class Invoice implements InvoiceType {
         return this.getMaxItemId() + 1;
     }
 
-    private  createItemArray(itemTypes: ItemType[]): Item[] {
+    private createItemArray(itemTypes: ItemType[]): Item[] {
         return itemTypes.map(itemType => {
             return new Item(this, itemType);
         });
@@ -361,7 +360,6 @@ export class Invoice implements InvoiceType {
     }
 
     // endregion
-
 
 
 }
