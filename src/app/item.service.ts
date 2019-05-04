@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Invoice} from './invoice';
 
 import {Item} from './item';
-import {INVOICES} from './mock-invoice';
+// import {INVOICES} from './mock-invoice';
 import {Observable, of} from 'rxjs';
 
 

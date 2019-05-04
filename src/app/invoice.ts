@@ -5,7 +5,6 @@ import {InvoiceType} from './invoice-type';
 import {InvoiceKind} from './invoice-kind';
 import {InvoiceKindType} from './invoice-kind-type';
 import {ItemType} from './item-type';
-import {INVOICES} from './mock-invoice';
 
 export class Invoice implements InvoiceType {
     // //////////////////////

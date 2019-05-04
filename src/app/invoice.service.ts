@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Invoice} from './invoice';
-import {INVOICES} from './mock-invoice';
+// import {INVOICES} from './mock-invoice';
 import {Observable, of} from 'rxjs';
 import {ItemType} from './item-type';
 import {InvoiceType} from './invoice-type';

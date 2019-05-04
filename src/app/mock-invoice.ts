@@ -1,7 +1,7 @@
 import {Invoice} from './invoice';
 import {InvoiceKind} from './invoice-kind';
 
-const invoice01 = Invoice.createInvoiceFromExistingId('In001', {
+/* const invoice01 = Invoice.createInvoiceFromExistingId('In001', {
   archived: false,
   invoiceDate: new Date('2016-02-04'), invoiceNumber: '2018abcd', recipient: 'DumpfbackeGmbH',
   invoiceDueDate: new Date('2016-02-24'),
@@ -118,4 +118,4 @@ invoice03.addNewItem({
   partialCost: 60.00, count: 5, hourPayment: false, currency: '€'
 });
 
-export const INVOICES: Invoice[] = [invoice01, invoice02, invoice03];
+export const INVOICES: Invoice[] = [invoice01, invoice02, invoice03]; */
