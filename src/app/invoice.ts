@@ -7,8 +7,6 @@ import {InvoiceKindType} from './invoice-kind-type';
 import {ItemType} from './item-type';
 
 export class Invoice implements InvoiceType {
-    // //////////////////////
-    //////////
 
     // region static properties
     private static emptyData: InvoiceType = {

@@ -18,7 +18,6 @@ import {map} from 'rxjs/operators';
 
 
 export class InvoiceListComponent implements OnInit {
-    ////////////
 
     // invoicesNew: Invoice[] = [{...this.invoiceService.standardInvoice}]; // clones this.standardInvoice
 
