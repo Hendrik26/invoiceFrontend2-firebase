@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Item} from '../item';
 import {ItemService} from '../item.service';
-import {InvoiceService} from '../invoice.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -37,7 +36,6 @@ export class ItemDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private invoiceService: InvoiceService,
     private itemService: ItemService
   ) {
   }

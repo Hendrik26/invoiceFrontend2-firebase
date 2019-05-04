@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Invoice} from '../invoice';
 import {InvoiceShort} from '../invoice-short';
-import {InvoiceService} from '../invoice.service';
 import {isNullOrUndefined} from 'util';
 import {ThreeStateButton} from '../three-state-button';
-import {INVOICES} from '../mock-invoice';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
@@ -61,7 +59,6 @@ export class InvoiceListComponent implements OnInit {
     }
 
     constructor(private fbInvoiceService: FbInvoiceService,
-                private invoiceService: InvoiceService,
                 private router: Router) {
     }
 
@@ -174,8 +171,9 @@ export class InvoiceListComponent implements OnInit {
     }
 
     public newInvoiceBtn(): void {
+        // TODO save new invoice to firebase-DB
         const invoice = Invoice.createNewInvoice();
-        INVOICES.push(invoice);
+        // code deleted here
         const invoiceId = invoice.getID();
         this.router.navigateByUrl('invoice-detail/' + invoiceId);
     }
@@ -234,7 +232,7 @@ export class InvoiceListComponent implements OnInit {
 
         sortInvoice(): void {
             // DONE filter
-            let retInvoices = this.invoices;
+            const retInvoices = this.invoices;
 
             this.invoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
                 retInvoices);

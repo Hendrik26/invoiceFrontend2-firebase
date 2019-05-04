@@ -9,7 +9,7 @@ import {InvoiceKind} from './invoice-kind';
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceService {
+export class InvoiceService { /*
 
 
   //region IDs
@@ -37,7 +37,7 @@ export class InvoiceService {
     timeSpan: '2017-01-01 bis 2017-12-31',
     salesTaxPercentage: 19,
     customerTaxNumber: 'standardCustomerTaxNumber'
-  }; */
+  };
 
   //endregion
 
@@ -192,4 +192,5 @@ export class InvoiceService {
 
 
   //endregion
+  */
 }

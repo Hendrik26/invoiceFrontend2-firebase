@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {InvoiceService} from '../invoice.service';
 // new imports added
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
@@ -68,8 +67,7 @@ export class InvoiceDetailComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private location: Location,
-        private invoiceService: InvoiceService
+        private location: Location
     ) {
         this.invoiceDate = new Date();
         this.invoiceKind = InvoiceKind.create(false, false, false);
@@ -104,8 +102,9 @@ export class InvoiceDetailComponent implements OnInit {
     //region other methods
 
   private calculateInitialDataLoad() {
+        // TODO: calculate out-commented data from firebase-DB
         console.log('method calculateInitialDataLoad() {...}');
-        this.percentageString = this.invoiceService.getSalesTaxPercentageString(this.invoiceId);
+        // this.percentageString = this.invoiceService.getSalesTaxPercentageString(this.invoiceId);
         this.calculateSums();
     }
 
@@ -203,7 +202,8 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private receiveInvoiceById(methId: string): void {
-        this.invoiceService.getInvoiceObservableById(methId)
+        // TODO receive invoice from firebase-DB
+        /* this.invoiceService.getInvoiceObservableById(methId)
             .subscribe(invoice => {
                 // TODO receive invoice from firebase-DB
                 this.countReminders = invoice.countReminders;
@@ -232,17 +232,18 @@ export class InvoiceDetailComponent implements OnInit {
               // this.items = [];
                 // this.invoice.items.forEach((item) => {this.items.push({...item})});
                 this.items = invoice.items;
-            });
+            }); */
         // Empfängt Daten aus einem Datenstream, d.h. wenn sich invoice ändert übernimmt this.invoice die Daten von invoice
 
     }
 
     private saveInvoice(): void {
+        // TODO: save invoices to firebase-DB
         console.log('invoice-detail.component.ts: method saveInvoice');
         this.creatingInvoiceBtn = false;
         this.calculateSavingData();
       this.invoiceKind = InvoiceKind.create(this.international, this.timeSpanBased, this.isSEPA);
-        this.invoiceService.saveInvoiceGlobalsByInvoiceId(
+        /* this.invoiceService.saveInvoiceGlobalsByInvoiceId(
             this.invoiceId,
             this.countReminders,
             this.invoiceCurrency,
@@ -259,14 +260,14 @@ export class InvoiceDetailComponent implements OnInit {
             this.customerTaxNumber,
             this.timespanBegin,
             this.timespanEnd
-        );
+        ); */
     }
 
     private backToInvoiceList(): void {
+        // TODO: back to InvoiceList without saving
         if (this.creatingInvoice || this.creatingInvoiceBtn) {
             this.creatingInvoice = false;
             this.creatingInvoiceBtn = false;
-            this.invoiceService.removeInvoiceById(this.invoiceId);
         }
         this.router.navigateByUrl('/invoice-list');
     }
