@@ -59,6 +59,7 @@ export class Invoice implements InvoiceType {
     };
     // endregion
     // region other properties
+
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
     // endregion
