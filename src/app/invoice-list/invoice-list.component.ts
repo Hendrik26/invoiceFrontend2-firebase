@@ -89,10 +89,14 @@ export class InvoiceListComponent implements OnInit {
     }
 
     receiveInvoices(): void {
-        const refIndex: number = Number(this.invoiceFilterDateOption) + Number(this.invoiceFilterStateOption);
+        const refIndex: number = Number(this.invoiceFilterDateOption) + Number(this.invoiceFilterStateOption)
+            + Number(this.invoiceFilterCompanyOption) + Number(this.invoiceFilterArchiveOption);
         const filterStartDate = this.filterStartDate ? this.filterStartDate : this.minDate;
         const filterEndDate = this.filterEndDate ? this.filterEndDate : this.maxDate;
-        this.fbInvoiceService.getInvoiceList(refIndex, filterStartDate, filterEndDate, this.invoiceFilterState, 'all')
+        const invoiceFilterCompany = this.invoiceFilterCompany ? this.invoiceFilterCompany : '';
+        const invoiceFilterArchive: boolean = (this.invoiceFilterArchive == 'showArchive');
+        this.fbInvoiceService.getInvoiceList(refIndex, filterStartDate, filterEndDate, this.invoiceFilterState,
+            invoiceFilterCompany, invoiceFilterArchive)
             .subscribe(invoices => {
                 // this.invoices = invoices;
                 // this.invoicesShort = invoices;

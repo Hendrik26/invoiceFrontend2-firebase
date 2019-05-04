@@ -130,28 +130,97 @@ export class FbInvoiceService {
         );
     }
 
-    getInvoiceList(refIndex: number, filterStartDate: Date, filterEndDate: Date, filterState: string, archive: string): Observable<any> {
+    getInvoiceList(refIndex: number, filterStartDate: Date, filterEndDate: Date, filterState: string,
+                   filterCustomer: string, filterArchive: boolean): Observable<any> {
         // let invoiceRef: AngularFirestoreCollection<Invoice> = null;
         const invoiceRefs: AngularFirestoreCollection<Invoice>[] = [
-          this.db.collection(this.dbInvoicePath),
-          null,
-          this.db.collection(this.dbInvoicePath,
-              ref => ref.where('invoiceDate', '>=', filterStartDate)
-                  .where('invoiceDate', '<=', filterEndDate)),
-          this.db.collection(this.dbInvoicePath,
-              ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                  .where('invoiceDueDate', '<=', filterEndDate)),
-          this.db.collection(this.dbInvoicePath,
-              ref => ref.where('invoiceState', '==', filterState)),
-          null,
-          this.db.collection(this.dbInvoicePath,
-              ref => ref.where('invoiceDate', '>=', filterStartDate)
-                  .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
-          this.db.collection(this.dbInvoicePath,
-              ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                  .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState))
+            this.db.collection(this.dbInvoicePath),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate)),
+            null,
 
-      ]
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceState', '==', filterState)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+            null,
+
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
+            null,
+
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceState', '==', filterState)
+                    .where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
+                    .where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
+                    .where('customerId', '==', filterCustomer)),
+            null,
+
+
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('archived', '==', filterArchive)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate)),
+            null,
+
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceState', '==', filterState)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+            null,
+
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
+            null,
+
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceState', '==', filterState)
+                    .where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
+                    .where('customerId', '==', filterCustomer)),
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
+                    .where('customerId', '==', filterCustomer)),
+            null
+
+        ];
 
         /*
         console.log('Method fb-invoice.service.getInvoiceList() started!!!');
