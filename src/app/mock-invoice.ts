@@ -2,6 +2,7 @@ import {Invoice} from './invoice';
 import {InvoiceKind} from './invoice-kind';
 
 const invoice01 = Invoice.createInvoiceFromExistingId('In001', {
+  archived: false,
   invoiceDate: new Date('2016-02-04'), invoiceNumber: '2018abcd', recipient: 'DumpfbackeGmbH',
   invoiceDueDate: new Date('2016-02-24'),
   invoiceState: 'Entwurf', wholeCost: 1111.11, countReminders: 0, timeSpan: '2017-01-01 bis 2017-12-31',
@@ -40,6 +41,7 @@ invoice01.addNewItem({
 
 
 const invoice02 = Invoice.createInvoiceFromExistingId('In002', {
+  archived: false,
   invoiceDate: new Date('2017-04-01'), invoiceNumber: '2018efgh', recipient: 'Goldbroiler',
   invoiceDueDate: new Date('2016-02-21'),
   invoiceState: 'Entwurf', wholeCost: 2222.221, countReminders: 0, timeSpan: '2016-01-01 bis 2016-12-31',
@@ -78,6 +80,7 @@ invoice02.addNewItem({
 });
 
 const invoice03 = Invoice.createInvoiceFromExistingId('In003', {
+  archived: false,
   invoiceDate: new Date('2018-02-06'), invoiceNumber: '2018ijkl', recipient: 'Schweizer Käse&Socken GmbH',
   invoiceDueDate: new Date('2016-03-04'),
   invoiceState: 'Entwurf', wholeCost: 333.3321, countReminders: 0, timeSpan: '2015-01-01 bis 2015-12-31',

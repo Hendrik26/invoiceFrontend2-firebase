@@ -14,6 +14,7 @@ export class Invoice implements InvoiceType {
     // region static properties
     private static emptyData: InvoiceType = {
 
+        archived: false,
         countReminders: 0, // <th>Anzahl der Mahnungen</th>
         newCreatedInvoice: true,
         // endregion
@@ -59,7 +60,7 @@ export class Invoice implements InvoiceType {
     };
     // endregion
     // region other properties
-
+    public archived: boolean;
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
     // endregion
@@ -98,7 +99,7 @@ export class Invoice implements InvoiceType {
         this.invoiceId = id; // New Commit after problems with merging
 
         // other properties
-
+        this.archived = data.archived;
         this.countReminders = data.countReminders; // <th>Anzahl der Mahnungen</th>
         this.newCreatedInvoice = data.newCreatedInvoice;
         // endregion
@@ -161,6 +162,7 @@ export class Invoice implements InvoiceType {
 
     public static normalizeInvoice(inputInvoice: any): Invoice {
         const invoiceData: InvoiceType = {
+            archived: !!inputInvoice.archived,
             countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
             newCreatedInvoice: !!inputInvoice.newCreatedInvoice,
             // endregion
@@ -322,6 +324,7 @@ export class Invoice implements InvoiceType {
         console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
         const invKind = this.invoiceKind.exportInvoiceKindData();
         return {
+            archived: this.archived,
             countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
             newCreatedInvoice: this.newCreatedInvoice,
             // endregion

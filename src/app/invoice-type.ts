@@ -3,6 +3,7 @@ import {CustomerType} from './customer-type';
 import {ItemType} from './item-type';
 
 export interface InvoiceType {
+    archived: boolean;
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     newCreatedInvoice: boolean;
     currency: string;
