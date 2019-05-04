@@ -96,12 +96,14 @@ export class InvoiceListComponent implements OnInit {
             .subscribe(invoices => {
                 // this.invoices = invoices;
                 // this.invoicesShort = invoices;
-                this.invoicesShort = invoices.map(invoice => InvoiceShort.normalizeInvoiceShort(invoice));
-                console.log('Next InvoiceShort received!', this.invoicesShort);
+                // this.invoicesShort = invoices.map(invoice => InvoiceShort.normalizeInvoiceShort(invoice));
+                // console.log('Next InvoiceShort received!', this.invoicesShort);
                 this.invoices = invoices.map(invoice => Invoice.normalizeInvoice(invoice));
                 // console.log('Next Invoice received!', this.invoices);
+                console.log('AAA: ', this.invoices)
+                this.sortInvoice();
             });
-        this.sortInvoice();
+
     }
 
 

@@ -158,6 +158,7 @@ export class Invoice implements InvoiceType {
     }
 
     public static normalizeInvoice(inputInvoice: any): Invoice {
+        console.log('---inputInvoice: ', inputInvoice);
         const invoiceData: InvoiceType = {
             archived: !!inputInvoice.archived,
             countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
@@ -211,13 +212,14 @@ export class Invoice implements InvoiceType {
             } : Customer.getEmptyCustomer()
         };
         // return new Customer(inputInvoice.key, invoiceData);
+        console.log('---invoiceData: ', invoiceData);
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
             });
         }
-
+        console.log('---retInvoice: ', retInvoice);
         return retInvoice;
     }
 
@@ -235,7 +237,7 @@ export class Invoice implements InvoiceType {
     }
 
     public static compareInvoicesByCompanyName(invoice01: Invoice, invoice02: Invoice): number {
-        if (invoice01.customerData.customerName.trim().toLowerCase() < invoice02.customerData.customerName.trim().toLowerCase()) {
+        if (invoice01.getCustomerName().trim().toLowerCase() < invoice02.getCustomerName().trim().toLowerCase()) {
             return -1;
         }
         return 1;

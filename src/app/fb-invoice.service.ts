@@ -221,29 +221,6 @@ export class FbInvoiceService {
             null
 
         ];
-
-        /*
-        console.log('Method fb-invoice.service.getInvoiceList() started!!!');
-        console.log('Archiv', archive);
-        let invoiceRef: AngularFirestoreCollection<Invoice> = null;
-        if (archive === 'all') {
-            console.log('Pfad all!   ');
-            invoiceRef = this.db.collection(this.dbInvoicePath);
-            console.log('Local propoerty invoiceRef set!   ');
-        } else {
-            if (archive === 'showArchive') {
-                console.log('Pfad showArchive!   ');
-                invoiceRef = this.db.collection(this.dbInvoicePath,
-                    ref => ref.where('archived', '==', true));
-            } else {
-                console.log('Pfad else!   ');
-                invoiceRef = this.db.collection(this.dbInvoicePath,
-                    ref => ref.where('archived', '==', false));
-            }
-        }
-        console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
-        */
-        // const invoiceRef: AngularFirestoreCollection<Invoice> = invoiceRefs[refIndex];
         return invoiceRefs[refIndex].snapshotChanges().pipe(
             map(changes =>
                 changes.map(c => ({
