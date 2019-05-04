@@ -205,7 +205,7 @@ export class InvoiceDetailComponent implements OnInit {
     private receiveInvoiceById(methId: string): void {
         this.invoiceService.getInvoiceObservableById(methId)
             .subscribe(invoice => {
-                // TODO remove this.invoice.....
+                // TODO receive invoice from firebase-DB
                 this.countReminders = invoice.countReminders;
                 this.creatingInvoiceBtn = invoice.newCreatedInvoice;
                 this.invoiceCurrency = invoice.currency;

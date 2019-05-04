@@ -119,25 +119,6 @@ export class InvoiceListComponent implements OnInit {
             });
     }
 
-    initialSaveInvoicesToDB() {
-        let invoice: any;
-        for (invoice in INVOICES) {
-            this.fbInvoiceService.createInvoice(invoice.exportInvoiceData());
-        }
-    }
-
-    initialSaveInvoicesToDB01() {
-        INVOICES.forEach(function (invoice) {
-            this.fbInvoiceService.createInvoice(invoice.exportInvoiceData());
-        });
-    }
-
-    initialSaveInvoicesToDB02() {
-        for (let i = 0; i < INVOICES.length; i++) {
-            this.fbInvoiceService.createInvoice(INVOICES[i].exportInvoiceData());
-        }
-    }
-
     sortStartDueDateClick(): void {
         this.sortStartDate.reset();
         this.sortCompanyName.reset();
@@ -252,7 +233,7 @@ export class InvoiceListComponent implements OnInit {
 
 
         sortInvoice(): void {
-            // TODO filter
+            // DONE filter
             let retInvoices = this.invoices;
 
             this.invoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],

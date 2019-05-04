@@ -287,7 +287,7 @@ export class Invoice implements InvoiceType {
 
     // region other methods
     public addNewItem(itemType: ItemType): number {
-        // TODO add new Item
+        // TODO add new Item to firebase-DB
         const createdItem = new Item(this, itemType);
         this.items.push(createdItem);
         // return new Item(this, item);
