@@ -17,10 +17,10 @@ export class Invoice implements InvoiceType {
         // endregion
         currency: '€',
 
-        customerIBAN: 'bspCustomerIBAN',
-        mandateIdentification: 'bspMandateIdentification', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+        // customerIBAN: 'bspCustomerIBAN',
+        // mandateIdentification: 'bspMandateIdentification', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
-        customerTaxNumber: 'bspCcustomerTaxNumber',
+        // customerTaxNumber: 'bspCcustomerTaxNumber',
         invoiceDate: new Date(), // <th>Rechnungsdatum</th>
         invoiceDueDate: new Date(), // Faelligkeitsdatum
         invoiceNumber: '2018xy', // <th>RechnungsNr</th>
@@ -28,7 +28,7 @@ export class Invoice implements InvoiceType {
         invoiceKind: InvoiceKind.create(false, false, false),
         invoiceState: 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
         itemTypes: [],
-        recipient: 'bspRecipient', // <th>Empfänger</th>
+        // recipient: 'bspRecipient', // <th>Empfänger</th>
         salesTaxPercentage: 19,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
 
@@ -38,7 +38,8 @@ export class Invoice implements InvoiceType {
         wholeCost: -111, // <th>Gesamtpreis</th>
 
         customerId: 'emptyCustomerId',
-        customerData: {
+        customerData: Customer.getEmptyCustomer(),
+            /* {
             customerNumber: '2018', // Kundennummer
             customerName: 'emptyCustomer',  // Kundenname
             country: 'Deutschland',
@@ -53,7 +54,7 @@ export class Invoice implements InvoiceType {
             creationTime: new Date(),
             lastUpdateTime: new Date(),
             archived: false
-        }
+        } */
     };
     // endregion
     // region other properties
@@ -64,10 +65,10 @@ export class Invoice implements InvoiceType {
     customer: Customer;
     currency = '€';
 
-    customerIBAN = 'Invoice-Bsp-IBAN';
-    mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+    // customerIBAN = 'Invoice-Bsp-IBAN';
+    // mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
-    customerTaxNumber = 'myCustomerTaxNumber';
+    // customerTaxNumber = 'myCustomerTaxNumber';
     invoiceDate: Date; // <th>Rechnungsdatum</th>
     invoiceDueDate: Date; // Faelligkeitsdatum
     invoiceNumber: string; // <th>RechnungsNr</th>
@@ -76,7 +77,7 @@ export class Invoice implements InvoiceType {
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     items: Item[];
     itemTypes: ItemType[];
-    recipient: string; // <th>Empfänger</th>
+    // recipient: string; // <th>Empfänger</th>
     salesTaxPercentage: number;
     timeSpan: string; // <th>Rechnungzeitraum</th>
 
@@ -102,9 +103,9 @@ export class Invoice implements InvoiceType {
         // endregion
         this.currency = data.currency;
 
-        this.customerIBAN = data.customerIBAN;
+        // this.customerIBAN = data.customerIBAN;
 
-        this.customerTaxNumber = data.customerTaxNumber;
+        // this.customerTaxNumber = data.customerTaxNumber;
         this.invoiceDate = data.invoiceDate; // <th>Rechnungsdatum</th>
         this.invoiceDueDate = data.invoiceDueDate; // Faelligkeitsdatum
         this.invoiceNumber = data.invoiceNumber; // <th>RechnungsNr</th>
@@ -114,9 +115,9 @@ export class Invoice implements InvoiceType {
         this.items = [];
         this.itemTypes = [];
 
-        this.mandateIdentification = data.mandateIdentification; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+        // this.mandateIdentification = data.mandateIdentification; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
-        this.recipient = data.recipient; // <th>Empfänger</th>
+        // this.recipient = data.recipient; // <th>Empfänger</th>
         this.salesTaxPercentage = data.salesTaxPercentage;
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
 
@@ -166,10 +167,10 @@ export class Invoice implements InvoiceType {
             // endregion
             currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
 
-            customerIBAN: inputInvoice.customerIBAN ? inputInvoice.customerIBAN : 'bspCustomerIBAN',
-            mandateIdentification: inputInvoice.mandateIdentification ? inputInvoice.mandateIdentification : 'bspMandateIdentification',
+            // customerIBAN: inputInvoice.customerIBAN ? inputInvoice.customerIBAN : 'bspCustomerIBAN',
+            // mandateIdentification: inputInvoice.mandateIdentification ? inputInvoice.mandateIdentification : 'bspMandateIdentification',
             // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-            customerTaxNumber: inputInvoice.customerTaxNumber ? inputInvoice.customerTaxNumber : 'bspCustomerTaxNumber',
+            // customerTaxNumber: inputInvoice.customerTaxNumber ? inputInvoice.customerTaxNumber : 'bspCustomerTaxNumber',
             invoiceDate: inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
             invoiceDueDate: inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
             invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
@@ -182,7 +183,7 @@ export class Invoice implements InvoiceType {
                 false, false),
             invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
             itemTypes: [],
-            recipient: inputInvoice.recipient ? inputInvoice.recipient : 'bspRecipient', // <th>Empfänger</th>
+            // recipient: inputInvoice.recipient ? inputInvoice.recipient : 'bspRecipient', // <th>Empfänger</th>
             salesTaxPercentage: inputInvoice.salesTaxPercentage ? inputInvoice.salesTaxPercentage : 19,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
 
@@ -192,24 +193,7 @@ export class Invoice implements InvoiceType {
             wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111, // <th>Gesamtpreis</th>
 
             customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
-            customerData: inputInvoice.customer ? {
-                customerNumber: inputInvoice.customer.customerNumber ? inputInvoice.customer.customerNumber : '2018', // Kundennummer
-                customerName: inputInvoice.customer.customerName ? inputInvoice.customer.customerName : 'emptyCustomer',  // Kundenname
-                country: inputInvoice.customer.country ? inputInvoice.customer.country : 'Deutschland',
-                postalCode: inputInvoice.customer.postalCode ? inputInvoice.customer.postalCode : '',
-                city: inputInvoice.customer.city ? inputInvoice.customer.city : '',
-                addressLine1: inputInvoice.customer.addressLine1 ? inputInvoice.customer.addressLine1 : '',
-                addressLine2: inputInvoice.customer.addressLine2 ? inputInvoice.customer.addressLine2 : '',
-                addressLine3: inputInvoice.customer.addressLine3 ? inputInvoice.customer.addressLine3 : '',
-                customerSalesTaxNumber: inputInvoice.customer.customerSalesTaxNumber ? inputInvoice.customer.customerSalesTaxNumber
-                    : '000000',
-                customerIBAN: inputInvoice.customer.customerIBAN ? inputInvoice.customer.customerIBAN : '',
-                mandateIdentification: inputInvoice.customer.mandateIdentification ? inputInvoice.customer.mandateIdentification : '',
-                // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-                creationTime: inputInvoice.customer.creationTime ? inputInvoice.customer.creationTime.toDate() : new Date(),
-                lastUpdateTime: inputInvoice.customer.lastUpdateTimey ? inputInvoice.customer.lastUpdateTime.toDate() : new Date(),
-                archived: inputInvoice.customer.country ? inputInvoice.customer.country : false
-            } : Customer.getEmptyCustomer()
+            customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer()
         };
         // return new Customer(inputInvoice.key, invoiceData);
         console.log('---invoiceData: ', invoiceData);
@@ -299,7 +283,7 @@ export class Invoice implements InvoiceType {
 
 
     public companyName(): string {
-        return Invoice.firstLine(this.recipient);
+        return Invoice.firstLine(this.customer.customerName);
     }
 
     public computeNextItemId(): number {
@@ -315,7 +299,7 @@ export class Invoice implements InvoiceType {
     public firstSave(): void {
         this.newCreatedInvoice = false;
     }
-
+/*
     public exportInvoiceData(): InvoiceType {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
         console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
@@ -327,7 +311,7 @@ export class Invoice implements InvoiceType {
             newCreatedInvoice: this.newCreatedInvoice,
             // endregion
             currency: this.currency,
-            customerIBAN: this.customerIBAN,
+            // customerIBAN: this.customerIBAN,
             mandateIdentification: this.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
             customerTaxNumber: this.customerTaxNumber,
             invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
@@ -347,6 +331,7 @@ export class Invoice implements InvoiceType {
             customerData: this.customer.exportCustomerData()
         };
     }
+    */
 
     private getMaxItemId(): number {
         if (this.items === undefined) {

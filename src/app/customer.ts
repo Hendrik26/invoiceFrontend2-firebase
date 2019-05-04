@@ -103,7 +103,7 @@ export class Customer implements CustomerType {
     public getCustomerId(): string {
         return this.customerId;
     }
-
+/*
     public exportCustomerData(): CustomerType {
         return {
             customerNumber: this.customerNumber, // Kundennummer
@@ -122,6 +122,7 @@ export class Customer implements CustomerType {
             archived: this.archived
         };
     }
+    */
 
     // endregion
 }

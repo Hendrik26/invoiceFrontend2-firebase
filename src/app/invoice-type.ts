@@ -8,10 +8,10 @@ export interface InvoiceType {
     newCreatedInvoice: boolean;
     currency: string;
 
-    customerIBAN: string;
-    mandateIdentification: string; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+    // customerIBAN: string;
+    // mandateIdentification: string; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
-    customerTaxNumber: string;
+    // customerTaxNumber: string;
     invoiceDate: Date; // <th>Rechnungsdatum</th>
     invoiceDueDate: Date; // Faelligkeitsdatum
     invoiceNumber: string; // <th>RechnungsNr</th>
@@ -19,7 +19,7 @@ export interface InvoiceType {
     invoiceKind: InvoiceKindType;
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     itemTypes: ItemType[];
-    recipient: string; // <th>Empfänger</th>
+    // recipient: string; // <th>Empfänger</th>
     salesTaxPercentage: number;
     timeSpan: string; // <th>Rechnungzeitraum</th>
 
