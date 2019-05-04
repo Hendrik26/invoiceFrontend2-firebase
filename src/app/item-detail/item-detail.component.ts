@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Item} from '../item';
-import {ItemService} from '../item.service';
+import {FbInvoiceService} from '../fb-invoice.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -36,7 +36,7 @@ export class ItemDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private itemService: ItemService
+    private fbInvoiceService: FbInvoiceService
   ) {
   }
 
@@ -73,7 +73,8 @@ export class ItemDetailComponent implements OnInit {
 
 
   private receiveItemByIds(methInvoiceId: string, methItemId: number): void {
-    this.itemService.getItemByItemId(methInvoiceId, methItemId)
+    // TODO: receive items from (invoice from firebase-DB)
+    /* this.itemService.getItemByItemId(methInvoiceId, methItemId)
       .subscribe((itemReceived: Item) => { // Lambda-Expression
         this.currentItem = itemReceived;
         this.itemName = itemReceived.itemName;
@@ -83,21 +84,21 @@ export class ItemDetailComponent implements OnInit {
         this.count = itemReceived.count;
         this.currency = itemReceived.currency;
         this.wholeCost = itemReceived.wholeCost;
-      });
+      }); */
     // Empfängt Daten aus einem Datenstream, d.h. wenn sich invoice ändert übernimmt this.invoice die Daten von invoice
   }
 
   private saveItem(): void {
-    // TODO Error if pressing saveButton in item-detail.component.html more then one time
+    // TODO: save items to firebase-DB
     this.wholeCost = this.count * this.partialCost;
-    if (this.creatingItem) {
+    /* if (this.creatingItem) {
       this.itemId = this.itemService.saveNewItemByInvoiceId(this.invoiceId, this.count, this.currency,
         this.hourPayment, this.itemDate, this.itemName, this.partialCost);
       this.creatingItem = false;
     } else {
       this.itemService.saveItemByIds(this.invoiceId, this.itemId, this.count, this.currency,
         this.hourPayment, this.itemDate, this.itemName, this.partialCost);
-    }
+    } */
   }
 
 

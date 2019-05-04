@@ -9,7 +9,7 @@ import {Observable, of} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class ItemService { /*
 
 
   constructor() {
@@ -100,6 +100,6 @@ export class ItemService {
   }
 
   //endregion
-
+*/
 
 }
