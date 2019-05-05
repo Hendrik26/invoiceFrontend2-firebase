@@ -10,17 +10,11 @@ export class Invoice implements InvoiceType {
 
     // region static properties
     private static emptyData: InvoiceType = {
-
         archived: false,
         countReminders: 0, // <th>Anzahl der Mahnungen</th>
-        newCreatedInvoice: true,
-        // endregion
         currency: '€',
-
-        // customerIBAN: 'bspCustomerIBAN',
-        // mandateIdentification: 'bspMandateIdentification', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-
-        // customerTaxNumber: 'bspCcustomerTaxNumber',
+        customerId: 'emptyCustomerId',
+        customerData: Customer.getEmptyCustomer(),
         invoiceDate: new Date(), // <th>Rechnungsdatum</th>
         invoiceDueDate: new Date(), // Faelligkeitsdatum
         invoiceNumber: '2018xy', // <th>RechnungsNr</th>
@@ -28,47 +22,21 @@ export class Invoice implements InvoiceType {
         invoiceKind: InvoiceKind.create(false, false, false),
         invoiceState: 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
         itemTypes: [],
-        // recipient: 'bspRecipient', // <th>Empfänger</th>
+        newCreatedInvoice: true,
         salesTaxPercentage: 19,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
-
         timespanBegin: new Date(),
         timespanEnd: new Date(),
-
         wholeCost: -111, // <th>Gesamtpreis</th>
-
-        customerId: 'emptyCustomerId',
-        customerData: Customer.getEmptyCustomer(),
-            /* {
-            customerNumber: '2018', // Kundennummer
-            customerName: 'emptyCustomer',  // Kundenname
-            country: 'Deutschland',
-            postalCode: '',
-            city: '',
-            addressLine1: '',
-            addressLine2: '',
-            addressLine3: '',
-            customerSalesTaxNumber: '000000',
-            customerIBAN: '',
-            mandateIdentification: '', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-            creationTime: new Date(),
-            lastUpdateTime: new Date(),
-            archived: false
-        } */
     };
     // endregion
+
     // region other properties
-    public archived: boolean;
+    archived: boolean;
     countReminders: number; // <th>Anzahl der Mahnungen</th>
-    newCreatedInvoice: boolean;
-    // endregion
-    customer: Customer;
     currency = '€';
-
-    // customerIBAN = 'Invoice-Bsp-IBAN';
-    // mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-
-    // customerTaxNumber = 'myCustomerTaxNumber';
+    customer: Customer;
+    customerId: string;
     invoiceDate: Date; // <th>Rechnungsdatum</th>
     invoiceDueDate: Date; // Faelligkeitsdatum
     invoiceNumber: string; // <th>RechnungsNr</th>
@@ -77,56 +45,41 @@ export class Invoice implements InvoiceType {
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     items: Item[];
     itemTypes: ItemType[];
-    // recipient: string; // <th>Empfänger</th>
+    newCreatedInvoice: boolean;
     salesTaxPercentage: number;
     timeSpan: string; // <th>Rechnungzeitraum</th>
-
     timespanBegin: Date;
     timespanEnd: Date;
-
     wholeCost: number; // <th>Gesamtpreis</th>
 
-    customerId: string;
     customerData: CustomerType;
-    // region IDs
-    private invoiceId: string; // <th>Ändern</th>
     // endregion
+
+    private invoiceId: string; // <th>Ändern</th>
+
 
     private constructor(id: string, data: InvoiceType) {
         // IDs
         this.invoiceId = id; // New Commit after problems with merging
-
         // other properties
         this.archived = data.archived;
         this.countReminders = data.countReminders; // <th>Anzahl der Mahnungen</th>
-        this.newCreatedInvoice = data.newCreatedInvoice;
-        // endregion
         this.currency = data.currency;
-
-        // this.customerIBAN = data.customerIBAN;
-
-        // this.customerTaxNumber = data.customerTaxNumber;
+        this.customer = new Customer(data.customerId, data.customerData);
         this.invoiceDate = data.invoiceDate; // <th>Rechnungsdatum</th>
         this.invoiceDueDate = data.invoiceDueDate; // Faelligkeitsdatum
-        this.invoiceNumber = data.invoiceNumber; // <th>RechnungsNr</th>
         this.invoiceIntendedUse = data.invoiceIntendedUse; // Verwendungszweck
         this.invoiceKind = InvoiceKind.create01(data.invoiceKind);
+        this.invoiceNumber = data.invoiceNumber; // <th>RechnungsNr</th>
         this.invoiceState = data.invoiceState; // <th>Status (Entwurf, bezahlt, ...)</th>
         this.items = [];
         this.itemTypes = [];
-
-        // this.mandateIdentification = data.mandateIdentification; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-
-        // this.recipient = data.recipient; // <th>Empfänger</th>
+        this.newCreatedInvoice = data.newCreatedInvoice;
         this.salesTaxPercentage = data.salesTaxPercentage;
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
-
         this.timespanBegin = data.timespanBegin;
         this.timespanEnd = data.timespanEnd;
-
         this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
-
-        this.customer = new Customer(data.customerId, data.customerData);
     }
 
 
@@ -159,51 +112,34 @@ export class Invoice implements InvoiceType {
     }
 
     public static normalizeInvoice(inputInvoice: any): Invoice {
-        console.log('---inputInvoice: ', inputInvoice);
         const invoiceData: InvoiceType = {
             archived: !!inputInvoice.archived,
             countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
-            newCreatedInvoice: !!inputInvoice.newCreatedInvoice,
-            // endregion
             currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
-
-            // customerIBAN: inputInvoice.customerIBAN ? inputInvoice.customerIBAN : 'bspCustomerIBAN',
-            // mandateIdentification: inputInvoice.mandateIdentification ? inputInvoice.mandateIdentification : 'bspMandateIdentification',
-            // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-            // customerTaxNumber: inputInvoice.customerTaxNumber ? inputInvoice.customerTaxNumber : 'bspCustomerTaxNumber',
+            customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
+            customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
             invoiceDate: inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
             invoiceDueDate: inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
-            invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
             invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
-            // Verwendungszweck
-            /* invoiceKind: InvoiceKind.create(inputInvoice.invoiceKind.international,
-                inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA), */
             invoiceKind: inputInvoice.invoiceKind ? InvoiceKind.create(inputInvoice.invoiceKind.international,
                 inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA) : InvoiceKind.create(false,
                 false, false),
+            invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
             invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
             itemTypes: [],
-            // recipient: inputInvoice.recipient ? inputInvoice.recipient : 'bspRecipient', // <th>Empfänger</th>
+            newCreatedInvoice: !!inputInvoice.newCreatedInvoice,
             salesTaxPercentage: inputInvoice.salesTaxPercentage ? inputInvoice.salesTaxPercentage : 19,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
-
             timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
-
-            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111, // <th>Gesamtpreis</th>
-
-            customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
-            customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer()
+            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
         };
-        // return new Customer(inputInvoice.key, invoiceData);
-        console.log('---invoiceData: ', invoiceData);
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
             });
         }
-        console.log('---retInvoice: ', retInvoice);
         return retInvoice;
     }
 
@@ -234,19 +170,16 @@ export class Invoice implements InvoiceType {
         if (ascending) {
             ascendingFactor = +1;
         }
-
         if (sortBy == 'Date') {
             invoices.sort(function (a, b) {
                 return ascendingFactor * a.invoiceDate.getTime() - ascendingFactor * b.invoiceDate.getTime();
             });
         }
-
         if (sortBy == 'DueDate') {
             invoices.sort(function (a, b) {
                 return ascendingFactor * a.invoiceDueDate.getTime() - ascendingFactor * b.invoiceDueDate.getTime();
             });
         }
-
         if (sortBy == 'CompanyName') {
             invoices.sort(function (a, b) {
                 return ascendingFactor * Invoice.compareInvoicesByCompanyName(a, b);
@@ -299,39 +232,40 @@ export class Invoice implements InvoiceType {
     public firstSave(): void {
         this.newCreatedInvoice = false;
     }
-/*
-    public exportInvoiceData(): InvoiceType {
-        console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
-        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
-        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
-        const invKind = this.invoiceKind.exportInvoiceKindData();
-        return {
-            archived: this.archived,
-            countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
-            newCreatedInvoice: this.newCreatedInvoice,
-            // endregion
-            currency: this.currency,
-            // customerIBAN: this.customerIBAN,
-            mandateIdentification: this.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-            customerTaxNumber: this.customerTaxNumber,
-            invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
-            invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
-            invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
-            invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
-            invoiceKind: this.invoiceKind.exportInvoiceKindData(),
-            invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
-            itemTypes: Invoice.createItemTypeArray(this.items),
-            recipient: this.recipient, // <th>Empfänger</th>
-            salesTaxPercentage: this.salesTaxPercentage,
-            timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
-            timespanBegin: this.timespanBegin,
-            timespanEnd: this.timespanEnd,
-            wholeCost: this.wholeCost, // <th>Gesamtpreis</th>
-            customerId: this.customer.getCustomerId(),
-            customerData: this.customer.exportCustomerData()
-        };
-    }
-    */
+
+    /*
+        public exportInvoiceData(): InvoiceType {
+            console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
+            console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
+            console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
+            const invKind = this.invoiceKind.exportInvoiceKindData();
+            return {
+                archived: this.archived,
+                countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
+                newCreatedInvoice: this.newCreatedInvoice,
+                // endregion
+                currency: this.currency,
+                // customerIBAN: this.customerIBAN,
+                mandateIdentification: this.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+                customerTaxNumber: this.customerTaxNumber,
+                invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
+                invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
+                invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
+                invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
+                invoiceKind: this.invoiceKind.exportInvoiceKindData(),
+                invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
+                itemTypes: Invoice.createItemTypeArray(this.items),
+                recipient: this.recipient, // <th>Empfänger</th>
+                salesTaxPercentage: this.salesTaxPercentage,
+                timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
+                timespanBegin: this.timespanBegin,
+                timespanEnd: this.timespanEnd,
+                wholeCost: this.wholeCost, // <th>Gesamtpreis</th>
+                customerId: this.customer.getCustomerId(),
+                customerData: this.customer.exportCustomerData()
+            };
+        }
+        */
 
     private getMaxItemId(): number {
         if (this.items === undefined) {
