@@ -23,12 +23,13 @@ export class InvoiceDetailComponent implements OnInit {
 
     // region other properties
     invoice: Invoice = Invoice.getEmptyInvoice();
-    nettoSum: number;
     customerAdress: string;
-
-
     bruttoSum: number;
-    countReminders: number;
+    salesTax: number;
+
+
+     // nettoSum: number;
+    // countReminders: number;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
     creditorIdentificationNunber = 'DE55ZZZ00001275596';
@@ -54,7 +55,6 @@ export class InvoiceDetailComponent implements OnInit {
 
     percentageString = '19%';
     receivedInvoiceIdError: boolean;
-    salesTax: number;
     salesTaxPercentage = 19;
 
     timespanBegin: Date = null;
@@ -108,9 +108,10 @@ export class InvoiceDetailComponent implements OnInit {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
             this.invoice.wholeCost = this.invoice.items ? this.invoice.items.reduce((sum, current) => sum + current.partialCost, 0) : 0;
-            this.customerAdress = this.invoice.customer.customerName + '/\r\n' + this.invoice.customer.addressLine1 + '/\r\n'
-                + this.invoice.customer.addressLine2 + '/\r\n' + this.invoice.customer.addressLine3 + '/\r\n'
-                + this.invoice.customer.postalCode + '/\r\n' + this.invoice.customer.city + '/\r\n'
+            this.calculateSums();
+            this.customerAdress = this.invoice.customer.customerName + '\r\n' + this.invoice.customer.addressLine1 + '\r\n'
+                + this.invoice.customer.addressLine2 + '\r\n' + this.invoice.customer.addressLine3 + '\r\n'
+                + this.invoice.customer.postalCode + '\r\n' + this.invoice.customer.city + '\r\n'
                 + this.invoice.customer.country ;
             console.log('III: ', this.invoice);
         });
@@ -170,9 +171,10 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private calculateSums(): void {
-        this.nettoSum = this.calculateNettoSum(this.invoiceId);
-        this.salesTax = this.calculateSalesTax(this.invoiceId); // hier
-        this.bruttoSum = this.calculateBruttoSum(this.invoiceId);
+        // this.nettoSum = this.calculateNettoSum(this.invoiceId);
+        this.salesTax =  !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
+        this.bruttoSum = this.salesTax + this.invoice.wholeCost;
+
     }
 
     private calculateSavingData() {
@@ -181,6 +183,7 @@ export class InvoiceDetailComponent implements OnInit {
         //  this.invoiceDate.getDate() + 14, 12);
     }
 
+    /*
     private calculateBruttoSum(methId: string): number {
         return !this.international ? (this.calculateNettoSum(methId) + this.calculateSalesTax(methId)) : this.calculateNettoSum(methId);
     }
@@ -200,9 +203,9 @@ export class InvoiceDetailComponent implements OnInit {
         // methInvoice = this.invoice;
         return this.calculateNettoSum(methId) * this.salesTaxPercentage / 100;
     }
-
+    */
     private changeInternational(): void {
-        this.international = !this.international;
+        this.invoice.invoiceKind.international = !this.invoice.invoiceKind.international;
         console.log('invoice-detail.component.ts.changeInternational()');
         this.calculateSums();
     }
@@ -210,13 +213,13 @@ export class InvoiceDetailComponent implements OnInit {
 
     public changeTimeSpanBased(): void {
         console.log('invoice-detail.component.ts.changeTimeSpanBased(), T1');
-        this.timeSpanBased = !this.timeSpanBased;
+        this.invoice.invoiceKind.timeSpanBased = !this.invoice.invoiceKind.timeSpanBased;
         console.log('invoice-detail.component.ts.changeTimeSpanBased(), T2');
 
     }
 
     public changeIsSEPA(): void {
-        this.isSEPA = !this.isSEPA;
+        this.invoice.invoiceKind.isSEPA = !this.invoice.invoiceKind.isSEPA;
         console.log('invoice-detail.component.ts.changeISSEPAs()');
 
     }
@@ -233,25 +236,25 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private invoiceDateChange(methEvent: string) {
-        this.invoiceDate = new Date(methEvent);
-        this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
-            this.invoiceDate.getDate() + 14, 12);
+        this.invoice.invoiceDate = new Date(methEvent);
+        this.invoice.invoiceDueDate = new Date(this.invoice.invoiceDate.getFullYear(), this.invoice.invoiceDate.getMonth(),
+            this.invoice.invoiceDate.getDate() + 14, 12);
     }
 
     private invoiceTimespanBeginChange(methEvent: string) {
-        this.timespanBegin = new Date(methEvent);
+        this.invoice.timespanBegin = new Date(methEvent);
         // this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
         //   this.invoiceDate.getDate() + 14, 12);
     }
 
     private invoiceTimespanEndChange(methEvent: string) {
-        this.timespanEnd = new Date(methEvent);
+        this.invoice.timespanEnd = new Date(methEvent);
     }
 
 
     private invoiceNumberChange(e: string) {
-        this.invoiceNumber = e;
-        this.invoiceIntendedUse = 'die Rechnungsnummer. ' + this.invoiceNumber;
+        this.invoice.invoiceNumber = e;
+        this.invoice.invoiceIntendedUse = 'die Rechnungsnummer ' + this.invoice.invoiceNumber;
     }
 
     private saveInvoice(): void {
@@ -290,10 +293,10 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private timespan(): string {
-        if (!this.timespanEnd || !this.timespanBegin) {
+        if (!this.invoice.timespanEnd || !this.invoice.timespanBegin) {
             return 'Ungueltiges Datum';
         }
-        const diffMonth: number = Math.round((this.timespanEnd.getTime() - this.timespanBegin.getTime()) / 1000 / 3600 / 24 / 30);
+        const diffMonth: number = Math.round((this.invoice.timespanEnd.getTime() - this.invoice.timespanBegin.getTime()) / 1000 / 3600 / 24 / 30);
         return '(' + diffMonth + ' Monate)';
     }
 

@@ -16,6 +16,7 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
         return lines[0];
     }
 
+    /*
     public static normalizeInvoiceShort(inputInvoice: any): InvoiceShort {
         const returnInvoiceShort = new InvoiceShort();
         returnInvoiceShort.countReminders = inputInvoice.countReminders ? inputInvoice.countReminders : -1;
@@ -31,6 +32,7 @@ export class InvoiceShort { // used to show invoice in invoice-list.component.ht
 
         return returnInvoiceShort;
     }
+    */
 
     public companyName(): string {
         return InvoiceShort.firstLine(this.recipient);

@@ -68,7 +68,7 @@
                 (ngModelChange)="invoiceTimespanBeginChange($event)">
         bis
         <input type="date" name="inStartDate"
-               [ngModel]="timespanEnd ? (invoice.timespanEnd | date:'yyyy-MM-dd') : ''"
+               [ngModel]="invoice.timespanEnd ? (invoice.timespanEnd | date:'yyyy-MM-dd') : ''"
                (ngModelChange)="invoiceTimespanEndChange($event)">
          {{timespan()}}
       </div>
@@ -89,7 +89,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of items">
+          <tr *ngFor="let item of invoice.items">
             <!-- loop for all items -->
             <td>{{item.itemName}}</td>
             <td>{{item.itemDate}}</td>
@@ -107,12 +107,12 @@
           <tr>
             <td colspan="3"></td>
             <td>Summe Netto</td>
-            <td>{{nettoSum | number:'1.2-2'}}{{invoiceCurrency}}</td>
+            <td>{{invoice.wholeCost | number:'1.2-2'}}{{invoice.currency}}</td>
           </tr>
-          <tr *ngIf="!international">
+          <tr *ngIf="!invoice.invoiceKind.international">
             <td colspan="3"></td>
-            <td>{{!international ? percentageString : ''}} MwSt.</td>
-            <td> {{!international ? (salesTax | number:'1.2-2') : 'Brutto == Netto '}}{{invoiceCurrency}}</td>
+            <td>{{!invoice.invoiceKind.international ? percentageString : ''}} MwSt.</td>
+            <td> {{!invoice.invoiceKind.international ? (salesTax | number:'1.2-2') : 'Brutto == Netto '}}{{invoice.currency}}</td>
             <td>
               <button type="button">Mehrwertsteuer ändern</button>
             </td>
@@ -121,7 +121,7 @@
             <td colspan="3"></td>
             <td>Rechnungsbetrag</td>
             <td> {{bruttoSum | number:'1.2-2'}}
-              <select name="invoiceCurrency" [(ngModel)]="invoiceCurrency">
+              <select name="invoiceCurrency" [(ngModel)]="invoice.currency">
                 <option value="€">€</option>
                 <option value="USD">USD</option>
                 <option value="GBP">GBP</option> <!-- Great -->
@@ -131,7 +131,7 @@
               </select>
             </td>
             <td>
-              <select name="invoiceState" [(ngModel)]="invoiceState">
+              <select name="invoiceState" [(ngModel)]="invoice.invoiceState">
                 <option value="Entwurf">Entwurf</option>
                 <option value="offen">offen</option>
                 <option value="teilweise bezahlt">teilweise bezahlt</option>
@@ -147,37 +147,37 @@
       <button>cancel</button>
       <button (click)="backToInvoiceList()">zurück</button>
       <p></p>
-       <div *ngIf="international">
+       <div *ngIf="invoice.invoiceKind.international">
          <dl>
             <dt>USt-IdNr.:</dt>
              <dd>DE243517710</dd>
               <dt>USt-IdNr. des Kunden:</dt>
                <dd>
-                 <input type="text" name="customerTaxNumber" size="27" [(ngModel)]="customerTaxNumber">
+                 <input type="text" name="customerTaxNumber" size="27" [(ngModel)]="invoice.customer.customerSalesTaxNumber">
                </dd>
           </dl>
          <p>Steuerschuldnerschaft des Leistungsempfängers (Reverse Charge)</p>
        </div>
       <p></p>
-      <div *ngIf="!isSEPA">
+      <div *ngIf="!invoice.invoiceKind.isSEPA">
         <p>Bitte überweisen Sie den Rechnungsbetrag bis zum
-          <input type="date" name="inDueDate" [ngModel]="invoiceDueDate | date:'yyyy-MM-dd'"
-                 (ngModelChange)="invoiceDueDate = $event">
+          <input type="date" name="inDueDate" [ngModel]="invoice.invoiceDueDate | date:'yyyy-MM-dd'"
+                 (ngModelChange)="invoice.invoiceDueDate = $event">
           auf das unten angegebene Konto.</p>
         <p> Als Verwendungszweck geben Sie bitte
-          <input type="text" class="inputLarge" name="intendedUse" [(ngModel)]="invoiceIntendedUse">
+          <input type="text" class="inputLarge" name="intendedUse" [(ngModel)]="invoice.invoiceIntendedUse">
           an.</p>
       </div>
-      <div *ngIf="isSEPA">
-          <p>Die Forderung von {{bruttoSum | number:'1.2-2'}}{{invoiceCurrency}} ziehen wir mit der SEPA Basislastschrift
+      <div *ngIf="invoice.invoiceKind.isSEPA">
+          <p>Die Forderung von {{bruttoSum | number:'1.2-2'}}{{invoice.currency}} ziehen wir mit der SEPA Basislastschrift
           zum Mandat
-          <input type="text" name="mandateIdentification" size="27" [(ngModel)]="mandateIdentification">
+          <input type="text" name="mandateIdentification" size="27" [(ngModel)]="invoice.customer.mandateIdentification">
           zu der Gläubigeridentifikationsnummer {{creditorIdentificationNunber}}
           von Ihrem Konto IBAN
-          <input type="text" name="customerIBAN" size="27" [(ngModel)]="customerIBAN">
+          <input type="text" name="customerIBAN" size="27" [(ngModel)]="invoice.customer.customerIBAN">
             bei der Bank BIC
           <input type="text"  name="customerBIC" size="27" [(ngModel)]="customerBIC">
-          zum Fälligkeitsdatum {{invoiceDueDate | date:'yyyy-MM-dd'}} ein. Wir bitten Sie,
+          zum Fälligkeitsdatum {{invoice.invoiceDueDate | date:'yyyy-MM-dd'}} ein. Wir bitten Sie,
           für Kontodeckung zu sorgen.</p>
       </div>
     </section>
@@ -189,7 +189,7 @@
       <p>A.Schaffhirt & A.Wünsche</p>
       <p>Biesnitzer Straße 8</p>
       <p>02826 Görlitz</p>
-      <p *ngIf="international">GERMANY</p>
+      <p *ngIf="invoice.invoiceKind.international">GERMANY</p>
     </div>
     <div class="contact">
       <p><strong>Kontakt</strong></p>
