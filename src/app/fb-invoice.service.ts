@@ -102,33 +102,18 @@ export class FbInvoiceService {
         this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
     }
 
-
-    getInvoiceList_old(archive: string): Observable<any> {
-        console.log('Method fb-invoice.service.getInvoiceList() started!!!');
-        console.log('Archiv', archive);
-        let invoiceRef: AngularFirestoreCollection<Invoice> = null;
-        if (archive === 'all') {
-            console.log('Pfad all!   ');
-            invoiceRef = this.db.collection(this.dbInvoicePath);
-            console.log('Local propoerty invoiceRef set!   ');
+    getInvoiceById(invoiceId: string, historyId: string): Observable<any> {
+        // create the database path witch depends from the value of the "historyId" parameter
+        let path = '';
+        if (!historyId) {
+            path = `${this.dbInvoicePath}/${invoiceId}`;
         } else {
-            if (archive === 'showArchive') {
-                console.log('Pfad showArchive!   ');
-                invoiceRef = this.db.collection(this.dbInvoicePath,
-                    ref => ref.where('archived', '==', true));
-            } else {
-                console.log('Pfad else!   ');
-                invoiceRef = this.db.collection(this.dbInvoicePath,
-                    ref => ref.where('archived', '==', false));
-            }
+            path = `${this.dbInvoicePath}/${invoiceId}/history/${historyId}`;
         }
-        console.log('Method fb-invoice.service.getInvoiceList() ends!!!');
-        return invoiceRef.snapshotChanges().pipe(
-            map(changes =>
-                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
-            )
-        );
+        // return of the observable
+        return this.db.doc(path).valueChanges();
     }
+
 
     getInvoiceList(refIndex: number, filterStartDate: Date, filterEndDate: Date, filterState: string,
                    filterCustomer: string, filterArchive: boolean): Observable<any> {
@@ -142,7 +127,6 @@ export class FbInvoiceService {
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate)),
             null,
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)),
             this.db.collection(this.dbInvoicePath,
@@ -152,7 +136,6 @@ export class FbInvoiceService {
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
             null,
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('customerId', '==', filterCustomer)),
             this.db.collection(this.dbInvoicePath,
@@ -162,7 +145,6 @@ export class FbInvoiceService {
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
             null,
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)
                     .where('customerId', '==', filterCustomer)),
@@ -175,8 +157,6 @@ export class FbInvoiceService {
                     .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
                     .where('customerId', '==', filterCustomer)),
             null,
-
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('archived', '==', filterArchive)),
             this.db.collection(this.dbInvoicePath,
@@ -186,7 +166,6 @@ export class FbInvoiceService {
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate)),
             null,
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)),
             this.db.collection(this.dbInvoicePath,
@@ -196,7 +175,6 @@ export class FbInvoiceService {
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
             null,
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('customerId', '==', filterCustomer)),
             this.db.collection(this.dbInvoicePath,
@@ -206,7 +184,6 @@ export class FbInvoiceService {
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
             null,
-
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)
                     .where('customerId', '==', filterCustomer)),
@@ -219,7 +196,6 @@ export class FbInvoiceService {
                     .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
                     .where('customerId', '==', filterCustomer)),
             null
-
         ];
         return invoiceRefs[refIndex].snapshotChanges().pipe(
             map(changes =>
