@@ -82,6 +82,9 @@ export class Invoice implements InvoiceType {
         this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
     }
 
+    public static getEmptyInvoice(): Invoice {
+        return new Invoice('newInvoice', Invoice.emptyData);
+    }
 
     // region static methods
     private static createItemTypeArray(items: Item[]): ItemType[] {

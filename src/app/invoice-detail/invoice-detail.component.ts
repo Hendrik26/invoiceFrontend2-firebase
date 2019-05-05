@@ -16,13 +16,13 @@ import {Customer} from '../customer';
 export class InvoiceDetailComponent implements OnInit {
 
 
-    //region IDs
+    // region IDs
     invoiceId: string;
-    //endregion
+    // endregion
 
 
-    //region other properties
-    invoice: Invoice;
+    // region other properties
+    invoice: Invoice = Invoice.getEmptyInvoice();
     nettoSum: number;
 
     bruttoSum: number;
