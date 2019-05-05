@@ -80,20 +80,20 @@ export class Customer implements CustomerType {
 
     public static normalizeCustomer(inCustomer: any): Customer {
         const cData: CustomerType = {
-            customerNumber: inCustomer.customerNumber, // Kundennummer
-            customerName: inCustomer.customerName,  // Kundenname
-            country: inCustomer.country,
-            postalCode: inCustomer.postalCode,
-            city: inCustomer.city,
-            addressLine1: inCustomer.addressLine1,
-            addressLine2: inCustomer.addressLine2,
-            addressLine3: inCustomer.addressLine3,
-            customerSalesTaxNumber: inCustomer.customerSalesTaxNumber,
-            customerIBAN: inCustomer.customerIBAN,
-            mandateIdentification: inCustomer.mandateIdentification,
+            customerNumber: inCustomer.customerNumber ? inCustomer.customerNumber : '', // Kundennummer
+            customerName: inCustomer.customerName ? inCustomer.customerName : '',  // Kundenname
+            country: inCustomer.country ? inCustomer.country : '',
+            postalCode: inCustomer.postalCode ? inCustomer.postalCode : '',
+            city: inCustomer.city ? inCustomer.city : '',
+            addressLine1: inCustomer.addressLine1 ? inCustomer.addressLine1 : '',
+            addressLine2: inCustomer.addressLine2 ? inCustomer.addressLine2 : '',
+            addressLine3: inCustomer.addressLine3 ? inCustomer.addressLine3 : '',
+            customerSalesTaxNumber: inCustomer.customerSalesTaxNumber ? inCustomer.customerSalesTaxNumber : '',
+            customerIBAN: inCustomer.customerIBAN ? inCustomer.customerIBAN : '',
+            mandateIdentification: inCustomer.mandateIdentification ? inCustomer.mandateIdentification : '',
             creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
             lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date(),
-            archived: inCustomer.archived
+            archived: !!inCustomer.archived
         };
         return new Customer(inCustomer.key, cData);
     }
