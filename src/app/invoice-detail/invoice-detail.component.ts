@@ -24,6 +24,8 @@ export class InvoiceDetailComponent implements OnInit {
     // region other properties
     invoice: Invoice = Invoice.getEmptyInvoice();
     nettoSum: number;
+    customerAdress: string;
+
 
     bruttoSum: number;
     countReminders: number;
@@ -108,7 +110,10 @@ export class InvoiceDetailComponent implements OnInit {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
             this.invoice.wholeCost = this.invoice.items ? this.invoice.items.reduce((sum, current) => sum + current.partialCost, 0) : 0;
-
+            this.customerAdress = this.invoice.customer.customerName + '/\r\n' + this.invoice.customer.addressLine1 + '/\r\n'
+                + this.invoice.customer.addressLine2 + '/\r\n' + this.invoice.customer.addressLine3 + '/\r\n'
+                + this.invoice.customer.postalCode + '/\r\n' + this.invoice.customer.city + '/\r\n'
+                + this.invoice.customer.country ;
             console.log('III: ', this.invoice);
         });
 
