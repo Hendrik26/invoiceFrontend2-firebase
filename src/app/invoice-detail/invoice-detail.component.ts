@@ -23,6 +23,9 @@ export class InvoiceDetailComponent implements OnInit {
 
     // region other properties
     invoice: Invoice = Invoice.getEmptyInvoice();
+    customers: Customer[];
+    invoiceSelectCustomer = "----------";
+    invoiceSelectCustomerDef1 = "----------";
     customerAdress: string;
     bruttoSum: number;
     salesTax: number;
@@ -65,7 +68,13 @@ export class InvoiceDetailComponent implements OnInit {
     public isSEPA = false; // ist SEPA-Lastschrift, Bit2
 
 
-    //endregion
+    // endregion
+    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
+        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
+            return -1;
+        }
+        return 1;
+    }
 
     constructor(
         private router: Router,
@@ -78,14 +87,13 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('ngOnInit ');
-
         this.creatingInvoice = false;
         this.receivedInvoiceIdError = !this.hasReceivedInvoiceId();
         if (!this.receivedInvoiceIdError) {
             console.log('receivedInvoiceId==' + this.invoiceId + ';;;', 'color:Blue');
             this.receiveInvoiceById(this.invoiceId, null);
         }
+        this.receiveCustomers();
  /*
         console.log('this.creatingInvoiceBtn==' + this.creatingInvoiceBtn);
 
@@ -109,11 +117,8 @@ export class InvoiceDetailComponent implements OnInit {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
             this.invoice.wholeCost = this.invoice.items ? this.invoice.items.reduce((sum, current) => sum + current.partialCost, 0) : 0;
             this.calculateSums();
-            this.customerAdress = this.invoice.customer.customerName + '\r\n' + this.invoice.customer.addressLine1 + '\r\n'
-                + this.invoice.customer.addressLine2 + '\r\n' + this.invoice.customer.addressLine3 + '\r\n'
-                + this.invoice.customer.postalCode + '\r\n' + this.invoice.customer.city + '\r\n'
-                + this.invoice.customer.country ;
-            console.log('III: ', this.invoice);
+            this.calculateAddress();
+            // console.log('III: ', this.invoice);
         });
 
         // TODO receive invoice from firebase-DB
@@ -151,9 +156,17 @@ export class InvoiceDetailComponent implements OnInit {
 
     }
 
+    receiveCustomers(): void {
+        this.fbInvoiceService.getCustomersList('notArchive')
+            .subscribe(data => {
+                this.customers = data.map(x => Customer.normalizeCustomer(x));
+                this.customers.sort(function (a, b) {
+                    return InvoiceDetailComponent.compareCustomersByName(a, b);
+                });
+            });
+    }
 
-
-    //region other methods
+    // region other methods
 
     private calculateInitialDataLoad() {
         // TODO: calculate out-commented data from firebase-DB
@@ -170,40 +183,35 @@ export class InvoiceDetailComponent implements OnInit {
 
     }
 
+    private calculateAddress(): void {
+        this.customerAdress = this.invoice.customer.addressLine1 + '\r\n'
+            + this.invoice.customer.addressLine2 + '\r\n' + this.invoice.customer.addressLine3 + '\r\n'
+            + this.invoice.customer.postalCode + '\r\n' + this.invoice.customer.city + '\r\n'
+            + this.invoice.customer.country ;
+    }
+
     private calculateSums(): void {
         // this.nettoSum = this.calculateNettoSum(this.invoiceId);
         this.salesTax =  !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
-
     }
-
     private calculateSavingData() {
         this.calculateSums();
         // this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
         //  this.invoiceDate.getDate() + 14, 12);
     }
 
-    /*
-    private calculateBruttoSum(methId: string): number {
-        return !this.international ? (this.calculateNettoSum(methId) + this.calculateSalesTax(methId)) : this.calculateNettoSum(methId);
-    }
-
-    private calculateNettoSum(methId: string): number {
-        let methSum = 0;
-        if (this.items !== undefined) {
-            for (let i = 0; i < this.items.length; i++) {
-                methSum += this.items[i].wholeCost;
-            }
+    public changeFilterCompany(e: string): void {
+        // let x: Customer = this.customers.filter(c => c.getCustomerId() == e)[0];
+        if (e != this.invoiceSelectCustomerDef1) {
+            this.invoice.customer = this.customers.filter(c => c.getCustomerId() == e)[0];
+            this.calculateAddress();
         }
-        return methSum;
+        console.log('PPP', this.invoiceSelectCustomer);
+        this.invoiceSelectCustomer = this.invoiceSelectCustomerDef1;
+        console.log('III', this.invoiceSelectCustomer);
     }
 
-    private calculateSalesTax(methId: string): number {
-        // var methInvoice: Invoice;
-        // methInvoice = this.invoice;
-        return this.calculateNettoSum(methId) * this.salesTaxPercentage / 100;
-    }
-    */
     private changeInternational(): void {
         this.invoice.invoiceKind.international = !this.invoice.invoiceKind.international;
         console.log('invoice-detail.component.ts.changeInternational()');

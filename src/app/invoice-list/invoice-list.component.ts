@@ -73,16 +73,6 @@ export class InvoiceListComponent implements OnInit {
         // this.initialSaveInvoicesToDB02();
     }
 
-    testBool() {
-        let myTestBool: boolean;
-        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
-        myTestBool = null;
-        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
-        myTestBool = !myTestBool;
-        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
-        myTestBool = !myTestBool;
-        console.log('myTestBool ===' + myTestBool + '!!!    \r\n');
-    }
 
     receiveInvoices(): void {
         const refIndex: number = Number(this.invoiceFilterDateOption) + Number(this.invoiceFilterStateOption)
