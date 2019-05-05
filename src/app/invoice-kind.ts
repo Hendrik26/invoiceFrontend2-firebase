@@ -2,34 +2,6 @@ import {InvoiceType} from './invoice-type';
 import {InvoiceKindType} from './invoice-kind-type';
 
 export class InvoiceKind implements InvoiceKindType {
-   /* get international(): boolean {
-    return this.international;
-  }
-
-  get national(): boolean {
-    return !this.international;
-  }
-
-
-  set international(value: boolean) {
-    this.international = value;
-  }
-
-  get timeSpanBased(): boolean {
-    return this.timeSpanBased;
-  }
-
-  set timeSpanBased(value: boolean) {
-    this.timeSpanBased = value;
-  }
-
-  get isSEPA(): boolean {
-    return this.isSEPA;
-  }
-
-  set isSEPA(value: boolean) {
-    this.isSEPA = value;
-  } */
 
     public international: boolean; // Inlandsrechnung, Bit0
     public timeSpanBased: boolean; // UZeitraumbasierter Rechnung, Bit1
