@@ -33,8 +33,6 @@ export class InvoiceDetailComponent implements OnInit {
     creatingInvoiceBtn: boolean;
     creditorIdentificationNunber = 'DE55ZZZ00001275596';
 
-    customerAdress: string;
-
     customerBIC = 'Invoice-Bsp-BIC';
     customerIBAN = 'Invoice-Bsp-IBAN';
     customerTaxNumber = 'murx';
