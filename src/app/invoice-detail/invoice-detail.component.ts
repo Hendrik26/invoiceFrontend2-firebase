@@ -108,9 +108,7 @@ export class InvoiceDetailComponent implements OnInit {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
             this.invoice.wholeCost = this.invoice.items ? this.invoice.items.reduce((sum, current) => sum + current.partialCost, 0) : 0;
-            this.international = this.invoice.invoiceKind.international;
-            this.timeSpanBased = this.invoice.invoiceKind.timeSpanBased;
-            this.isSEPA = this.invoice.invoiceKind.isSEPA;
+
             console.log('III: ', this.invoice);
         });
 

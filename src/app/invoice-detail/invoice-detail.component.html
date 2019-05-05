@@ -12,11 +12,11 @@
     </div><!-- class="adress-window" -->
 
     <div class="checkboxfield">
-      <label><input type="checkbox" name="international" [checked]="international"
+      <label><input type="checkbox" name="international" [checked]="invoice.invoiceKind.international"
                     (change)="changeInternational()"> Auslandsrechnung</label>
-      <label><input type="checkbox" name="timeSpanBased" [checked]="timeSpanBased"
+      <label><input type="checkbox" name="timeSpanBased" [checked]="invoice.invoiceKind.timeSpanBased"
                     (change)="changeTimeSpanBased()"> Zeitraumbasiert</label>
-      <label><input type="checkbox" name="isSEPA" [checked]="isSEPA"
+      <label><input type="checkbox" name="isSEPA" [checked]="invoice.invoiceKind.isSEPA"
                     (change)="changeIsSEPA()"> SEPA-Lastschriftmandat</label>
     </div>
 
@@ -33,7 +33,7 @@
       <p>A. Schaffhirt & A. Wünsche</p>
       <p>Biesnitzer Straße 8</p>
       <p>02826 Görlitz</p>
-      <p *ngIf="international">GERMANY</p>
+      <p *ngIf="invoice.invoiceKind.international">GERMANY</p>
       <dl>
         <dt>Fon</dt>
         <dd>+49-3581-3221063</dd>
@@ -52,23 +52,23 @@
   <main>
     <section>
       <div class="city-date">Görlitz,
-        <input type="date" name="inDate" [ngModel]="invoiceDate | date:'yyyy-MM-dd'"
+        <input type="date" name="inDate" [ngModel]="invoice.invoiceDate | date:'yyyy-MM-dd'"
                (ngModelChange)="invoiceDateChange($event)">
       </div>
 
       <h1 class="invoice-number">Rechnung
-        <input class="invoice-number" [ngModel]="invoiceNumber"
+        <input class="invoice-number" [ngModel]="invoice.invoiceNumber"
                (ngModelChange)="invoiceNumberChange($event)">
       </h1>
       <!-- p>Zeitraum: 2018-01-01 bis 2018-12-31 (12 Monate)</p>
     <input class="timeSpan" class="inputLarge" [(ngModel)]="invoiceTimeSpan" -->
       <div class="timespan" *ngIf="timeSpanBased">
         Zeitraum:
-        <input type="date" name="inStartDate" [ngModel]="timespanBegin | date:'yyyy-MM-dd'"
+        <input type="date" name="inStartDate" [ngModel]="invoice.timespanBegin | date:'yyyy-MM-dd'"
                 (ngModelChange)="invoiceTimespanBeginChange($event)">
         bis
         <input type="date" name="inStartDate"
-               [ngModel]="timespanEnd ? (timespanEnd | date:'yyyy-MM-dd') : ''"
+               [ngModel]="timespanEnd ? (invoice.timespanEnd | date:'yyyy-MM-dd') : ''"
                (ngModelChange)="invoiceTimespanEndChange($event)">
          {{timespan()}}
       </div>
