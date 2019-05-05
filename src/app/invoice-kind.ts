@@ -2,45 +2,43 @@ import {InvoiceType} from './invoice-type';
 import {InvoiceKindType} from './invoice-kind-type';
 
 export class InvoiceKind implements InvoiceKindType {
-   get international(): boolean {
-    return this._international;
+   /* get international(): boolean {
+    return this.international;
   }
 
   get national(): boolean {
-    return !this._international;
+    return !this.international;
   }
 
 
   set international(value: boolean) {
-    this._international = value;
+    this.international = value;
   }
 
   get timeSpanBased(): boolean {
-    return this._timeSpanBased;
+    return this.timeSpanBased;
   }
 
   set timeSpanBased(value: boolean) {
-    this._timeSpanBased = value;
+    this.timeSpanBased = value;
   }
 
   get isSEPA(): boolean {
-    return this._isSEPA;
+    return this.isSEPA;
   }
 
   set isSEPA(value: boolean) {
-    this._isSEPA = value;
-  }
+    this.isSEPA = value;
+  } */
 
-    private _international: boolean; // Inlandsrechnung, Bit0
-    private _timeSpanBased: boolean; // UZeitraumbasierter Rechnung, Bit1
-    private _isSEPA: boolean; // ist SEPA-Lastschrift, Bit2
-
-    private packedDataNumber: number;
+    public international: boolean; // Inlandsrechnung, Bit0
+    public timeSpanBased: boolean; // UZeitraumbasierter Rechnung, Bit1
+    public isSEPA: boolean; // ist SEPA-Lastschrift, Bit2
 
     private constructor() {
-        this._international = false;
-        this._timeSpanBased = false;
-        this._isSEPA = false;
+        this.international = false;
+        this.timeSpanBased = false;
+        this.isSEPA = false;
     }
 
     public static create(international: boolean, timeSpanBased: boolean, isSEPA: boolean): InvoiceKind {
@@ -61,42 +59,36 @@ export class InvoiceKind implements InvoiceKindType {
 
     // getter
     public getHomeCountryInvoice(): boolean {
-        return this._international;
+        return this.international;
     }
 
     public getAbroadInvoice(): boolean {
-        return !this._international;
+        return !this.international;
     }
-
-
-    public getPackedDataNumber(): number{
-        return -1;
-    }
-
 
     // settet
 
     public changeInternational(): void {
-        this._international = !this._international;
+        this.international = !this.international;
     }
 
   public changeTimeSpanBased(): void {
-    this._timeSpanBased = !this._timeSpanBased;
+    this.timeSpanBased = !this.timeSpanBased;
   }
 
   public changeIsSEPA(): void {
-    this._isSEPA = !this._isSEPA;
+    this.isSEPA = !this.isSEPA;
   }
 
   public printToString(): string {
-      return `this.invoiceKind  ==={ _international ===${this._international}, _timeSpanBased ===${this._timeSpanBased},
-      _isSEPA ===${this._isSEPA}, !!!}`;
+      return `this.invoiceKind  ==={ _international ===${this.international}, _timeSpanBased ===${this.timeSpanBased},
+      _isSEPA ===${this.isSEPA}, !!!}`;
   }
 
     public exportInvoiceKindData(): InvoiceKindType {
       return {
-        international: this._international, // Inlandsrechnung, Bit0
-        timeSpanBased: this._timeSpanBased, // UZeitraumbasierter Rechnung, Bit1
+        international: this.international, // Inlandsrechnung, Bit0
+        timeSpanBased: this.timeSpanBased, // UZeitraumbasierter Rechnung, Bit1
         isSEPA: this.isSEPA // ist SEPA-Lastschrift, Bit2
       };
     }
