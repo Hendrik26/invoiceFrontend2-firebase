@@ -22,6 +22,9 @@ export class InvoiceDetailComponent implements OnInit {
 
 
     //region other properties
+    invoice: Invoice;
+    nettoSum: number;
+
     bruttoSum: number;
     countReminders: number;
     creatingInvoice: boolean;
@@ -36,7 +39,6 @@ export class InvoiceDetailComponent implements OnInit {
     mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
 
-    invoice: Invoice;
     invoiceCurrency = '€';
     invoiceNumber = '201800xx';
     invoiceIntendedUse = 'die Rechnungsnummer 201800xx';
@@ -49,7 +51,7 @@ export class InvoiceDetailComponent implements OnInit {
 
     items: Item[];
 
-    nettoSum: number;
+
     percentageString = '19%';
     receivedInvoiceIdError: boolean;
     salesTax: number;
@@ -104,10 +106,11 @@ export class InvoiceDetailComponent implements OnInit {
 
     private receiveInvoiceById(methId: string, historyId: string): void {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
-            console.log('KKK: ', methId);
-            console.log('JJJ: ', invoiceType);
-            console.log('PPP: ', Invoice.normalizeInvoice(invoiceType));
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
+            this.invoice.wholeCost = this.invoice.items ? this.invoice.items.reduce((sum, current) => sum + current.partialCost, 0) : 0;
+            this.international = this.invoice.invoiceKind.international;
+            this.timeSpanBased = this.invoice.invoiceKind.timeSpanBased;
+            this.isSEPA = this.invoice.invoiceKind.isSEPA;
             console.log('III: ', this.invoice);
         });
 

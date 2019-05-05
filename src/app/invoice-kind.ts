@@ -2,7 +2,7 @@ import {InvoiceType} from './invoice-type';
 import {InvoiceKindType} from './invoice-kind-type';
 
 export class InvoiceKind implements InvoiceKindType {
-  get international(): boolean {
+   get international(): boolean {
     return this._international;
   }
 
