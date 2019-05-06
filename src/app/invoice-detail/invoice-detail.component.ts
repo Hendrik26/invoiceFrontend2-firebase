@@ -15,7 +15,6 @@ import {Customer} from '../customer';
 })
 export class InvoiceDetailComponent implements OnInit {
 
-
     // region IDs
     invoiceId: string;
     // endregion

@@ -2,6 +2,8 @@ import {CustomerType} from './customer-type';
 import {ItemType} from './item-type';
 
 export class Customer implements CustomerType {
+    //////
+
     // region static properties
     private static emptyCustomer: CustomerType = {
         customerNumber: '2018', // Kundennummer
