@@ -85,21 +85,21 @@ export class Customer implements CustomerType {
 
     public static normalizeCustomer(inCustomer: any): Customer {
         const cData: CustomerType = {
-            customerNumber: inCustomer.customerNumber ? inCustomer.customerNumber : '', // Kundennummer
-            customerName: inCustomer.customerName ? inCustomer.customerName : '',  // Kundenname
-            country: inCustomer.country ? inCustomer.country : '',
-            postalCode: inCustomer.postalCode ? inCustomer.postalCode : '',
-            city: inCustomer.city ? inCustomer.city : '',
+            archived: !!inCustomer.archived,
             addressLine1: inCustomer.addressLine1 ? inCustomer.addressLine1 : '',
             addressLine2: inCustomer.addressLine2 ? inCustomer.addressLine2 : '',
             addressLine3: inCustomer.addressLine3 ? inCustomer.addressLine3 : '',
-            customerSalesTaxNumber: inCustomer.customerSalesTaxNumber ? inCustomer.customerSalesTaxNumber : '',
+            city: inCustomer.city ? inCustomer.city : '',
+            country: inCustomer.country ? inCustomer.country : '',
+            creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
             customerBIC: inCustomer.customerBIC ? inCustomer.customerBIC : '',
             customerIBAN: inCustomer.customerIBAN ? inCustomer.customerIBAN : '',
+            customerName: inCustomer.customerName ? inCustomer.customerName : '',  // Kundenname
+            customerNumber: inCustomer.customerNumber ? inCustomer.customerNumber : '', // Kundennummer
+            customerSalesTaxNumber: inCustomer.customerSalesTaxNumber ? inCustomer.customerSalesTaxNumber : '',
             mandateIdentification: inCustomer.mandateIdentification ? inCustomer.mandateIdentification : '',
-            creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
-            lastUpdateTime: inCustomer.lastUpdateTime ? inCustomer.lastUpdateTime.toDate() : new Date(),
-            archived: !!inCustomer.archived
+            lastUpdateTime: new Date(),
+            postalCode: inCustomer.postalCode ? inCustomer.postalCode : ''
         };
         return new Customer(inCustomer.key, cData);
     }
@@ -109,7 +109,7 @@ export class Customer implements CustomerType {
     public getCustomerId(): string {
         return this.customerId;
     }
-/*
+
     public exportCustomerData(): CustomerType {
         return {
             customerNumber: this.customerNumber, // Kundennummer
@@ -129,7 +129,7 @@ export class Customer implements CustomerType {
             archived: this.archived
         };
     }
-    */
+
 
     // endregion
 }

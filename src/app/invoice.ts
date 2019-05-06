@@ -236,7 +236,7 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
-    /*
+
         public exportInvoiceData(): InvoiceType {
             console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
             console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
@@ -245,30 +245,25 @@ export class Invoice implements InvoiceType {
             return {
                 archived: this.archived,
                 countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
-                newCreatedInvoice: this.newCreatedInvoice,
-                // endregion
                 currency: this.currency,
-                // customerIBAN: this.customerIBAN,
-                mandateIdentification: this.mandateIdentification, // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-                customerTaxNumber: this.customerTaxNumber,
+                customerId: this.customer.getCustomerId(),
+                customerData: this.customer.exportCustomerData(),
                 invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
                 invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
-                invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
                 invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
                 invoiceKind: this.invoiceKind.exportInvoiceKindData(),
+                invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
                 invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
                 itemTypes: Invoice.createItemTypeArray(this.items),
-                recipient: this.recipient, // <th>Empfänger</th>
+                newCreatedInvoice: this.newCreatedInvoice,
                 salesTaxPercentage: this.salesTaxPercentage,
                 timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
                 timespanBegin: this.timespanBegin,
                 timespanEnd: this.timespanEnd,
-                wholeCost: this.wholeCost, // <th>Gesamtpreis</th>
-                customerId: this.customer.getCustomerId(),
-                customerData: this.customer.exportCustomerData()
+                wholeCost: this.wholeCost // <th>Gesamtpreis</th>
             };
         }
-        */
+
 
     private getMaxItemId(): number {
         if (this.items === undefined) {

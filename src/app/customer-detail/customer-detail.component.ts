@@ -4,6 +4,7 @@ import {Customer} from '../customer';
 import {CustomerType} from '../customer-type';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
+import {Invoice} from '../invoice';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class CustomerDetailComponent implements OnInit {
     // endregion
 
     // region other properties
-    customer: Customer;
+    customer: CustomerType = Customer.getEmptyCustomer();
     historyDateList: [{ historyKey: string, historyLabel: string}] ;
     historyId: string;
     newCustomer: boolean;
@@ -88,7 +89,7 @@ export class CustomerDetailComponent implements OnInit {
             this.newCustomer = false;
             this.fbInvoiceService.createCustomer(customerType);
         } else {
-            this.fbInvoiceService.updateCustomer(this.customer.getCustomerId(), customerType);
+            this.fbInvoiceService.updateCustomer(this.customerId, customerType);
         }
         this.router.navigateByUrl('/customer-list');
     }

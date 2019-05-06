@@ -114,7 +114,6 @@ export class FbInvoiceService {
         return this.db.doc(path).valueChanges();
     }
 
-
     getInvoiceList(refIndex: number, filterStartDate: Date, filterEndDate: Date, filterState: string,
                    filterCustomer: string, filterArchive: boolean): Observable<any> {
         // let invoiceRef: AngularFirestoreCollection<Invoice> = null;
@@ -208,6 +207,9 @@ export class FbInvoiceService {
             ));
     }
 
+    updateInvoice(id: string, data: InvoiceType): void {
+        this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
+    }
 
     createInvoice(data: InvoiceType): void {
         console.log('Method FbInvoiceService.createInvoice(...) started!');
