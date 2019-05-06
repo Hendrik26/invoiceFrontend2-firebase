@@ -171,7 +171,7 @@
             <div *ngIf="!invoice.invoiceKind.isSEPA">
                 <p>Bitte überweisen Sie den Rechnungsbetrag bis zum
                     <input type="date" name="inDueDate" [ngModel]="invoice.invoiceDueDate | date:'yyyy-MM-dd'"
-                           (ngModelChange)="invoice.invoiceDueDate = $event">
+                           (ngModelChange)="invoiceDueDateChange($event)">
                     auf das unten angegebene Konto.</p>
                 <p> Als Verwendungszweck geben Sie bitte
                     <input type="text" class="inputLarge" name="intendedUse" [(ngModel)]="invoice.invoiceIntendedUse">

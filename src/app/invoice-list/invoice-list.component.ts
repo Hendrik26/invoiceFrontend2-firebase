@@ -62,7 +62,7 @@ export class InvoiceListComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.testBool();
+        // this.testBool();
         this.sortStartDueDate = new ThreeStateButton('DueDate');
         this.sortStartDate = new ThreeStateButton('Date');
         this.sortCompanyName = new ThreeStateButton('CompanyName');

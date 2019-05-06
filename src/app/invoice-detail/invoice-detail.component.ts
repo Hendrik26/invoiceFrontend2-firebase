@@ -114,7 +114,7 @@ export class InvoiceDetailComponent implements OnInit {
     private receiveInvoiceById(methId: string, historyId: string): void {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
-            this.invoice.wholeCost = this.invoice.items ? this.invoice.items.reduce((sum, current) => sum + current.partialCost, 0) : 0;
+
             this.calculateSums();
             this.calculateAddress();
             // console.log('III: ', this.invoice);
@@ -155,6 +155,36 @@ export class InvoiceDetailComponent implements OnInit {
 
     }
 
+    private saveInvoice(): void {
+        // TODO: save invoices to firebase-DB
+        console.log('invoice-detail.component.ts: method saveInvoice');
+        this.creatingInvoiceBtn = false;
+        this.calculateSums();
+        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceData(false));
+        /*
+                this.invoiceKind = InvoiceKind.create(this.international, this.timeSpanBased, this.isSEPA);
+              /* this.invoiceService.saveInvoiceGlobalsByInvoiceId(
+                    this.invoiceId,
+                    this.countReminders,
+                    this.invoiceCurrency,
+                    this.invoiceDate,
+                    this.invoiceDueDate,
+                    this.invoiceNumber,
+                    this.invoiceIntendedUse,
+                    this.invoiceState,
+                    this.customerAdress,
+                    this.salesTaxPercentage,
+                    'unknown',
+                    this.bruttoSum,
+                    this.invoiceKind,
+                    this.customerTaxNumber,
+                    this.timespanBegin,
+                    this.timespanEnd
+                ); */
+    }
+
+
+
     receiveCustomers(): void {
         this.fbInvoiceService.getCustomersList('notArchive')
             .subscribe(data => {
@@ -190,7 +220,8 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private calculateSums(): void {
-        // this.nettoSum = this.calculateNettoSum(this.invoiceId);
+        this.invoice.wholeCost = this.invoice.items
+            ? this.invoice.items.reduce((sum, current) => sum + current.count * current.partialCost, 0) : 0;
         this.salesTax =  !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
     }
@@ -242,6 +273,10 @@ export class InvoiceDetailComponent implements OnInit {
         }
     }
 
+    private invoiceDueDateChange(methEvent: string) {
+        this.invoice.invoiceDate = new Date(methEvent);
+    }
+
     private invoiceDateChange(methEvent: string) {
         this.invoice.invoiceDate = new Date(methEvent);
         this.invoice.invoiceDueDate = new Date(this.invoice.invoiceDate.getFullYear(), this.invoice.invoiceDate.getMonth(),
@@ -262,32 +297,6 @@ export class InvoiceDetailComponent implements OnInit {
     private invoiceNumberChange(e: string) {
         this.invoice.invoiceNumber = e;
         this.invoice.invoiceIntendedUse = 'die Rechnungsnummer ' + this.invoice.invoiceNumber;
-    }
-
-    private saveInvoice(): void {
-        // TODO: save invoices to firebase-DB
-        console.log('invoice-detail.component.ts: method saveInvoice');
-        this.creatingInvoiceBtn = false;
-        this.calculateSavingData();
-        this.invoiceKind = InvoiceKind.create(this.international, this.timeSpanBased, this.isSEPA);
-        /* this.invoiceService.saveInvoiceGlobalsByInvoiceId(
-            this.invoiceId,
-            this.countReminders,
-            this.invoiceCurrency,
-            this.invoiceDate,
-            this.invoiceDueDate,
-            this.invoiceNumber,
-            this.invoiceIntendedUse,
-            this.invoiceState,
-            this.customerAdress,
-            this.salesTaxPercentage,
-            'unknown',
-            this.bruttoSum,
-            this.invoiceKind,
-            this.customerTaxNumber,
-            this.timespanBegin,
-            this.timespanEnd
-        ); */
     }
 
     private backToInvoiceList(): void {

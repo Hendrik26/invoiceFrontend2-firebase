@@ -202,7 +202,7 @@ export class FbInvoiceService {
                     key: c.payload.doc.id,
                     ...c.payload.doc.data(),
                     wholeCost: (c.payload.doc.data().itemTypes
-                        ? c.payload.doc.data().itemTypes.reduce((sum, current) => sum + current.partialCost, 0) : 0)
+                        ? c.payload.doc.data().itemTypes.reduce((sum, current) => sum + current.count * current.partialCost, 0) : 0)
                 }))
             ));
     }

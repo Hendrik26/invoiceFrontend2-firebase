@@ -237,17 +237,17 @@ export class Invoice implements InvoiceType {
     }
 
 
-        public exportInvoiceData(): InvoiceType {
+        public exportInvoiceData(archived: boolean): any { // InvoiceType {
             console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
             console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
             console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
-            const invKind = this.invoiceKind.exportInvoiceKindData();
+            // const invKind = this.invoiceKind.exportInvoiceKindData();
             return {
-                archived: this.archived,
+                archived: archived,
                 countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
                 currency: this.currency,
                 customerId: this.customer.getCustomerId(),
-                customerData: this.customer.exportCustomerData(),
+                customer: this.customer.exportCustomerData(),
                 invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
                 invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
                 invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
@@ -260,7 +260,7 @@ export class Invoice implements InvoiceType {
                 timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
                 timespanBegin: this.timespanBegin,
                 timespanEnd: this.timespanEnd,
-                wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+                // wholeCost: this.wholeCost // <th>Gesamtpreis</th>
             };
         }
 
