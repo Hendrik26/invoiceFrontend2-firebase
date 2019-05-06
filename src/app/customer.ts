@@ -67,7 +67,7 @@ export class Customer implements CustomerType {
 
     // region static methods
     public static getEmptyCustomer(): CustomerType {
-        return Customer.emptyCustomer;
+        return new Customer('emptyCustomer', Customer.emptyCustomer);
     }
 
     public static createNewCustomerId() {
