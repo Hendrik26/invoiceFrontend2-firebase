@@ -57,6 +57,7 @@ export class Customer implements CustomerType {
         this.addressLine2 = data.addressLine2;
         this.addressLine3 = data.addressLine3;
         this.customerSalesTaxNumber = data.customerSalesTaxNumber;
+        this.customerBIC = data.customerBIC;
         this.customerIBAN = data.customerIBAN;
         this.mandateIdentification = data.mandateIdentification;
         this.creationTime = data.creationTime ? data.creationTime : new Date();
