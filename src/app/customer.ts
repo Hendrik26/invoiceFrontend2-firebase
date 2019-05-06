@@ -13,6 +13,7 @@ export class Customer implements CustomerType {
         addressLine2: '',
         addressLine3: '',
         customerSalesTaxNumber: '000000',
+        customerBIC: 'Customer-Bsp-BIC',
         customerIBAN: '',
         mandateIdentification: '', // Mandatsreferenz fuer SEPA-Lastschriftverfahren
         creationTime: new Date(),
@@ -32,6 +33,7 @@ export class Customer implements CustomerType {
     addressLine2: string;
     addressLine3: string;
     customerSalesTaxNumber: string;
+    customerBIC: string;
     customerIBAN: string;
     mandateIdentification: string; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
     creationTime: Date;
@@ -89,6 +91,7 @@ export class Customer implements CustomerType {
             addressLine2: inCustomer.addressLine2 ? inCustomer.addressLine2 : '',
             addressLine3: inCustomer.addressLine3 ? inCustomer.addressLine3 : '',
             customerSalesTaxNumber: inCustomer.customerSalesTaxNumber ? inCustomer.customerSalesTaxNumber : '',
+            customerBIC: inCustomer.customerBIC ? inCustomer.customerBIC : '',
             customerIBAN: inCustomer.customerIBAN ? inCustomer.customerIBAN : '',
             mandateIdentification: inCustomer.mandateIdentification ? inCustomer.mandateIdentification : '',
             creationTime: inCustomer.creationTime ? inCustomer.creationTime.toDate() : new Date(),
@@ -115,6 +118,7 @@ export class Customer implements CustomerType {
             addressLine2: this.addressLine2,
             addressLine3: this.addressLine3,
             customerSalesTaxNumber: this.customerSalesTaxNumber,
+            customerBIC: this.customerBIC,
             customerIBAN: this.customerIBAN,
             mandateIdentification: this.mandateIdentification,
             creationTime: this.creationTime ? this.creationTime : new Date(),

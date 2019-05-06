@@ -187,7 +187,7 @@
                     von Ihrem Konto IBAN
                     <input type="text" name="customerIBAN" size="27" [(ngModel)]="invoice.customer.customerIBAN">
                     bei der Bank BIC
-                    <input type="text" name="customerBIC" size="27" [(ngModel)]="customerBIC">
+                    <input type="text" name="customerBIC" size="27" [(ngModel)]="invoice.customer.customerBIC">
                     zum Fälligkeitsdatum {{invoice.invoiceDueDate | date:'yyyy-MM-dd'}} ein. Wir bitten Sie,
                     für Kontodeckung zu sorgen.</p>
             </div>

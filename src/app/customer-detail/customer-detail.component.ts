@@ -77,6 +77,7 @@ export class CustomerDetailComponent implements OnInit {
             addressLine2: this.customer.addressLine2 ? this.customer.addressLine2 : '',
             addressLine3: this.customer.addressLine3 ? this.customer.addressLine3 : '',
             customerSalesTaxNumber: this.customer.customerSalesTaxNumber ? this.customer.customerSalesTaxNumber : '',
+            customerBIC: this.customer.customerBIC ? this.customer.customerBIC : '',
             customerIBAN: this.customer.customerIBAN ? this.customer.customerIBAN : '',
             mandateIdentification: this.customer.mandateIdentification ? this.customer.mandateIdentification : '',
             creationTime: this.customer.creationTime ? this.customer.creationTime : new Date(),

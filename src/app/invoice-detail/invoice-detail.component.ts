@@ -24,8 +24,8 @@ export class InvoiceDetailComponent implements OnInit {
     // region other properties
     invoice: Invoice = Invoice.getEmptyInvoice();
     customers: Customer[];
-    invoiceSelectCustomer = "----------";
-    invoiceSelectCustomerDef1 = "----------";
+    invoiceSelectCustomer = '----------';
+    invoiceSelectCustomerDef1 = '----------';
     customerAdress: string;
     bruttoSum: number;
     salesTax: number;
