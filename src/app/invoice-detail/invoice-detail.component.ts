@@ -160,7 +160,7 @@ export class InvoiceDetailComponent implements OnInit {
         console.log('invoice-detail.component.ts: method saveInvoice');
         this.creatingInvoiceBtn = false;
         this.calculateSums();
-        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceData(false));
+        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(false));
         /*
                 this.invoiceKind = InvoiceKind.create(this.international, this.timeSpanBased, this.isSEPA);
               /* this.invoiceService.saveInvoiceGlobalsByInvoiceId(

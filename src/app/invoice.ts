@@ -7,6 +7,7 @@ import {InvoiceKindType} from './invoice-kind-type';
 import {ItemType} from './item-type';
 
 export class Invoice implements InvoiceType {
+    ////
 
     // region static properties
     private static emptyData: InvoiceType = {
@@ -26,8 +27,8 @@ export class Invoice implements InvoiceType {
         salesTaxPercentage: 19,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
         timespanBegin: new Date(),
-        timespanEnd: new Date(),
-        wholeCost: -111, // <th>Gesamtpreis</th>
+        timespanEnd: new Date()
+        // wholeCost: -111, // <th>Gesamtpreis</th>
     };
     // endregion
 
@@ -79,7 +80,7 @@ export class Invoice implements InvoiceType {
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
         this.timespanBegin = data.timespanBegin;
         this.timespanEnd = data.timespanEnd;
-        this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
+        this.wholeCost = -999 // <th>Gesamtpreis</th>
     }
 
     public static getEmptyInvoice(): Invoice {
@@ -120,7 +121,8 @@ export class Invoice implements InvoiceType {
             countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
             currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
             customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
-            customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
+            customerId: inputInvoice.customer.customerId ? inputInvoice.customer.customerId
+                : (inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId'),
             invoiceDate: inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
             invoiceDueDate: inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
             invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
@@ -135,9 +137,10 @@ export class Invoice implements InvoiceType {
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
-            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
+            // wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
         };
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
+        console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \rßn`)
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
@@ -236,8 +239,7 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
-
-        public exportInvoiceData(archived: boolean): any { // InvoiceType {
+        public exportInvoiceData(archived: boolean): InvoiceType {
             console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
             console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
             console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
@@ -247,7 +249,7 @@ export class Invoice implements InvoiceType {
                 countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
                 currency: this.currency,
                 customerId: this.customer.getCustomerId(),
-                customer: this.customer.exportCustomerData(),
+                customerData: this.customer.exportCustomerData(),
                 invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
                 invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
                 invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
@@ -264,6 +266,31 @@ export class Invoice implements InvoiceType {
             };
         }
 
+    public exportInvoiceToAny(archived: boolean): any {
+        console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
+        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
+        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
+        // const invKind = this.invoiceKind.exportInvoiceKindData();
+        return {
+            archived: archived,
+            countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
+            currency: this.currency,
+            customer: this.customer.exportCustomerDataPlus(),
+            invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
+            invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
+            invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
+            invoiceKind: this.invoiceKind.exportInvoiceKindData(),
+            invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
+            invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
+            itemTypes: Invoice.createItemTypeArray(this.items),
+            newCreatedInvoice: this.newCreatedInvoice,
+            salesTaxPercentage: this.salesTaxPercentage,
+            timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
+            timespanBegin: this.timespanBegin,
+            timespanEnd: this.timespanEnd,
+            // wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+        };
+    }
 
     private getMaxItemId(): number {
         if (this.items === undefined) {

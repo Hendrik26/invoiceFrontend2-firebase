@@ -1,4 +1,5 @@
 import {CustomerType} from './customer-type';
+import {CustomerTypePlus} from './customer-type-plus';
 import {ItemType} from './item-type';
 
 export class Customer implements CustomerType {
@@ -112,6 +113,27 @@ export class Customer implements CustomerType {
 
     public exportCustomerData(): CustomerType {
         return {
+            customerNumber: this.customerNumber, // Kundennummer
+            customerName: this.customerName,  // Kundenname
+            country: this.country,
+            postalCode: this.postalCode,
+            city: this.city,
+            addressLine1: this.addressLine1,
+            addressLine2: this.addressLine2,
+            addressLine3: this.addressLine3,
+            customerSalesTaxNumber: this.customerSalesTaxNumber,
+            customerBIC: this.customerBIC,
+            customerIBAN: this.customerIBAN,
+            mandateIdentification: this.mandateIdentification,
+            creationTime: this.creationTime ? this.creationTime : new Date(),
+            lastUpdateTime: this.lastUpdateTime ? this.lastUpdateTime : new Date(),
+            archived: this.archived
+        };
+    }
+
+    public exportCustomerDataPlus(): CustomerTypePlus {
+        return {
+            customerId: this.customerId,
             customerNumber: this.customerNumber, // Kundennummer
             customerName: this.customerName,  // Kundenname
             country: this.country,
