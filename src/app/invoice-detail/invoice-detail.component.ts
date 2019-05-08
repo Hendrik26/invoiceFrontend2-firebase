@@ -66,6 +66,9 @@ export class InvoiceDetailComponent implements OnInit {
     public timeSpanBased = false; // UZeitraumbasierter Rechnung, Bit1
     public isSEPA = false; // ist SEPA-Lastschrift, Bit2
 
+    private changedItemNumber = -1;
+    private changedItem: Item;
+
 
     // endregion
     private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
@@ -109,6 +112,16 @@ export class InvoiceDetailComponent implements OnInit {
         }
         this.calculateSums();
         */
+    }
+
+    private setChangeItemNumber(input: number): void {
+        this.changedItemNumber = input;
+        this.changedItem = this.invoice.items[input];
+        console.log(`this.changedItemNumber === ${input}`);
+    }
+
+    private resetChangeItemNumber(): void {
+        this.changedItemNumber = -1;
     }
 
     private receiveInvoiceById(methId: string, historyId: string): void {
