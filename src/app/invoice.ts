@@ -173,17 +173,17 @@ export class Invoice implements InvoiceType {
         if (ascending) {
             ascendingFactor = +1;
         }
-        if (sortBy == 'Date') {
+        if (sortBy === 'Date') {
             invoices.sort(function (a, b) {
                 return ascendingFactor * a.invoiceDate.getTime() - ascendingFactor * b.invoiceDate.getTime();
             });
         }
-        if (sortBy == 'DueDate') {
+        if (sortBy === 'DueDate') {
             invoices.sort(function (a, b) {
                 return ascendingFactor * a.invoiceDueDate.getTime() - ascendingFactor * b.invoiceDueDate.getTime();
             });
         }
-        if (sortBy == 'CompanyName') {
+        if (sortBy === 'CompanyName') {
             invoices.sort(function (a, b) {
                 return ascendingFactor * Invoice.compareInvoicesByCompanyName(a, b);
             });
