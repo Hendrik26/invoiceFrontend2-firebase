@@ -137,7 +137,7 @@ export class Invoice implements InvoiceType {
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
-            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
+            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
         };
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
         console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \r\n`);

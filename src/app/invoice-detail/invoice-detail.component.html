@@ -88,6 +88,7 @@
                     <!-- loop for all invoice - filter needed!!! -->
                     <thead>
                     <tr>
+                        <th>Leistungsnummer</th>
                         <th>Leistungsbeschreibung</th>
                         <th>Leistungsdatum</th>
                         <th>Anzahl</th>
@@ -97,8 +98,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let item of invoice.items">
+                    <tr *ngFor="let item of invoice.items; let i = index">
                         <!-- loop for all items -->
+                        <td>{{i}}</td>
                         <td>{{item.itemName}}</td>
                         <td>{{item.itemDate}}</td>
                         <td>{{item.countString()}}</td>
