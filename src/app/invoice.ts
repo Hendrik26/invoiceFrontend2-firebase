@@ -139,6 +139,8 @@ export class Invoice implements InvoiceType {
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
             wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
         };
+        const wcType: string = typeof inputInvoice.wholeCost;
+        console.log(`\r\n wcType ===${wcType} !!! \r\n`)
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
         console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \r\n`);
         if (inputInvoice.itemTypes) {
