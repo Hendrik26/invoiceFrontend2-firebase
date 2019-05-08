@@ -29,8 +29,13 @@ export class InvoiceDetailComponent implements OnInit {
     bruttoSum: number;
     salesTax: number;
 
+    private changedItemNumber = -1;
+    private changedItem: Item;
+    private oldItem: Item;
 
-     // nettoSum: number;
+
+
+    // nettoSum: number;
     // countReminders: number;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
@@ -65,9 +70,6 @@ export class InvoiceDetailComponent implements OnInit {
     public international = false; // Inlandsrechnung, Bit0
     public timeSpanBased = false; // UZeitraumbasierter Rechnung, Bit1
     public isSEPA = false; // ist SEPA-Lastschrift, Bit2
-
-    private changedItemNumber = -1;
-    private changedItem: Item;
 
 
     // endregion
@@ -116,7 +118,8 @@ export class InvoiceDetailComponent implements OnInit {
 
     private setChangeItemNumber(input: number): void {
         this.changedItemNumber = input;
-        this.changedItem = this.invoice.items[input];
+        this.oldItem =  new Item(this.invoice, this.invoice.items[input]);
+        this.changedItem =  this.invoice.items[input];
         console.log(`this.changedItemNumber === ${input}`);
     }
 
@@ -125,14 +128,16 @@ export class InvoiceDetailComponent implements OnInit {
         this.calculateSums();
     }
 
-    private resetChangeItemNumber(): void {
+    private saveItem(): void {
+        this.invoice.items[this.changedItemNumber] = Item.normalizeItem(this.invoice, this.invoice.items[this.changedItemNumber]);
         this.changedItemNumber = -1;
+        this.calculateSums();
     }
 
-    private saveItem(input: number): void {
-        this.invoice.items[input] = this.changedItem;
+    private notSaveItem(): void {
+        this.invoice.items[this.changedItemNumber] = this.oldItem;
         this.changedItemNumber = -1;
-        console.log(`this.changedItemNumber === ${input}`);
+        this.calculateSums();
     }
 
     private receiveInvoiceById(methId: string, historyId: string): void {
