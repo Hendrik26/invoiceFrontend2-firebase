@@ -237,7 +237,7 @@ export class Invoice implements InvoiceType {
     }
 
 
-        public exportInvoiceData(archived: boolean): any { // InvoiceType {
+        public exportInvoiceToAny(archived: boolean): any { // InvoiceType {
             console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
             console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
             console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
@@ -246,8 +246,9 @@ export class Invoice implements InvoiceType {
                 archived: archived,
                 countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
                 currency: this.currency,
-                customerId: this.customer.getCustomerId(),
-                customer: this.customer.exportCustomerData(),
+                // customerId: this.customer.getCustomerId(),
+                // customer: this.customer.exportCustomerData(),
+                customer: this.customer,
                 invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
                 invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
                 invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
