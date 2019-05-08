@@ -124,6 +124,12 @@ export class InvoiceDetailComponent implements OnInit {
         this.changedItemNumber = -1;
     }
 
+    private saveItem(input: number): void {
+        this.invoice.items[input] = this.changedItem;
+        this.changedItemNumber = -1;
+        console.log(`this.changedItemNumber === ${input}`);
+    }
+
     private receiveInvoiceById(methId: string, historyId: string): void {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);

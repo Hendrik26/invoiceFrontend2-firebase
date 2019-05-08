@@ -100,8 +100,7 @@
                     <tbody>
                     <tr *ngFor="let item of invoice.items; let i = index">
                         <!-- loop for all items -->
-                        <td *ngIf="changedItemNumber !== i">{{i}}</td>
-                        <td *ngIf="changedItemNumber === i">{{i}}</td>
+                        <td>{{i}}</td>
                         <td *ngIf="changedItemNumber !== i">{{item.itemName}}</td>
                         <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
                                    [(ngModel)]="changedItem.itemName"></td>
@@ -116,12 +115,14 @@
                         <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
                                                                    [(ngModel)]="changedItem.partialCost">
                         {{invoice.currency}}</td>
-                        <td *ngIf="changedItemNumber !== i">{{item.wholeCost | number:'1.2-2'}}{{invoiceCurrency}}</td>
+                        <td>{{item.wholeCost | number:'1.2-2'}}{{invoiceCurrency}}</td>
                         <td>
                             <button *ngIf="changedItemNumber !== i" (click)="setChangeItemNumber(i)">
                                 Item bearbeiten</button>
                             <button *ngIf="changedItemNumber === i" (click)="resetChangeItemNumber()">
                                 Item zurücksetzen</button>
+                            <button *ngIf="changedItemNumber === i" (click)="resetChangeItemNumber()">
+                                Itemänderungen speichern</button>
                             <!-- a routerLink="/item-detail/{{invoiceId}}/{{item.getItemId()}}">Posten bearbeiten</a-->
                         </td>
                     </tr>
