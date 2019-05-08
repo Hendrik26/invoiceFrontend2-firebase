@@ -4,7 +4,7 @@
             <div class="postage-info">
                 SednaSoft GbR, Biesnitzer Straße 8, 02826 Görlitz
             </div><!-- class="postage-info" -->
-            <select [(ngModel)]="invoiceSelectCustomer" (ngModelChange) = "changeFilterCompany($event)">
+            <select [(ngModel)]="invoiceSelectCustomer" (ngModelChange)="changeFilterCompany($event)">
                 <option selected [ngValue]="invoiceSelectCustomerDef1">
                     {{invoice.customer.customerName}}
                 </option>
@@ -100,29 +100,38 @@
                     <tbody>
                     <tr *ngFor="let item of invoice.items; let i = index">
                         <!-- loop for all items -->
-                        <td>{{i}}</td>
+                        <td>{{i + 1}}</td>
                         <td *ngIf="changedItemNumber !== i">{{item.itemName}}</td>
                         <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
-                                   [(ngModel)]="changedItem.itemName"></td>
+                                                                   [(ngModel)]="changedItem.itemName"></td>
                         <td *ngIf="changedItemNumber !== i">{{item.itemDate}}</td>
-                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
+                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="15"
                                                                    [(ngModel)]="changedItem.itemDate"></td>
-                        <td *ngIf="changedItemNumber !== i" >{{item.count}}</td>
-                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
-                                                                   [(ngModel)]="changedItem.count"></td>
+                        <td *ngIf="changedItemNumber !== i">{{item.count}}</td>
+                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="10"
+                                                                   [(ngModel)] = "changedItem.count"
+                                                                   (ngModelChange)="changeChangedItemCost()">
+
+                        </td>
                         <!-- td>{{item.partialCost | number:'1.2-2'}}{{invoiceCurrency}}</td -->
                         <td *ngIf="changedItemNumber !== i">{{item.partialCostString(invoiceCurrency)}}</td>
-                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
-                                                                   [(ngModel)]="changedItem.partialCost">
-                        {{invoice.currency}}</td>
+                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="10"
+                                                                   [(ngModel)]="changedItem.partialCost"
+                                                                   (ngModelChange) = "changeChangedItemCost()">
+                            <label>Stundenpreis</label>
+                            <input type="checkbox" [(ngModel)] = "changedItem.hourPayment">
+                            {{invoice.currency}}</td>
                         <td>{{item.wholeCost | number:'1.2-2'}}{{invoiceCurrency}}</td>
                         <td>
                             <button *ngIf="changedItemNumber !== i" (click)="setChangeItemNumber(i)">
-                                Item bearbeiten</button>
+                                Item bearbeiten
+                            </button>
                             <button *ngIf="changedItemNumber === i" (click)="resetChangeItemNumber()">
-                                Item zurücksetzen</button>
+                                zurück
+                            </button>
                             <button *ngIf="changedItemNumber === i" (click)="resetChangeItemNumber()">
-                                Itemänderungen speichern</button>
+                                speichern
+                            </button>
                             <!-- a routerLink="/item-detail/{{invoiceId}}/{{item.getItemId()}}">Posten bearbeiten</a-->
                         </td>
                     </tr>
@@ -130,12 +139,12 @@
                     <tfoot>
 
                     <tr>
-                        <td colspan="3"></td>
+                        <td colspan="4"></td>
                         <td>Summe Netto</td>
                         <td>{{invoice.wholeCost | number:'1.2-2'}}{{invoice.currency}}</td>
                     </tr>
                     <tr *ngIf="!invoice.invoiceKind.international">
-                        <td colspan="3"></td>
+                        <td colspan="4"></td>
                         <td>{{!invoice.invoiceKind.international ? percentageString : ''}} MwSt.</td>
                         <td> {{!invoice.invoiceKind.international ? (salesTax | number:'1.2-2') : 'Brutto == Netto '}}{{invoice.currency}}</td>
                         <td>
@@ -143,7 +152,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3"></td>
+                        <td colspan="4"></td>
                         <td>Rechnungsbetrag</td>
                         <td> {{bruttoSum | number:'1.2-2'}}
                             <select name="invoiceCurrency" [(ngModel)]="invoice.currency">

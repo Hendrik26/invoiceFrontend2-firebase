@@ -120,6 +120,11 @@ export class InvoiceDetailComponent implements OnInit {
         console.log(`this.changedItemNumber === ${input}`);
     }
 
+    private changeChangedItemCost(): void {
+        this.changedItem.wholeCost = this.changedItem.count * this.changedItem.partialCost;
+        this.calculateSums();
+    }
+
     private resetChangeItemNumber(): void {
         this.changedItemNumber = -1;
     }
