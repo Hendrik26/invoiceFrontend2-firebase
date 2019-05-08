@@ -26,8 +26,8 @@ export class Invoice implements InvoiceType {
         salesTaxPercentage: 19,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
         timespanBegin: new Date(),
-        timespanEnd: new Date(),
-        wholeCost: -111, // <th>Gesamtpreis</th>
+        timespanEnd: new Date()
+        // wholeCost: -111, // <th>Gesamtpreis</th>
     };
     // endregion
 
@@ -79,7 +79,7 @@ export class Invoice implements InvoiceType {
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
         this.timespanBegin = data.timespanBegin;
         this.timespanEnd = data.timespanEnd;
-        this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
+        this.wholeCost = -999 // <th>Gesamtpreis</th>
     }
 
     public static getEmptyInvoice(): Invoice {
@@ -135,7 +135,7 @@ export class Invoice implements InvoiceType {
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
-            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
+            // wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
         };
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
         if (inputInvoice.itemTypes) {
@@ -237,7 +237,7 @@ export class Invoice implements InvoiceType {
     }
 
 
-        public exportInvoiceToAny(archived: boolean): any { // InvoiceType {
+        public exportInvoiceToAny(archived: boolean): InvoiceType { // InvoiceType {
             console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
             console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
             console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
@@ -246,9 +246,9 @@ export class Invoice implements InvoiceType {
                 archived: archived,
                 countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
                 currency: this.currency,
-                // customerId: this.customer.getCustomerId(),
-                // customer: this.customer.exportCustomerData(),
-                customer: this.customer,
+                customerId: this.customer.getCustomerId(),
+                customerData: this.customer.exportCustomerData(),
+                // customer: this.customer,
                 invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
                 invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
                 invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
