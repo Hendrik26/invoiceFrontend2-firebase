@@ -121,7 +121,8 @@ export class Invoice implements InvoiceType {
             countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
             currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
             customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
-            customerId: inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId',
+            customerId: inputInvoice.customer.customerId ? inputInvoice.customer.customerId
+                : (inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId'),
             invoiceDate: inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
             invoiceDueDate: inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
             invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
@@ -139,6 +140,7 @@ export class Invoice implements InvoiceType {
             // wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
         };
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
+        console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \rßn`)
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
