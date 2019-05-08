@@ -248,7 +248,6 @@ export class Invoice implements InvoiceType {
                 currency: this.currency,
                 customerId: this.customer.getCustomerId(),
                 customerData: this.customer.exportCustomerData(),
-                // customer: this.customer,
                 invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
                 invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
                 invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
@@ -265,6 +264,31 @@ export class Invoice implements InvoiceType {
             };
         }
 
+    public exportInvoiceToAny(archived: boolean): any {
+        console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
+        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
+        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
+        // const invKind = this.invoiceKind.exportInvoiceKindData();
+        return {
+            archived: archived,
+            countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
+            currency: this.currency,
+            customer: this.customer.exportCustomerDataPlus(),
+            invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
+            invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
+            invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
+            invoiceKind: this.invoiceKind.exportInvoiceKindData(),
+            invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
+            invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
+            itemTypes: Invoice.createItemTypeArray(this.items),
+            newCreatedInvoice: this.newCreatedInvoice,
+            salesTaxPercentage: this.salesTaxPercentage,
+            timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
+            timespanBegin: this.timespanBegin,
+            timespanEnd: this.timespanEnd,
+            // wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+        };
+    }
 
     private getMaxItemId(): number {
         if (this.items === undefined) {

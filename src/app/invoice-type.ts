@@ -30,5 +30,5 @@ export interface InvoiceType {
 
     customerId: string;
     customerData: CustomerType;
-    // customer: CustomerType;
+    // customer: CustomerTypePlus;
 }
