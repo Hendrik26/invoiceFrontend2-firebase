@@ -118,7 +118,8 @@ export class Invoice implements InvoiceType {
     public static normalizeInvoice(inputInvoice: any): Invoice {
         const invoiceData: InvoiceType = {
             archived: !!inputInvoice.archived,
-            countReminders: inputInvoice.countReminders ? inputInvoice.countReminders : -1, // <th>Anzahl der Mahnungen</th>
+            countReminders: (typeof inputInvoice.countReminders === 'number') ? inputInvoice.countReminders : -1,
+            // <th>Anzahl der Mahnungen</th>
             currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
             customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
             customerId: inputInvoice.customer.customerId ? inputInvoice.customer.customerId
@@ -137,7 +138,7 @@ export class Invoice implements InvoiceType {
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin.toDate ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd.toDate() ? inputInvoice.timespanEnd.toDate() : new Date(),
-            wholeCost: (inputInvoice.wholeCost === 'number') ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
+            wholeCost: (typeof inputInvoice.wholeCost === 'number') ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
         };
         const wcType: string = typeof inputInvoice.wholeCost;
         console.log(`\r\n wcType ===${wcType} !!! \r\n`)
