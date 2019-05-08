@@ -27,8 +27,8 @@ export class Invoice implements InvoiceType {
         salesTaxPercentage: 19,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
         timespanBegin: new Date(),
-        timespanEnd: new Date()
-        // wholeCost: -111, // <th>Gesamtpreis</th>
+        timespanEnd: new Date(),
+        wholeCost: -111, // <th>Gesamtpreis</th>
     };
     // endregion
 
@@ -80,7 +80,7 @@ export class Invoice implements InvoiceType {
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
         this.timespanBegin = data.timespanBegin;
         this.timespanEnd = data.timespanEnd;
-        this.wholeCost = -999 // <th>Gesamtpreis</th>
+        this.wholeCost = data.wholeCost // <th>Gesamtpreis</th>
     }
 
     public static getEmptyInvoice(): Invoice {
@@ -137,15 +137,16 @@ export class Invoice implements InvoiceType {
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
-            // wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
+            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : -111 // <th>Gesamtpreis</th>
         };
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
-        console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \rßn`)
+        console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \r\n`);
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
             });
         }
+        console.log(`\r\n normalizeInvoice.items ===${retInvoice.items} !!! \r\n`);
         return retInvoice;
     }
 
@@ -262,7 +263,7 @@ export class Invoice implements InvoiceType {
                 timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
                 timespanBegin: this.timespanBegin,
                 timespanEnd: this.timespanEnd,
-                // wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+                wholeCost: this.wholeCost // <th>Gesamtpreis</th>
             };
         }
 
