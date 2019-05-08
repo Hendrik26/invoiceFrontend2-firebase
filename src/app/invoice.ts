@@ -237,8 +237,7 @@ export class Invoice implements InvoiceType {
         this.newCreatedInvoice = false;
     }
 
-
-        public exportInvoiceToAny(archived: boolean): InvoiceType { // InvoiceType {
+        public exportInvoiceData(archived: boolean): InvoiceType { // InvoiceType {
             console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
             console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
             console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
