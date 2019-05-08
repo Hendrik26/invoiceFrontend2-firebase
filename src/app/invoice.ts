@@ -124,8 +124,8 @@ export class Invoice implements InvoiceType {
             customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
             customerId: inputInvoice.customer.customerId ? inputInvoice.customer.customerId
                 : (inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId'),
-            invoiceDate: inputInvoice.invoiceDate ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
-            invoiceDueDate: inputInvoice.invoiceDueDate ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
+            invoiceDate: inputInvoice.invoiceDate.toDate() ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
+            invoiceDueDate: inputInvoice.invoiceDueDate.toDate() ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
             invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
             invoiceKind: inputInvoice.invoiceKind ? InvoiceKind.create(inputInvoice.invoiceKind.international,
                 inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA) : InvoiceKind.create(false,
@@ -133,8 +133,8 @@ export class Invoice implements InvoiceType {
             invoiceNumber: inputInvoice.invoiceNumber ? inputInvoice.invoiceNumber : '2018xy', // <th>RechnungsNr</th>
             invoiceState: inputInvoice.invoiceState ? inputInvoice.invoiceState : 'Entwurf', // <th>Status (Entwurf, bezahlt, ...)</th>
             itemTypes: [],
-            newCreatedInvoice: !!inputInvoice.newCreatedInvoice,
-            salesTaxPercentage: inputInvoice.salesTaxPercentage ? inputInvoice.salesTaxPercentage : 19,
+            newCreatedInvoice: false,
+            salesTaxPercentage: (typeof inputInvoice.salesTaxPercentage === 'number') ? inputInvoice.salesTaxPercentage : 19,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin.toDate ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd.toDate() ? inputInvoice.timespanEnd.toDate() : new Date(),
