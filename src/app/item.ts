@@ -33,12 +33,12 @@ export class Item implements ItemType {
 
   public static normalizeItem(motherInvoice: Invoice, inputItem: any): Item {
     const itemData: ItemType = {
-        itemDate: inputItem.itemDate ? inputItem.itemDate : new Date(), /// <th>Leistungsdatum</th>
-        itemName: inputItem.itemName ? inputItem.itemName : 'bspItemName',  // <th>Leistungsbeschreibung</th>
-        partialCost: isNaN(inputItem.partialCost) || inputItem.partialCost ? 0 : inputItem.partialCost, // <th>Stückpreis</th>
-        count: isNaN(inputItem.count) || inputItem.count ? 0 : inputItem.count , // <th>Anzahl</th>
+        itemDate: inputItem.itemDate ? inputItem.itemDate : new Date().toISOString().slice(0,10), /// <th>Leistungsdatum</th>
+        itemName: inputItem.itemName ? inputItem.itemName : '',  // <th>Leistungsbeschreibung</th>
+        partialCost: isNaN(inputItem.partialCost) || !inputItem.partialCost ? 0 : inputItem.partialCost, // <th>Stückpreis</th>
+        count: isNaN(inputItem.count) || !inputItem.count ? 0 : inputItem.count , // <th>Anzahl</th>
         hourPayment: !!inputItem.hourPayment,
-        currency: inputItem.currency ? inputItem.currency : 'bspCurrency'
+        currency: inputItem.currency ? inputItem.currency : '€'
     };
     return new Item(motherInvoice, itemData);
   }

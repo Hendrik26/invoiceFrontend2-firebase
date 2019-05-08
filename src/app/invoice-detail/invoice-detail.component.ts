@@ -140,6 +140,13 @@ export class InvoiceDetailComponent implements OnInit {
         this.calculateSums();
     }
 
+    private addNewItem(): void {
+        this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
+        this.changedItemNumber = this.invoice.items.length - 1;
+        this.oldItem =  new Item(this.invoice, this.invoice.items[this.changedItemNumber]);
+        this.changedItem =  this.invoice.items[this.changedItemNumber];
+    }
+
     private receiveInvoiceById(methId: string, historyId: string): void {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);

@@ -102,20 +102,21 @@
                         <!-- loop for all items -->
                         <td>{{i + 1}}</td>
                         <td *ngIf="changedItemNumber !== i">{{item.itemName}}</td>
-                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="27"
-                                                                   [(ngModel)]="changedItem.itemName"></td>
+                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="70"
+                                                                   [(ngModel)]="changedItem.itemName"
+                                                                   placeholder="neue Leistungsbeschreibung"></td>
                         <td *ngIf="changedItemNumber !== i">{{item.itemDate}}</td>
                         <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="15"
                                                                    [(ngModel)]="changedItem.itemDate"></td>
                         <td *ngIf="changedItemNumber !== i">{{item.count}}</td>
-                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="10"
+                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="7"
                                                                    [(ngModel)] = "changedItem.count"
                                                                    (ngModelChange)="changeChangedItemCost()">
 
                         </td>
                         <!-- td>{{item.partialCost | number:'1.2-2'}}{{invoiceCurrency}}</td -->
                         <td *ngIf="changedItemNumber !== i">{{item.partialCostString(invoiceCurrency)}}</td>
-                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="10"
+                        <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="7"
                                                                    [(ngModel)]="changedItem.partialCost"
                                                                    (ngModelChange) = "changeChangedItemCost()">
                             <label>Stundenpreis</label>
@@ -177,7 +178,7 @@
                     </tfoot>
                 </table>
             </div>
-            <a routerLink="/item-create/{{invoiceId}}">Posten hinzufügen</a>
+            <button (click)="addNewItem()">Posten hinzufügen</button>
             <button (click)="saveInvoice()">{{(creatingInvoice || creatingInvoiceBtn) ? 'Create' : 'Save'}}</button>
             <button>cancel</button>
             <button (click)="backToInvoiceList()">zurück</button>
