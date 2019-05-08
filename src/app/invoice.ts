@@ -135,9 +135,9 @@ export class Invoice implements InvoiceType {
             newCreatedInvoice: !!inputInvoice.newCreatedInvoice,
             salesTaxPercentage: inputInvoice.salesTaxPercentage ? inputInvoice.salesTaxPercentage : 19,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
-            timespanBegin: inputInvoice.timespanBegin ? inputInvoice.timespanBegin.toDate() : new Date(),
-            timespanEnd: inputInvoice.timespanEnd ? inputInvoice.timespanEnd.toDate() : new Date(),
-            wholeCost: inputInvoice.wholeCost ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
+            timespanBegin: inputInvoice.timespanBegin.toDate ? inputInvoice.timespanBegin.toDate() : new Date(),
+            timespanEnd: inputInvoice.timespanEnd.toDate() ? inputInvoice.timespanEnd.toDate() : new Date(),
+            wholeCost: (inputInvoice.wholeCost === 'number') ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
         };
         const wcType: string = typeof inputInvoice.wholeCost;
         console.log(`\r\n wcType ===${wcType} !!! \r\n`)
