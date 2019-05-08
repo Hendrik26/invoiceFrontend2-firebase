@@ -312,11 +312,12 @@ export class InvoiceDetailComponent implements OnInit {
         if (!this.invoice.timespanEnd || !this.invoice.timespanBegin) {
             return 'Ungueltiges Datum';
         }
-        const diffMonth: number = Math.round((this.invoice.timespanEnd.getTime() - this.invoice.timespanBegin.getTime()) / 1000 / 3600 / 24 / 30);
+        const diffMonth: number
+            = Math.round((this.invoice.timespanEnd.getTime() - this.invoice.timespanBegin.getTime()) / 1000 / 3600 / 24 / 30);
         return '(' + diffMonth + ' Monate)';
     }
 
-    //endregion
+    // endregion
 
 
 }
