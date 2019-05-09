@@ -204,7 +204,7 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private saveInvoice(): void {
-        // TODO: save invoices to firebase-DB
+        // TODO: reload new-created invoices to get their Id, reload them by invoiceDate and invoiceCustomerName
         console.log('invoice-detail.component.ts: method saveInvoice');
         // this.creatingInvoiceBtn = false;
         this.calculateSums();
