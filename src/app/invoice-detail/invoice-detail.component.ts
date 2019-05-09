@@ -14,6 +14,7 @@ import {Customer} from '../customer';
     styleUrls: ['./invoice-detail.component.css']
 })
 export class InvoiceDetailComponent implements OnInit {
+    ////
 
     // region IDs
     invoiceId: string;
