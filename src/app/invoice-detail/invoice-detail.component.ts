@@ -149,6 +149,7 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private addNewItem(): void {
+        // this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
         this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
         this.changedItemNumber = this.invoice.items.length - 1;
         this.oldItem =  new Item(this.invoice, this.invoice.items[this.changedItemNumber]);
