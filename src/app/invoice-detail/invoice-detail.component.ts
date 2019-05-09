@@ -117,11 +117,18 @@ export class InvoiceDetailComponent implements OnInit {
         */
     }
 
-    private setChangeItemNumber(input: number): void {
-        this.changedItemNumber = input;
-        this.oldItem =  new Item(this.invoice, this.invoice.items[input]);
-        this.changedItem =  this.invoice.items[input];
-        console.log(`this.changedItemNumber === ${input}`);
+    private editItemNumber(row: number): void {
+        this.changedItemNumber = row;
+        this.oldItem =  new Item(this.invoice, this.invoice.items[row]);
+        this.changedItem =  this.invoice.items[row];
+        console.log(`this.changedItemNumber === ${row}`);
+    }
+
+    private deleteItemNumber(row: number): void {
+        if (confirm(`Posten "${this.invoice.items[row].itemName}" löschen?`)) {
+            this.invoice.items = this.invoice.items.filter((item, index) => index !== row);
+            this.calculateSums();
+        }
     }
 
     private changeChangedItemCost(): void {

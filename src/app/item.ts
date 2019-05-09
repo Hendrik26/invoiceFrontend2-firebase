@@ -35,8 +35,8 @@ export class Item implements ItemType {
     const itemData: ItemType = {
         itemDate: inputItem.itemDate ? inputItem.itemDate : new Date().toISOString().slice(0,10), /// <th>Leistungsdatum</th>
         itemName: inputItem.itemName ? inputItem.itemName : '',  // <th>Leistungsbeschreibung</th>
-        partialCost: isNaN(inputItem.partialCost) || !inputItem.partialCost ? 0 : inputItem.partialCost, // <th>Stückpreis</th>
-        count: isNaN(inputItem.count) || !inputItem.count ? 0 : inputItem.count , // <th>Anzahl</th>
+        partialCost: isNaN(inputItem.partialCost) || !inputItem.partialCost ? 0 : Number(inputItem.partialCost), // <th>Stückpreis</th>
+        count: isNaN(inputItem.count) || !inputItem.count ? 0 : Number(inputItem.count) , // <th>Anzahl</th>
         hourPayment: !!inputItem.hourPayment,
         currency: inputItem.currency ? inputItem.currency : '€'
     };
