@@ -160,7 +160,7 @@ export class InvoiceListComponent implements OnInit {
         const invoice = Invoice.createNewInvoice();
         // code deleted here
         const invoiceId = invoice.getID();
-        this.router.navigateByUrl('invoice-detail/' + invoiceId);
+        this.router.navigateByUrl(`invoice-detail/${invoiceId}/true`);
     }
 
 

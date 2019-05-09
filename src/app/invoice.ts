@@ -141,15 +141,15 @@ export class Invoice implements InvoiceType {
             wholeCost: (typeof inputInvoice.wholeCost === 'number') ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
         };
         const wcType: string = typeof inputInvoice.wholeCost;
-        console.log(`\r\n wcType ===${wcType} !!! \r\n`)
+        // console.log(`\r\n wcType ===${wcType} !!! \r\n`)
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
-        console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \r\n`);
+        // console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \r\n`);
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
             });
         }
-        console.log(`\r\n normalizeInvoice.items ===${retInvoice.items} !!! \r\n`);
+        // console.log(`\r\n normalizeInvoice.items ===${retInvoice.items} !!! \r\n`);
         return retInvoice;
     }
 

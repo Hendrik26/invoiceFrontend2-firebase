@@ -94,6 +94,7 @@ export class InvoiceDetailComponent implements OnInit {
     ngOnInit() {
         this.creatingInvoice = false;
         this.receivedInvoiceIdError = !this.hasReceivedInvoiceId();
+        console.log(`\r\n\r\nInvoiceDetailComponent.ngOnInit() step 002,\r\n creatingInvoice ===${this.creatingInvoice}! \r\n\r\n`);
         if (!this.receivedInvoiceIdError) {
             console.log('receivedInvoiceId==' + this.invoiceId + ';;;', 'color:Blue');
             this.receiveInvoiceById(this.invoiceId, null);
@@ -157,13 +158,15 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private receiveInvoiceById(methId: string, historyId: string): void {
-        this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
+        if (!this.creatingInvoice) { this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice =  Invoice.normalizeInvoice(invoiceType);
 
             this.calculateSums();
             this.calculateAddress();
             // console.log('III: ', this.invoice);
-        });
+        }); } else {
+            this.invoice = Invoice.createNewInvoice();
+        }
 
         // TODO receive invoice from firebase-DB
         /* this.invoiceService.getInvoiceObservableById(methId)
@@ -311,6 +314,7 @@ export class InvoiceDetailComponent implements OnInit {
         boolean {
         if (this.route.snapshot.paramMap.has('invoiceId')) {
             this.invoiceId = this.route.snapshot.paramMap.get('invoiceId');  // get itemID???? invoiceId from URL
+            this.creatingInvoice = (this.route.snapshot.paramMap.get('newInvoice') === 'true');
             return true;
         } else {
             this.invoiceId = null; // stands for the creation of a new item???? invoice

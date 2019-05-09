@@ -10,7 +10,8 @@ const routes: Routes = [
     {path: '', redirectTo: '/invoice-list', pathMatch: 'full'},
     {path: 'invoice-list', component: InvoiceListComponent},
     {path: 'customer-list', component: CustomerListComponent},
-    {path: 'invoice-detail/:invoiceId', component: InvoiceDetailComponent}, // routing to the details of a dedicated invoice by ID
+    {path: 'invoice-detail/:invoiceId/:newInvoice', component: InvoiceDetailComponent},
+    // routing to the details of a dedicated invoice by ID
     {path: 'invoice-create', component: InvoiceDetailComponent},
     {path: 'item-detail/:invoiceId/:itemId', component: ItemDetailComponent},
     {path: 'item-create/:invoiceId', component: ItemDetailComponent},
