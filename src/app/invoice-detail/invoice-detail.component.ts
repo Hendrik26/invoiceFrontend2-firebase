@@ -206,29 +206,16 @@ export class InvoiceDetailComponent implements OnInit {
     private saveInvoice(): void {
         // TODO: save invoices to firebase-DB
         console.log('invoice-detail.component.ts: method saveInvoice');
-        this.creatingInvoiceBtn = false;
+        // this.creatingInvoiceBtn = false;
         this.calculateSums();
-        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(false));
-        /*
-                this.invoiceKind = InvoiceKind.create(this.international, this.timeSpanBased, this.isSEPA);
-              /* this.invoiceService.saveInvoiceGlobalsByInvoiceId(
-                    this.invoiceId,
-                    this.countReminders,
-                    this.invoiceCurrency,
-                    this.invoiceDate,
-                    this.invoiceDueDate,
-                    this.invoiceNumber,
-                    this.invoiceIntendedUse,
-                    this.invoiceState,
-                    this.customerAdress,
-                    this.salesTaxPercentage,
-                    'unknown',
-                    this.bruttoSum,
-                    this.invoiceKind,
-                    this.customerTaxNumber,
-                    this.timespanBegin,
-                    this.timespanEnd
-                ); */
+        if (this.creatingInvoice) {
+            this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(false));
+            this.creatingInvoice = false;
+            this.creatingInvoiceBtn = false;
+        } else {
+            this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(false));
+        }
+
     }
 
 
