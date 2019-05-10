@@ -47,7 +47,7 @@
 <table style="width:100%">
     <thead>
     <tr>
-        <th>RechnungsId</th>
+        <!--th>RechnungsId</th-->
         <th>
             Fälligkeitsdatum
             <button name="sort" id="sortStartDueDate" (click)="sortStartDueDateClick()">
@@ -71,7 +71,7 @@
         </th>
         <th>Status (Entwurf, bezahlt, ...)</th>
         <th>Gesamtpreis</th>
-        <th>Anzahl der Mahnungen</th>
+        <!--th>Anzahl der Mahnungen</th-->
         <!--th>Rechnungzeitraum</th-->
         <th>Ändern</th>
     </tr>
@@ -86,7 +86,7 @@
         <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.getCustomerName()}}</td>
         <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.invoiceState}}</td>
         <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.wholeCost}}{{invoice.currency}}</td>
-        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.countReminders}}</td>
+        <!--td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.countReminders}}</td-->
         <!--td>{{invoice.timeSpan}}</td-->
         <td>
             <!-- button type="button">Rechnung bearbeiten</button -->

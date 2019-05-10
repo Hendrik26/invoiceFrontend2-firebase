@@ -45,7 +45,7 @@ export class InvoiceDetailComponent implements OnInit {
 
     // customerBIC = 'Invoice-Bsp-BIC';
     // customerIBAN = 'Invoice-Bsp-IBAN';
-    customerTaxNumber = 'murx';
+    // customerTaxNumber = 'murx';
     // mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
 
