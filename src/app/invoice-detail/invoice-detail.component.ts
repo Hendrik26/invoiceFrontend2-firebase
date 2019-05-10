@@ -29,18 +29,18 @@ export class InvoiceDetailComponent implements OnInit {
     customerAdress: string;
     bruttoSum: number;
     salesTax: number;
-
-    private changedItemNumber = -1;
-    private changedItem: Item;
-    private oldItem: Item;
-    private editNewItem: boolean;
+    // countReminders: number;
+    creatingInvoice: boolean;
+    creatingInvoiceBtn: boolean;
+    // invoiceIntendedUse = 'die Rechnungsnummer 201800xx';
+    invoiceDate: Date;
+    invoiceDueDate: Date;
 
 
 
     // nettoSum: number;
-    // countReminders: number;
-    creatingInvoice: boolean;
-    creatingInvoiceBtn: boolean;
+    invoiceTimeSpan = '2018-01-01 bis 2018-12-31';
+    invoiceKind: InvoiceKind;
     // creditorIdentificationNumber = 'DE55ZZZ00001275596';
 
     // customerBIC = 'Invoice-Bsp-BIC';
@@ -51,19 +51,14 @@ export class InvoiceDetailComponent implements OnInit {
 
     // invoiceCurrency = '€';
     // invoiceNumber = '201800xx';
-    // invoiceIntendedUse = 'die Rechnungsnummer 201800xx';
-    invoiceDate: Date;
-    invoiceDueDate: Date;
-    invoiceTimeSpan = '2018-01-01 bis 2018-12-31';
-    // invoiceState = 'Entwurf'; // <th>Status (Entwurf, bezahlt, ...)</th>
-
-    invoiceKind: InvoiceKind;
-
     items: Item[];
-
-
     // percentageString = '19%';
     receivedInvoiceIdError: boolean;
+    private changedItemNumber = -1;
+    // invoiceState = 'Entwurf'; // <th>Status (Entwurf, bezahlt, ...)</th>
+    private changedItem: Item;
+    private oldItem: Item;
+    private editNewItem: boolean;
     // salesTaxPercentage = 19;
 
     // timespanBegin: Date = null;
@@ -73,15 +68,6 @@ export class InvoiceDetailComponent implements OnInit {
     // public timeSpanBased = false; // UZeitraumbasierter Rechnung, Bit1
     // public isSEPA = false; // ist SEPA-Lastschrift, Bit2
 
-
-    // endregion
-    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
-        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
-            return -1;
-        }
-        return 1;
-    }
-
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -90,6 +76,14 @@ export class InvoiceDetailComponent implements OnInit {
     ) {
         this.invoiceDate = new Date();
         this.invoiceKind = InvoiceKind.create(false, false, false);
+    }
+
+    // endregion
+    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
+        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
+            return -1;
+        }
+        return 1;
     }
 
     ngOnInit() {
@@ -117,6 +111,40 @@ export class InvoiceDetailComponent implements OnInit {
         }
         this.calculateSums();
         */
+    }
+
+    receiveCustomers(): void {
+        this.fbInvoiceService.getCustomersList('notArchive')
+            .subscribe(data => {
+                this.customers = data.map(x => Customer.normalizeCustomer(x));
+                this.customers.sort(function (a, b) {
+                    return InvoiceDetailComponent.compareCustomersByName(a, b);
+                });
+            });
+    }
+
+    public changeFilterCompany(e: string): void {
+        // let x: Customer = this.customers.filter(c => c.getCustomerId() == e)[0];
+        if (e != this.invoiceSelectCustomerDef1) {
+            this.invoice.customer = this.customers.filter(c => c.getCustomerId() == e)[0];
+            this.calculateAddress();
+        }
+        console.log('PPP', this.invoiceSelectCustomer);
+        this.invoiceSelectCustomer = this.invoiceSelectCustomerDef1;
+        console.log('III', this.invoiceSelectCustomer);
+    }
+
+    public changeTimeSpanBased(): void {
+        console.log('invoice-detail.component.ts.changeTimeSpanBased(), T1');
+        this.invoice.invoiceKind.timeSpanBased = !this.invoice.invoiceKind.timeSpanBased;
+        console.log('invoice-detail.component.ts.changeTimeSpanBased(), T2');
+
+    }
+
+    public changeIsSEPA(): void {
+        this.invoice.invoiceKind.isSEPA = !this.invoice.invoiceKind.isSEPA;
+        console.log('invoice-detail.component.ts.changeISSEPAs()');
+
     }
 
     private editItemNumber(row: number): void {
@@ -155,6 +183,8 @@ export class InvoiceDetailComponent implements OnInit {
         this.calculateSums();
     }
 
+    // region other methods
+
     private addNewItem(): void {
         // this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
         this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
@@ -191,20 +221,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.router.navigateByUrl('/invoice-list');
     }
 
-
-
-    receiveCustomers(): void {
-        this.fbInvoiceService.getCustomersList('notArchive')
-            .subscribe(data => {
-                this.customers = data.map(x => Customer.normalizeCustomer(x));
-                this.customers.sort(function (a, b) {
-                    return InvoiceDetailComponent.compareCustomersByName(a, b);
-                });
-            });
-    }
-
-    // region other methods
-
     private calculateInitialDataLoad() {
         // TODO: calculate out-commented data from firebase-DB
         console.log('method calculateInitialDataLoad() {...}');
@@ -233,41 +249,17 @@ export class InvoiceDetailComponent implements OnInit {
         this.salesTax =  !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
     }
+
     private calculateSavingData() {
         this.calculateSums();
         // this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
         //  this.invoiceDate.getDate() + 14, 12);
     }
 
-    public changeFilterCompany(e: string): void {
-        // let x: Customer = this.customers.filter(c => c.getCustomerId() == e)[0];
-        if (e != this.invoiceSelectCustomerDef1) {
-            this.invoice.customer = this.customers.filter(c => c.getCustomerId() == e)[0];
-            this.calculateAddress();
-        }
-        console.log('PPP', this.invoiceSelectCustomer);
-        this.invoiceSelectCustomer = this.invoiceSelectCustomerDef1;
-        console.log('III', this.invoiceSelectCustomer);
-    }
-
     private changeInternational(): void {
         this.invoice.invoiceKind.international = !this.invoice.invoiceKind.international;
         console.log('invoice-detail.component.ts.changeInternational()');
         this.calculateSums();
-    }
-
-
-    public changeTimeSpanBased(): void {
-        console.log('invoice-detail.component.ts.changeTimeSpanBased(), T1');
-        this.invoice.invoiceKind.timeSpanBased = !this.invoice.invoiceKind.timeSpanBased;
-        console.log('invoice-detail.component.ts.changeTimeSpanBased(), T2');
-
-    }
-
-    public changeIsSEPA(): void {
-        this.invoice.invoiceKind.isSEPA = !this.invoice.invoiceKind.isSEPA;
-        console.log('invoice-detail.component.ts.changeISSEPAs()');
-
     }
 
     private hasReceivedInvoiceId(): // can NOT be deleted
