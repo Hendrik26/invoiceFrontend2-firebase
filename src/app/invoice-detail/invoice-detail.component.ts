@@ -206,17 +206,17 @@ export class InvoiceDetailComponent implements OnInit {
         }
     }
 
-    private saveInvoice(): void {
+    private saveInvoice(archive: boolean = false): void {
         // TODO: reload new-created invoices to get their Id, reload them by invoiceDate and invoiceCustomerName
         console.log('invoice-detail.component.ts: method saveInvoice');
         // this.creatingInvoiceBtn = false;
         this.calculateSums();
         if (this.creatingInvoice) {
-            this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(false));
+            this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(archive));
             this.creatingInvoice = false;
             this.creatingInvoiceBtn = false;
         } else {
-            this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(false));
+            this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
         }
         this.router.navigateByUrl('/invoice-list');
     }
