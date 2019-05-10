@@ -33,6 +33,7 @@ export class InvoiceDetailComponent implements OnInit {
     private changedItemNumber = -1;
     private changedItem: Item;
     private oldItem: Item;
+    private editNewItem: boolean;
 
 
 
@@ -40,37 +41,37 @@ export class InvoiceDetailComponent implements OnInit {
     // countReminders: number;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
-    creditorIdentificationNumber = 'DE55ZZZ00001275596';
+    // creditorIdentificationNumber = 'DE55ZZZ00001275596';
 
-    customerBIC = 'Invoice-Bsp-BIC';
-    customerIBAN = 'Invoice-Bsp-IBAN';
+    // customerBIC = 'Invoice-Bsp-BIC';
+    // customerIBAN = 'Invoice-Bsp-IBAN';
     customerTaxNumber = 'murx';
-    mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
+    // mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
 
 
-    invoiceCurrency = '€';
-    invoiceNumber = '201800xx';
-    invoiceIntendedUse = 'die Rechnungsnummer 201800xx';
+    // invoiceCurrency = '€';
+    // invoiceNumber = '201800xx';
+    // invoiceIntendedUse = 'die Rechnungsnummer 201800xx';
     invoiceDate: Date;
     invoiceDueDate: Date;
     invoiceTimeSpan = '2018-01-01 bis 2018-12-31';
-    invoiceState = 'Entwurf'; // <th>Status (Entwurf, bezahlt, ...)</th>
+    // invoiceState = 'Entwurf'; // <th>Status (Entwurf, bezahlt, ...)</th>
 
     invoiceKind: InvoiceKind;
 
     items: Item[];
 
 
-    percentageString = '19%';
+    // percentageString = '19%';
     receivedInvoiceIdError: boolean;
-    salesTaxPercentage = 19;
+    // salesTaxPercentage = 19;
 
-    timespanBegin: Date = null;
-    timespanEnd: Date = null;
+    // timespanBegin: Date = null;
+    // timespanEnd: Date = null;
 
-    public international = false; // Inlandsrechnung, Bit0
-    public timeSpanBased = false; // UZeitraumbasierter Rechnung, Bit1
-    public isSEPA = false; // ist SEPA-Lastschrift, Bit2
+    // public international = false; // Inlandsrechnung, Bit0
+    // public timeSpanBased = false; // UZeitraumbasierter Rechnung, Bit1
+    // public isSEPA = false; // ist SEPA-Lastschrift, Bit2
 
 
     // endregion
@@ -122,6 +123,7 @@ export class InvoiceDetailComponent implements OnInit {
         this.changedItemNumber = row;
         this.oldItem =  new Item(this.invoice, this.invoice.items[row]);
         this.changedItem =  this.invoice.items[row];
+        this.editNewItem = false;
         console.log(`this.changedItemNumber === ${row}`);
     }
 
@@ -145,7 +147,11 @@ export class InvoiceDetailComponent implements OnInit {
 
     private notSaveItem(): void {
         this.invoice.items[this.changedItemNumber] = this.oldItem;
+        if (this.editNewItem) {
+            this.invoice.items = this.invoice.items.filter((item, index) => index !== this.changedItemNumber);
+        }
         this.changedItemNumber = -1;
+        this.editNewItem = false;
         this.calculateSums();
     }
 
@@ -153,6 +159,7 @@ export class InvoiceDetailComponent implements OnInit {
         // this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
         this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
         this.changedItemNumber = this.invoice.items.length - 1;
+        this.editNewItem = true;
         this.oldItem =  new Item(this.invoice, this.invoice.items[this.changedItemNumber]);
         this.changedItem =  this.invoice.items[this.changedItemNumber];
     }
@@ -167,40 +174,6 @@ export class InvoiceDetailComponent implements OnInit {
         }); } else {
             this.invoice = Invoice.createNewInvoice();
         }
-
-        // TODO receive invoice from firebase-DB
-        /* this.invoiceService.getInvoiceObservableById(methId)
-            .subscribe(invoice => {
-                // TODO receive invoice from firebase-DB
-                this.countReminders = invoice.countReminders;
-                this.creatingInvoiceBtn = invoice.newCreatedInvoice;
-                this.invoiceCurrency = invoice.currency;
-                this.invoiceDate = invoice.invoiceDate;
-                this.invoiceDueDate = invoice.invoiceDueDate;
-                this.invoiceNumber = invoice.invoiceNumber;
-                this.invoiceIntendedUse = invoice.invoiceIntendedUse;
-                this.invoiceState = invoice.invoiceState;
-                this.customerAdress = invoice.recipient;
-                this.salesTaxPercentage = invoice.salesTaxPercentage;
-                // this.timespan = invoice.timeSpan;
-                // -----------------------------
-                this.invoiceKind = invoice.invoiceKind;
-                this.customerTaxNumber = invoice.customerTaxNumber;
-
-                this.timespanBegin = invoice.timespanBegin;
-                this.timespanEnd = invoice.timespanEnd;
-
-              this.international = invoice.invoiceKind.international;
-              this.timeSpanBased = invoice.invoiceKind.timeSpanBased;
-              this.isSEPA = invoice.invoiceKind.isSEPA;
-
-
-              // this.items = [];
-                // this.invoice.items.forEach((item) => {this.items.push({...item})});
-                this.items = invoice.items;
-            }); */
-        // Empfängt Daten aus einem Datenstream, d.h. wenn sich invoice ändert übernimmt this.invoice die Daten von invoice
-
     }
 
     private saveInvoice(): void {

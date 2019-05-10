@@ -1,4 +1,4 @@
-<h1>Test</h1>
+<h1>Rechnungsübersicht</h1>
 <div class="flex-container">
     <div>
         Datumsbereich<br>
@@ -78,15 +78,15 @@
     </thead>
     <tbody>
     <tr *ngFor="let invoice of invoices">
-        <td><!-- {{invoice.getID()}} --> place for invoiceId</td>
-        <td>{{invoice.invoiceDueDate | date:'yyyy-MM-dd'}}</td>
-        <td>{{invoice.invoiceDate | date:'yyyy-MM-dd'}}</td>
-        <td>{{invoice.invoiceNumber}}</td>
+        <!--td>< {{invoice.getID()}} > place for invoiceId</td-->
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.invoiceDueDate | date:'yyyy-MM-dd'}}</td>
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.invoiceDate | date:'yyyy-MM-dd'}}</td>
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.invoiceNumber}}</td>
         <!--td>{{invoice.customerData.customerName}}</td-->
-        <td>{{invoice.getCustomerName()}}</td>
-        <td>{{invoice.invoiceState}}</td>
-        <td>{{invoice.wholeCost}}{{invoice.currency}}</td>
-        <td>{{invoice.countReminders}}</td>
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.getCustomerName()}}</td>
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.invoiceState}}</td>
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.wholeCost}}{{invoice.currency}}</td>
+        <td [ngStyle]="{'color':invoice.archived ? 'red' : 'black' }">{{invoice.countReminders}}</td>
         <!--td>{{invoice.timeSpan}}</td-->
         <td>
             <!-- button type="button">Rechnung bearbeiten</button -->

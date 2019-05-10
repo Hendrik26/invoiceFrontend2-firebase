@@ -64,8 +64,9 @@
                        (ngModelChange)="invoiceDateChange($event)">
             </div>
 
-            <h1 class="invoice-number">Rechnung
-                <input class="invoice-number" [ngModel]="invoice.invoiceNumber"
+            <h1 class="invoice-number" [ngStyle]="{'color': invoice.archived ? 'red' : 'black' }">Rechnung
+                <input class="invoice-number" [ngStyle]="{'color': invoice.archived ? 'red' : 'black' }"
+                       [ngModel]="invoice.invoiceNumber"
                        (ngModelChange)="invoiceNumberChange($event)">
             </h1>
             <!-- p>Zeitraum: 2018-01-01 bis 2018-12-31 (12 Monate)</p>
