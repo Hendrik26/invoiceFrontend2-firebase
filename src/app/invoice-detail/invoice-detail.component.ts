@@ -215,7 +215,7 @@ export class InvoiceDetailComponent implements OnInit {
         } else {
             this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(false));
         }
-
+        this.router.navigateByUrl('/invoice-list');
     }
 
 
