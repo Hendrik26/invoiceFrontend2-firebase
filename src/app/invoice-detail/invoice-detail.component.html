@@ -185,6 +185,7 @@
             </div>
             <button (click)="addNewItem()">Posten hinzufügen</button>
             <button (click)="saveInvoice()">{{(creatingInvoice || creatingInvoiceBtn) ? 'Create' : 'Save'}}</button>
+            <button>archivieren</button>
             <button (click)="backToInvoiceList()">zurück</button>
             <p></p>
             <div *ngIf="invoice.invoiceKind.international">
