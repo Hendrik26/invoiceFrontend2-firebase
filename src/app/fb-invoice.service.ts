@@ -216,7 +216,9 @@ export class FbInvoiceService {
     createInvoice(data: any): void {
         console.log('Method FbInvoiceService.createInvoice(...) started!');
         // console.log(data.invoiceKind.printToString()); ///
-        this.db.collection(this.dbInvoicePath).add(data).catch(error => this.handleError(error));
+        this.db.collection(this.dbInvoicePath).add(data).then(docRef => {
+            console.log(docRef.id);
+        }).catch(error => this.handleError(error));
     }
 
     private handleError(error) {
