@@ -210,7 +210,17 @@ export class FbInvoiceService {
     }
 
     updateInvoice(id: string, data: InvoiceType): void {
-        this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
+        // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
+        this.db.runTransaction(transaction => {
+            return transaction.get(this.db.doc(`${this.dbInvoicePath}/${id}`)).then(invoiceDoc => {
+                if (!invoiceDoc.exists) {
+                    console.log('\r\n\r\nInvoiceDocument does not exist!\r\n\r\n');
+                } else {
+                    transaction.update(data)
+                }
+
+            });
+        });
     }
 
     createInvoice(data: any): void {
