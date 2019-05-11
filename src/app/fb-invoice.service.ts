@@ -2,15 +2,13 @@
 
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-
 import {Customer} from './customer';
 import {CustomerType} from './customer-type';
 import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
 import {map} from 'rxjs/operators';
 import {Observable, combineLatest} from 'rxjs';
-import {InvoiceKind} from './invoice-kind';
-import {Item} from './item';
+
 
 @Injectable({
     providedIn: 'root'
