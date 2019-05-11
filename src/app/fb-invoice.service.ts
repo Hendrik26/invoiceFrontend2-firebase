@@ -207,7 +207,7 @@ export class FbInvoiceService {
             ));
     }
 
-    updateInvoice(id: string, data: InvoiceType): void {
+    /* updateInvoiceOld(id: string, data: InvoiceType): void {
         // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
         this.db.runTransaction(transaction => {
             return transaction.get(this.db.doc(`${this.dbInvoicePath}/${id}`)).then(invoiceDoc => {
@@ -218,6 +218,16 @@ export class FbInvoiceService {
                 }
 
             });
+        });
+    } */
+
+    updateInvoice(id: string, data: InvoiceType): void {
+        // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
+        const batch = this.db.firestore.batch();
+        const invoicefRef = this.db.firestore.collection('invoices').doc(id);
+        batch.update(invoicefRef, data);
+        batch.commit().then(() => {
+            console.log(`\r\n\r\nDB-Update with BatchWrite completed!!! \r\n\r\n`);
         });
     }
 
