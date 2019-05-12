@@ -225,10 +225,15 @@ export class FbInvoiceService {
         // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
         const batch = this.db.firestore.batch();
         const invoicefRef = this.db.firestore.collection('invoices').doc(id);
+        const invoicefHistoryRef = this.db.firestore.collection('invoices')
+            .doc(id).collection('History').doc(this.getHistoryKey());
         batch.update(invoicefRef, data);
+        console.log(`\r\n\r\nDB-Update with BatchWrite invoiceRef!!! \r\n\r\n`);
+        batch.set(invoicefHistoryRef, data);
+        console.log(`\r\n\r\nDB-Update with BatchWrite invoiceHistoryRef!!! \r\n\r\n`);
         batch.commit().then(() => {
             console.log(`\r\n\r\nDB-Update with BatchWrite completed!!! \r\n\r\n`);
-        });
+        }).catch(error => this.handleError(error));
     }
 
     createInvoice(data: any): void {
@@ -242,4 +247,17 @@ export class FbInvoiceService {
     private handleError(error) {
         console.log(error);
     }
+
+    private getHistoryKey(): string {
+        const date = new Date();
+        const key = 'Key-' + date.getFullYear() + '-'
+            + ('0' + (date.getMonth() + 1).toString()).slice(-2) + '-'
+            + ('0' + date.getDate().toString()).slice(-2) + '-'
+            + ('0' + date.getHours().toString()).slice(-2) + '-'
+            + ('0' + date.getMinutes().toString()).slice(-2) + '-'
+            + ('0' + date.getSeconds().toString()).slice(-2) + '-'
+            + ('00' + date.getMilliseconds().toString()).slice(-3);
+        return key;
+    }
+
 }
