@@ -236,12 +236,28 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
-    createInvoice(data: any): void {
+    createInvoiceOld(data: any): void {
+        let invId: string = '-111';
         console.log('Method FbInvoiceService.createInvoice(...) started!');
         // console.log(data.invoiceKind.printToString()); ///
         this.db.collection(this.dbInvoicePath).add(data).then(docRef => {
-            console.log(docRef.id);
+            console.log(`\r\n\r\ndocRef.id ===${docRef.id}!!! \r\n\r\n`);
+            invId = docRef.id;
+            console.log(`\r\n\r\ninvId01 ===${invId}!!! \r\n\r\n`);
         }).catch(error => this.handleError(error));
+        console.log(`\r\n\r\ninvId02 ===${invId}!!! \r\n\r\n`);
+    }
+
+    createInvoice(data: any): void {
+        let invId: string = '-111';
+        console.log('Method FbInvoiceService.createInvoice(...) started!');
+        // console.log(data.invoiceKind.printToString()); ///
+        this.db.collection(this.dbInvoicePath).add(data).then(docRef => {
+            console.log(`\r\n\r\ndocRef.id ===${docRef.id}!!! \r\n\r\n`);
+            invId = docRef.id;
+            console.log(`\r\n\r\ninvId01 ===${invId}!!! \r\n\r\n`);
+        }).catch(error => this.handleError(error));
+        console.log(`\r\n\r\ninvId02 ===${invId}!!! \r\n\r\n`);
     }
 
     private handleError(error) {
