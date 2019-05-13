@@ -14,7 +14,6 @@ import {Observable, combineLatest} from 'rxjs';
     providedIn: 'root'
 })
 export class FbInvoiceService {
-    // branch dev2019-04-26b_create-invoice-with-history
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
