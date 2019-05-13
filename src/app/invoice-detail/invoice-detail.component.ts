@@ -95,22 +95,6 @@ export class InvoiceDetailComponent implements OnInit {
             this.receiveInvoiceById(this.invoiceId, null);
         }
         this.receiveCustomers();
- /*
-        console.log('this.creatingInvoiceBtn==' + this.creatingInvoiceBtn);
-
-
-        if (!this.creatingInvoiceBtn) {
-            console.log('this.creatingInvoiceBtn==' + this.creatingInvoiceBtn + '  ifZweig');
-            // this.receiveInvoiceById(this.invoiceId);
-            this.calculateInitialDataLoad();
-            console.log('this.creatingInvoiceBtn==' + this.creatingInvoiceBtn + '  ifZweig');
-        } else {
-            console.log('this.creatingInvoiceBtn==' + this.creatingInvoiceBtn + '  elseZweig');
-            // this.invoiceId = this.invoiceService.createNewInvoiceId();
-            this.calculateInitialDataCreate();
-        }
-        this.calculateSums();
-        */
     }
 
     receiveCustomers(): void {
@@ -212,9 +196,17 @@ export class InvoiceDetailComponent implements OnInit {
         // this.creatingInvoiceBtn = false;
         this.calculateSums();
         if (this.creatingInvoice) {
-            this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(archive));
-            this.creatingInvoice = false;
-            this.creatingInvoiceBtn = false;
+
+            this.fbInvoiceService.getNewInvoiceId().subscribe(data => {
+                console.log('NewInvoiceId: ', data.id);
+                if (data.id) {
+                    this.fbInvoiceService.updateInvoice(data.id, this.invoice.exportInvoiceToAny(archive));
+                    this.creatingInvoice = false;
+                    this.creatingInvoiceBtn = false;
+                }});
+
+            // this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(archive));
+
         } else {
             this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
         }

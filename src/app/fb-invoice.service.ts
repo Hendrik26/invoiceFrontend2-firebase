@@ -7,7 +7,7 @@ import {CustomerType} from './customer-type';
 import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
 import {map} from 'rxjs/operators';
-import {Observable, combineLatest} from 'rxjs';
+import {Observable, from, combineLatest} from 'rxjs';
 
 
 @Injectable({
@@ -235,7 +235,8 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
-    createInvoiceOld(data: any): void {
+    /*
+    createInvoice(data: any): void {
         let invId: string = '-111';
         console.log('Method FbInvoiceService.createInvoice(...) started!');
         // console.log(data.invoiceKind.printToString()); ///
@@ -247,7 +248,7 @@ export class FbInvoiceService {
         console.log(`\r\n\r\ninvId02 ===${invId}!!! \r\n\r\n`);
     }
 
-    createInvoice(data: any): void {
+    createInvoice_exp(data: any): void {
         const promise = new Promise((resolve, reject) => {
             let invId: string = '-111';
             console.log('Method FbInvoiceService.createInvoice(...) started!');
@@ -259,6 +260,11 @@ export class FbInvoiceService {
             }).catch(error => this.handleError(error));
             console.log(`\r\n\r\ninvId02 ===${invId}!!! \r\n\r\n`);
         });
+    }
+    */
+
+    getNewInvoiceId(): Observable<any> {
+        return from(this.db.collection(this.dbInvoicePath).add({}));
     }
 
     private handleError(error) {
