@@ -15,8 +15,6 @@ import {Observable, from, combineLatest} from 'rxjs';
 })
 export class FbInvoiceService {
 
-    // branch dev2019-04-26c_new-invoice-with-transaction
-
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
 
