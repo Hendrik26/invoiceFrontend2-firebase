@@ -196,7 +196,7 @@ export class InvoiceDetailComponent implements OnInit {
         // this.creatingInvoiceBtn = false;
         this.calculateSums();
         if (this.creatingInvoice) {
-
+            /*
             this.fbInvoiceService.getNewInvoiceId().subscribe(data => {
                 console.log('NewInvoiceId: ', data.id);
                 if (data.id) {
@@ -204,8 +204,9 @@ export class InvoiceDetailComponent implements OnInit {
                     this.creatingInvoice = false;
                     this.creatingInvoiceBtn = false;
                 }});
-
+            */
             // this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(archive));
+            this.fbInvoiceService.updateInvoice(null, this.invoice.exportInvoiceToAny(archive));
 
         } else {
             this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
