@@ -16,7 +16,6 @@ import Firestore = firebase.firestore.Firestore;
     providedIn: 'root'
 })
 export class FbInvoiceService {
-    // branch dev2019-04-26d_experimental
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
