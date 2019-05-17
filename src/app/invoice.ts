@@ -80,7 +80,7 @@ export class Invoice implements InvoiceType {
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
         this.timespanBegin = data.timespanBegin;
         this.timespanEnd = data.timespanEnd;
-        this.wholeCost = data.wholeCost // <th>Gesamtpreis</th>
+        this.wholeCost = data.wholeCost; // <th>Gesamtpreis</th>
     }
 
     public static getEmptyInvoice(): Invoice {
@@ -100,11 +100,12 @@ export class Invoice implements InvoiceType {
         return 'Inv' + methDate.getTime();
     }
 
+    /*
     public static createNewInvoice(): Invoice { // factory pattern, prime example
         let methInvoice: Invoice;
         methInvoice = this.createInvoiceFromExistingId(this.createNewInvoiceId(), this.emptyData);
         return methInvoice;
-    }
+    */
 
     public static createInvoiceFromExistingId(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
         let invoice: Invoice;
@@ -120,13 +121,13 @@ export class Invoice implements InvoiceType {
             archived: !!inputInvoice.archived,
             countReminders: (typeof inputInvoice.countReminders === 'number') ? inputInvoice.countReminders : -1,
             // <th>Anzahl der Mahnungen</th>
-            currency: inputInvoice.currency ? inputInvoice.currency : 'bspCurrency',
+            currency: inputInvoice.currency ? inputInvoice.currency : '€',
             customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
             customerId: inputInvoice.customer.customerId ? inputInvoice.customer.customerId
                 : (inputInvoice.customerId ? inputInvoice.customerId : 'emptyCustomerId'),
             invoiceDate: inputInvoice.invoiceDate.toDate() ? inputInvoice.invoiceDate.toDate() : new Date(), // <th>Rechnungsdatum</th>
             invoiceDueDate: inputInvoice.invoiceDueDate.toDate() ? inputInvoice.invoiceDueDate.toDate() : new Date(), // Faelligkeitsdatum
-            invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : 'bspInvoiceIntendedUse',
+            invoiceIntendedUse: inputInvoice.invoiceIntendedUse ? inputInvoice.invoiceIntendedUse : '',
             invoiceKind: inputInvoice.invoiceKind ? InvoiceKind.create(inputInvoice.invoiceKind.international,
                 inputInvoice.invoiceKind.timeSpanBased, inputInvoice.invoiceKind.isSEPA) : InvoiceKind.create(false,
                 false, false),
@@ -239,36 +240,38 @@ export class Invoice implements InvoiceType {
         });
     }
 
+    /*
     public firstSave(): void {
         this.newCreatedInvoice = false;
     }
 
-        public exportInvoiceData(archived: boolean): InvoiceType {
-            console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
-            console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
-            console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
-            // const invKind = this.invoiceKind.exportInvoiceKindData();
-            return {
-                archived: archived,
-                countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
-                currency: this.currency,
-                customerId: this.customer.getCustomerId(),
-                customerData: this.customer.exportCustomerData(),
-                invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
-                invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
-                invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
-                invoiceKind: this.invoiceKind.exportInvoiceKindData(),
-                invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
-                invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
-                itemTypes: Invoice.createItemTypeArray(this.items),
-                newCreatedInvoice: this.newCreatedInvoice,
-                salesTaxPercentage: this.salesTaxPercentage,
-                timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
-                timespanBegin: this.timespanBegin,
-                timespanEnd: this.timespanEnd,
-                wholeCost: this.wholeCost // <th>Gesamtpreis</th>
-            };
-        }
+    public exportInvoiceData(archived: boolean): InvoiceType {
+        console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
+        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
+        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
+        // const invKind = this.invoiceKind.exportInvoiceKindData();
+        return {
+            archived: archived,
+            countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
+            currency: this.currency,
+            customerId: this.customer.getCustomerId(),
+            customerData: this.customer.exportCustomerData(),
+            invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
+            invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
+            invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
+            invoiceKind: this.invoiceKind.exportInvoiceKindData(),
+            invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
+            invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
+            itemTypes: Invoice.createItemTypeArray(this.items),
+            newCreatedInvoice: this.newCreatedInvoice,
+            salesTaxPercentage: this.salesTaxPercentage,
+            timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
+            timespanBegin: this.timespanBegin,
+            timespanEnd: this.timespanEnd,
+            wholeCost: this.wholeCost // <th>Gesamtpreis</th>
+        };
+    }
+    */
 
     public exportInvoiceToAny(archived: boolean): any {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);

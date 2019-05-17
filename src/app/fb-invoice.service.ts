@@ -107,7 +107,7 @@ export class FbInvoiceService {
         if (!historyId) {
             path = `${this.dbInvoicePath}/${invoiceId}`;
         } else {
-            path = `${this.dbInvoicePath}/${invoiceId}/history/${historyId}`;
+            path = `${this.dbInvoicePath}/${invoiceId}/History/${historyId}`;
         }
         // return of the observable
         return this.db.doc(path).valueChanges();
@@ -206,6 +206,36 @@ export class FbInvoiceService {
                             0) : 0)
                 }))
             ));
+    }
+
+    // receives te first two documents of the history - necessary to test the existence of the customer history
+    testInvoiceHistoryById(invoiceId: string): Observable<any> {
+        // create the database reference
+        const invoiceRef = this.db.collection(`${this.dbInvoicePath}/${invoiceId}/History`,
+            ref => ref.limit(2));
+        // return of the observable
+        return invoiceRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({historyId: c.payload.doc.id}))));
+    }
+
+    getInvoiceHistoryById(invoicerId: string): Observable<any> {
+        // create the database reference
+        const invoicerRef = this.db.collection(`${this.dbInvoicePath}/${invoicerId}/History`);
+        // return of the observable
+        return invoicerRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({
+                    historyKey: c.payload.doc.id,
+                    historyLabel: c.payload.doc.id.slice(12, 14)
+                        + '.' + c.payload.doc.id.slice(9, 11)
+                        + '.' + c.payload.doc.id.slice(4, 8)
+                        + ' ' + c.payload.doc.id.slice(15, 17)
+                        + ':' + c.payload.doc.id.slice(18, 20)
+                        + ':' + c.payload.doc.id.slice(21, 23)
+                }))
+            )
+        );
     }
 
     /* updateInvoiceOld(id: string, data: InvoiceType): void {

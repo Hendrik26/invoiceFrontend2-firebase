@@ -187,6 +187,22 @@
             <button (click)="saveInvoice(false)">{{(creatingInvoice || creatingInvoiceBtn) ? 'erstellen' : 'speichern'}}</button>
             <button (click)="saveInvoice(true)">archivieren</button>
             <button (click)="backToInvoiceList()">zurück</button>
+            <button *ngIf="historyTest" (click)="receiveInvoiceHistoryById(invoiceId)">alte Versionen</button>
+            <select (change)="receiveInvoiceById(invoiceId,historyId)" *ngIf="historyDateList"
+                    [(ngModel)]="historyId" [ngModelOptions]="{standalone: true}" >
+                <option selected [ngValue]="undefined">
+                    aktuell
+                </option>
+                <option *ngFor="let opt of historyDateList" [ngValue]="opt.historyKey">
+                    {{opt.historyLabel}}
+                </option>
+            </select>
+
+
+
+
+
+
             <p></p>
             <div *ngIf="invoice.invoiceKind.international">
                 <dl>

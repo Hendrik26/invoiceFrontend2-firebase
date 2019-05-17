@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Invoice} from '../invoice';
-import {InvoiceShort} from '../invoice-short';
-import {isNullOrUndefined} from 'util';
+// import {InvoiceShort} from '../invoice-short';
+// import {isNullOrUndefined} from 'util';
 import {ThreeStateButton} from '../three-state-button';
 import {Router} from '@angular/router';
-import {ActivatedRoute} from '@angular/router';
+// import {ActivatedRoute} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Customer} from '../customer';
-import {map} from 'rxjs/operators';
+// import {map} from 'rxjs/operators';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class InvoiceListComponent implements OnInit {
 
     // region other properties
     invoices: Invoice[];
-    invoicesShort: InvoiceShort[];
+    // invoicesShort: InvoiceShort[];
     maxDate = new Date(2100, 1, 1);
     minDate = new Date(1900, 1, 1);
     invoiceFilterDateOption = 0;
@@ -43,9 +43,9 @@ export class InvoiceListComponent implements OnInit {
 
     // region ThreeStateButtons
     sortStartDueDate: ThreeStateButton;
-    sortEndDueDate: ThreeStateButton;
+    // sortEndDueDate: ThreeStateButton;
     sortStartDate: ThreeStateButton;
-    sortEndDate: ThreeStateButton;
+    // sortEndDate: ThreeStateButton;
     sortCompanyName: ThreeStateButton;
 
     // endregion
@@ -141,7 +141,7 @@ export class InvoiceListComponent implements OnInit {
     }
 
     changeFilterState(e: string) {
-        this.invoiceFilterStateOption = e == 'Kein'  ? 0 : 4;
+        this.invoiceFilterStateOption = e == 'Kein' ? 0 : 4;
         this.receiveInvoices();
     }
 
@@ -151,50 +151,54 @@ export class InvoiceListComponent implements OnInit {
     }
 
     changeFilterArchive(e: string) {
-        this.invoiceFilterArchiveOption = e == 'all'  ? 0 : 16;
+        this.invoiceFilterArchiveOption = e == 'all' ? 0 : 16;
         this.receiveInvoices();
     }
 
-    public newInvoiceBtn(): void {
+    /*
+    public newInvoice(): void {
         // TODO save new invoice to firebase-DB
-        const invoice = Invoice.createNewInvoice();
+        // const invoice = Invoice.createNewInvoice();
         // code deleted here
-        const invoiceId = invoice.getID();
-        this.router.navigateByUrl(`invoice-detail/${invoiceId}/true`);
+        // const invoiceId = invoice.getID();
+        // this.router.navigateByUrl(`invoice-detail/${invoiceId}/true`);
+        this.router.navigateByUrl(`invoice-detail/newInvoice/true`);
     }
+    */
 
 
     // endregion
 
-
-    public dateGreaterEqualThen(date1: Date, date2: Date): boolean {
-        if (!date1) {
-            return true;
-        }
-        if (!date2) {
-            return true;
-        }
-        const ret: boolean = (date1.getTime() >= date2.getTime());
+    /*
+       public dateGreaterEqualThen(date1: Date, date2: Date): boolean {
+           if (!date1) {
+               return true;
+           }
+           if (!date2) {
+               return true;
+           }
+           const ret: boolean = (date1.getTime() >= date2.getTime());
         return ret;
-    }
+       }
 
-    calculateCompanySelectOptions(invoices: Invoice[]): object[] {
-        console.log('Method calculateCompanySelectOptions(...) started! ');
-        const retList: object[] = [];
-        invoices.forEach(function (fktInvoice) {
-            retList.push({value: fktInvoice.companyName(), name: fktInvoice.companyName()});
-        });
-        console.log('Method calculateCompanySelectOptions(...) finished! ');
-        return retList;
-    }
+       /*
+       calculateCompanySelectOptions(invoices: Invoice[]): object[] {
+           console.log('Method calculateCompanySelectOptions(...) started! ');
+           const retList: object[] = [];
+           invoices.forEach(function (fktInvoice) {
+               retList.push({value: fktInvoice.companyName(), name: fktInvoice.companyName()});
+           });
+           console.log('Method calculateCompanySelectOptions(...) finished! ');
+           return retList;
+       }
 
-    calculateCompanySelectOptions2(invoices: Invoice[]): string[] {
-        const companyNames = Array.from(new Set(Invoice.companyNames(invoices))); // array unique
-        // makes sure that all elements in array are unique
-        companyNames.push('--alle--');
-        return companyNames.sort();
-    }
-
+       calculateCompanySelectOptions2(invoices: Invoice[]): string[] {
+           const companyNames = Array.from(new Set(Invoice.companyNames(invoices))); // array unique
+           // makes sure that all elements in array are unique
+           companyNames.push('--alle--');
+           return companyNames.sort();
+       }
+       */
 
     sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
         // sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
@@ -215,16 +219,16 @@ export class InvoiceListComponent implements OnInit {
     }
 
 
-        sortInvoice(): void {
-            // DONE filter
-            const retInvoices = this.invoices;
+    sortInvoice(): void {
+        // DONE filter
+        const retInvoices = this.invoices;
 
-            this.invoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
-                retInvoices);
+        this.invoices = this.sortInvoicesByButtons([this.sortStartDueDate, this.sortStartDate, this.sortCompanyName],
+            retInvoices);
 
-        }
+    }
 
-
+    /*
     // region getter
     private getGreatPastDate(): Date {
         return new Date('1871-01-18');
@@ -284,5 +288,5 @@ export class InvoiceListComponent implements OnInit {
     }
 
     // endregion
-
+    */
 }

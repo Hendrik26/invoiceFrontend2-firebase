@@ -37,7 +37,6 @@ export class InvoiceDetailComponent implements OnInit {
     invoiceDueDate: Date;
 
 
-
     // nettoSum: number;
     invoiceTimeSpan = '2018-01-01 bis 2018-12-31';
     invoiceKind: InvoiceKind;
@@ -59,6 +58,9 @@ export class InvoiceDetailComponent implements OnInit {
     private changedItem: Item;
     private oldItem: Item;
     private editNewItem: boolean;
+    historyTest: boolean;
+    historyDateList: [{ historyKey: string, historyLabel: string}] ;
+    historyId: string;
     // salesTaxPercentage = 19;
 
     // timespanBegin: Date = null;
@@ -92,8 +94,11 @@ export class InvoiceDetailComponent implements OnInit {
         console.log(`\r\n\r\nInvoiceDetailComponent.ngOnInit() step 002,\r\n creatingInvoice ===${this.creatingInvoice}! \r\n\r\n`);
         if (!this.receivedInvoiceIdError) {
             console.log('receivedInvoiceId==' + this.invoiceId + ';;;', 'color:Blue');
-            this.receiveInvoiceById(this.invoiceId, null);
+            if (this.invoiceId) {
+                this.receiveInvoiceById(this.invoiceId, null);
+            }
         }
+        this.calculateSums();
         this.receiveCustomers();
     }
 
@@ -133,8 +138,8 @@ export class InvoiceDetailComponent implements OnInit {
 
     private editItemNumber(row: number): void {
         this.changedItemNumber = row;
-        this.oldItem =  new Item(this.invoice, this.invoice.items[row]);
-        this.changedItem =  this.invoice.items[row];
+        this.oldItem = new Item(this.invoice, this.invoice.items[row]);
+        this.changedItem = this.invoice.items[row];
         this.editNewItem = false;
         console.log(`this.changedItemNumber === ${row}`);
     }
@@ -174,20 +179,41 @@ export class InvoiceDetailComponent implements OnInit {
         this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
         this.changedItemNumber = this.invoice.items.length - 1;
         this.editNewItem = true;
-        this.oldItem =  new Item(this.invoice, this.invoice.items[this.changedItemNumber]);
-        this.changedItem =  this.invoice.items[this.changedItemNumber];
+        this.oldItem = new Item(this.invoice, this.invoice.items[this.changedItemNumber]);
+        this.changedItem = this.invoice.items[this.changedItemNumber];
     }
 
-    private receiveInvoiceById(methId: string, historyId: string): void {
-        if (!this.creatingInvoice) { this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
-            this.invoice =  Invoice.normalizeInvoice(invoiceType);
+    /*
+    private receiveInvoiceById_old(methId: string, historyId: string): void {
+        if (!this.creatingInvoice) {
+            this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
+                this.invoice = Invoice.normalizeInvoice(invoiceType);
 
-            this.calculateSums();
-            this.calculateAddress();
-            // console.log('III: ', this.invoice);
-        }); } else {
+                this.calculateSums();
+                this.calculateAddress();
+                // console.log('III: ', this.invoice);
+            });
+        } else {
             this.invoice = Invoice.createNewInvoice();
         }
+    }
+    */
+
+    private receiveInvoiceById(methId: string, historyId: string): void {
+        this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
+            this.invoice = Invoice.normalizeInvoice(invoiceType);
+            this.calculateSums();
+            this.calculateAddress();
+            this.fbInvoiceService.testInvoiceHistoryById(methId).subscribe(invoiceTest => {
+                this.historyTest = invoiceTest[1];
+                console.log('RRRR: ', invoiceTest, this.historyTest,);
+            });
+        });
+    }
+
+    receiveInvoiceHistoryById(id: string): void {
+        this.fbInvoiceService.getInvoiceHistoryById(id)
+            .subscribe(data => {this.historyDateList = data; });
     }
 
     private saveInvoice(archive: boolean = false): void {
@@ -195,25 +221,20 @@ export class InvoiceDetailComponent implements OnInit {
         console.log('invoice-detail.component.ts: method saveInvoice');
         // this.creatingInvoiceBtn = false;
         this.calculateSums();
+        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
+        /*
         if (this.creatingInvoice) {
-            /*
-            this.fbInvoiceService.getNewInvoiceId().subscribe(data => {
-                console.log('NewInvoiceId: ', data.id);
-                if (data.id) {
-                    this.fbInvoiceService.updateInvoice(data.id, this.invoice.exportInvoiceToAny(archive));
-                    this.creatingInvoice = false;
-                    this.creatingInvoiceBtn = false;
-                }});
-            */
-            // this.fbInvoiceService.createInvoice(this.invoice.exportInvoiceToAny(archive));
+
             this.fbInvoiceService.updateInvoice(null, this.invoice.exportInvoiceToAny(archive));
 
         } else {
             this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
         }
+        */
         this.router.navigateByUrl('/invoice-list');
     }
 
+    /*
     private calculateInitialDataLoad() {
         // TODO: calculate out-commented data from firebase-DB
         console.log('method calculateInitialDataLoad() {...}');
@@ -228,26 +249,29 @@ export class InvoiceDetailComponent implements OnInit {
             this.invoiceDate.getDate() + 14, 12);
 
     }
+    */
 
     private calculateAddress(): void {
         this.customerAdress = this.invoice.customer.addressLine1 + '\r\n'
             + this.invoice.customer.addressLine2 + '\r\n' + this.invoice.customer.addressLine3 + '\r\n'
             + this.invoice.customer.postalCode + '\r\n' + this.invoice.customer.city + '\r\n'
-            + this.invoice.customer.country ;
+            + this.invoice.customer.country;
     }
 
     private calculateSums(): void {
         this.invoice.wholeCost = this.invoice.items
             ? this.invoice.items.reduce((sum, current) => sum + current.count * current.partialCost, 0) : 0;
-        this.salesTax =  !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
+        this.salesTax = !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
     }
 
+    /*
     private calculateSavingData() {
         this.calculateSums();
         // this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
         //  this.invoiceDate.getDate() + 14, 12);
     }
+    */
 
     private changeInternational(): void {
         this.invoice.invoiceKind.international = !this.invoice.invoiceKind.international;
@@ -259,7 +283,11 @@ export class InvoiceDetailComponent implements OnInit {
         boolean {
         if (this.route.snapshot.paramMap.has('invoiceId')) {
             this.invoiceId = this.route.snapshot.paramMap.get('invoiceId');  // get itemID???? invoiceId from URL
-            this.creatingInvoice = (this.route.snapshot.paramMap.get('newInvoice') === 'true');
+            // this.creatingInvoice = (this.route.snapshot.paramMap.get('newInvoice') === 'true');
+
+            if (this.route.snapshot.paramMap.get('newInvoice') === 'true') {
+                this.invoiceId = null;
+            }
             return true;
         } else {
             this.invoiceId = null; // stands for the creation of a new item???? invoice
