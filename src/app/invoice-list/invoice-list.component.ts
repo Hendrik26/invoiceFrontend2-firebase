@@ -50,13 +50,6 @@ export class InvoiceListComponent implements OnInit {
 
     // endregion
 
-    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
-        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
-            return -1;
-        }
-        return 1;
-    }
-
     constructor(private fbInvoiceService: FbInvoiceService,
                 private router: Router) {
     }
@@ -93,12 +86,7 @@ export class InvoiceListComponent implements OnInit {
 
     receiveCustomers(): void {
         this.fbInvoiceService.getCustomersList('notArchive')
-            .subscribe(data => {
-                this.customers = data.map(x => Customer.normalizeCustomer(x));
-                this.customers.sort(function (a, b) {
-                    return InvoiceListComponent.compareCustomersByName(a, b);
-                });
-            });
+            .subscribe(data => {this.customers = Customer.sortCustomers(data.map(x => Customer.normalizeCustomer(x))) ; });
     }
 
     sortStartDueDateClick(): void {

@@ -43,7 +43,7 @@ export class InvoiceDetailComponent implements OnInit {
     private oldItem: Item;
     private editNewItem: boolean;
     historyTest: boolean;
-    historyDateList: [{ historyKey: string, historyLabel: string}] ;
+    historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
 
     constructor(
@@ -57,12 +57,6 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     // endregion
-    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
-        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
-            return -1;
-        }
-        return 1;
-    }
 
     ngOnInit() {
         this.creatingInvoice = false;
@@ -80,12 +74,7 @@ export class InvoiceDetailComponent implements OnInit {
 
     receiveCustomers(): void {
         this.fbInvoiceService.getCustomersList('notArchive')
-            .subscribe(data => {
-                this.customers = data.map(x => Customer.normalizeCustomer(x));
-                this.customers.sort(function (a, b) {
-                    return InvoiceDetailComponent.compareCustomersByName(a, b);
-                });
-            });
+            .subscribe(data => {this.customers = Customer.sortCustomers(data.map(x => Customer.normalizeCustomer(x))); });
     }
 
     public changeFilterCompany(e: string): void {
@@ -172,7 +161,9 @@ export class InvoiceDetailComponent implements OnInit {
 
     receiveInvoiceHistoryById(id: string): void {
         this.fbInvoiceService.getInvoiceHistoryById(id)
-            .subscribe(data => {this.historyDateList = data; });
+            .subscribe(data => {
+                this.historyDateList = data;
+            });
     }
 
     private saveInvoice(archive: boolean = false): void {

@@ -5,6 +5,7 @@ import {ItemType} from './item-type';
 export class Customer implements CustomerType {
     //////
 
+
     // region static properties
     private static emptyCustomer: CustomerType = {
         customerNumber: '2018', // Kundennummer
@@ -23,6 +24,20 @@ export class Customer implements CustomerType {
         lastUpdateTime: new Date(),
         archived: false
     };
+
+    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
+        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
+            return -1;
+        }
+        return 1;
+    }
+
+    public static sortCustomers(customers: Customer[]): Customer[] {
+        customers.sort(function (a, b) {
+            return Customer.compareCustomersByName(a, b);
+        });
+        return customers;
+    }
 
     // endregion
     // region other properties
@@ -151,7 +166,6 @@ export class Customer implements CustomerType {
             archived: this.archived
         };
     }
-
 
     // endregion
 }

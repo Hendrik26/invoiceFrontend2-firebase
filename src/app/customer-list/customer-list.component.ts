@@ -23,12 +23,6 @@ export class CustomerListComponent implements OnInit {
     showArchive = 'notArchive';
     // endregion
 
-    private static compareCustomersByName(customer1: Customer, customer2: Customer): number {
-        if (customer1.customerName.trim().toLowerCase() < customer2.customerName.trim().toLowerCase()) {
-            return -1;
-        }
-        return 1;
-    }
 
     constructor(private fbInvoiceService: FbInvoiceService,
                 private router: Router,
@@ -42,7 +36,7 @@ export class CustomerListComponent implements OnInit {
 
     hasReceivedCustomerParentId(): // can NOT be deleted
         boolean {
-        let tempStr: string = 'tempStr';
+        // let tempStr: string = 'tempStr';
         console.log('<<< Start method hasReceivedCustomerParentId()! >>>');
         if (this.route.snapshot.paramMap.has('customerId') && this.route.snapshot.paramMap.has('newCustomer')) {
             console.log('<<< Method hasReceivedCustomerParentId() if-branch! >>>');
@@ -70,21 +64,26 @@ export class CustomerListComponent implements OnInit {
         }
     }
 
+    /*
     private toShow(customerArchived): boolean {
         return ((this.showArchived === customerArchived) || this.history);
     }
+    */
 
     receiveCustomers(): void {
             this.fbInvoiceService.getCustomersList(this.showArchive)
-                .subscribe(data => {this.customers = data.map(x => Customer.normalizeCustomer(x));
+                .subscribe(data => {this.customers = Customer.sortCustomers(data.map(x => Customer.normalizeCustomer(x))) ;
+                /*
+
                     this.customers.sort(function (a, b) {
                         return CustomerListComponent.compareCustomersByName(a, b);
                     });
+                */
                 });
     }
 
     public newCustomereBtn(): void {
-        const methCustomer = Customer.createNewCustomer();
+        // const methCustomer = Customer.createNewCustomer();
         // const customerId = methCustomer.getCustomerId();
         const customerId = 'nK';
         this.router.navigateByUrl('customer-detail/' + customerId + '/true'  );
