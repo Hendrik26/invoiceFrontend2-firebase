@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {InvoiceListComponent} from './invoice-list/invoice-list.component';
 import {InvoiceDetailComponent} from './invoice-detail/invoice-detail.component';
-import {ItemDetailComponent} from './item-detail/item-detail.component';
+// import {ItemDetailComponent} from './item-detail/item-detail.component';
 import {InvoiceRouterModule} from './/invoice-router.module';
 import {FormsModule} from '@angular/forms';
 import { CustomerListComponent } from './customer-list/customer-list.component';
@@ -20,7 +20,7 @@ import {FbInvoiceService} from './fb-invoice.service'; // line must be addesd
     AppComponent,
     InvoiceListComponent,
     InvoiceDetailComponent,
-    ItemDetailComponent,
+    // ItemDetailComponent,
     CustomerListComponent,
     CustomerDetailComponent
   ],

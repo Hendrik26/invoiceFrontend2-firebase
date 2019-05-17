@@ -4,7 +4,7 @@ import {InvoiceListComponent} from './invoice-list/invoice-list.component';
 import {CustomerListComponent} from './customer-list/customer-list.component';
 import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import {InvoiceDetailComponent} from './invoice-detail/invoice-detail.component';
-import {ItemDetailComponent} from './item-detail/item-detail.component';
+// import {ItemDetailComponent} from './item-detail/item-detail.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/invoice-list', pathMatch: 'full'},
@@ -13,8 +13,8 @@ const routes: Routes = [
     {path: 'invoice-detail/:invoiceId/:newInvoice', component: InvoiceDetailComponent},
     // routing to the details of a dedicated invoice by ID
     {path: 'invoice-create', component: InvoiceDetailComponent},
-    {path: 'item-detail/:invoiceId/:itemId', component: ItemDetailComponent},
-    {path: 'item-create/:invoiceId', component: ItemDetailComponent},
+    // {path: 'item-detail/:invoiceId/:itemId', component: ItemDetailComponent},
+    // {path: 'item-create/:invoiceId', component: ItemDetailComponent},
     {path: 'customer-detail/:customerId/:newCustomer', component: CustomerDetailComponent},
     {path: 'customer-detail/:customerId/:newCustomer/customer-history', component: CustomerListComponent},
 ];
