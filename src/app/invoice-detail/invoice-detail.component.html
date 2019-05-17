@@ -152,7 +152,7 @@
                     </tr>
                     <tr *ngIf="!invoice.invoiceKind.international">
                         <td colspan="4"></td>
-                        <td>{{!invoice.invoiceKind.international ? percentageString : ''}} MwSt.</td>
+                        <td>{{!invoice.invoiceKind.international ? (invoice.salesTaxPercentage | number:'1.0-1') + '%' : ''}} MwSt.</td>
                         <td> {{!invoice.invoiceKind.international ? (salesTax | number:'1.2-2') : 'Brutto == Netto '}}{{invoice.currency}}</td>
                         <td>
                             <!--button type="button">Mehrwertsteuer ändern</button-->
@@ -184,8 +184,8 @@
                 </table>
             </div>
             <button (click)="addNewItem()">Posten hinzufügen</button>
-            <button (click)="saveInvoice(false)">{{(creatingInvoice || creatingInvoiceBtn) ? 'erstellen' : 'speichern'}}</button>
-            <button (click)="saveInvoice(true)">archivieren</button>
+            <button (click)="saveInvoice(false)">{{invoiceId ? 'speichern' : 'erstellen'}}</button>
+            <button *ngIf="invoiceId"(click)="saveInvoice(true)">archivieren</button>
             <button (click)="backToInvoiceList()">zurück</button>
             <button *ngIf="historyTest" (click)="receiveInvoiceHistoryById(invoiceId)">alte Versionen</button>
             <select (change)="receiveInvoiceById(invoiceId,historyId)" *ngIf="historyDateList"
@@ -197,11 +197,6 @@
                     {{opt.historyLabel}}
                 </option>
             </select>
-
-
-
-
-
 
             <p></p>
             <div *ngIf="invoice.invoiceKind.international">

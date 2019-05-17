@@ -29,46 +29,22 @@ export class InvoiceDetailComponent implements OnInit {
     customerAdress: string;
     bruttoSum: number;
     salesTax: number;
-    // countReminders: number;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
-    // invoiceIntendedUse = 'die Rechnungsnummer 201800xx';
     invoiceDate: Date;
     invoiceDueDate: Date;
 
-
-    // nettoSum: number;
-    invoiceTimeSpan = '2018-01-01 bis 2018-12-31';
     invoiceKind: InvoiceKind;
-    // creditorIdentificationNumber = 'DE55ZZZ00001275596';
-
-    // customerBIC = 'Invoice-Bsp-BIC';
-    // customerIBAN = 'Invoice-Bsp-IBAN';
-    // customerTaxNumber = 'murx';
-    // mandateIdentification = 'Invoice-Bsp-Mandat'; // Mandatsreferenz fuer SEPA-Lastschriftverfahren
-
-
-    // invoiceCurrency = '€';
-    // invoiceNumber = '201800xx';
     items: Item[];
     // percentageString = '19%';
     receivedInvoiceIdError: boolean;
-    private changedItemNumber = -1;
-    // invoiceState = 'Entwurf'; // <th>Status (Entwurf, bezahlt, ...)</th>
-    private changedItem: Item;
+    changedItemNumber = -1;
+    changedItem: Item;
     private oldItem: Item;
     private editNewItem: boolean;
     historyTest: boolean;
     historyDateList: [{ historyKey: string, historyLabel: string}] ;
     historyId: string;
-    // salesTaxPercentage = 19;
-
-    // timespanBegin: Date = null;
-    // timespanEnd: Date = null;
-
-    // public international = false; // Inlandsrechnung, Bit0
-    // public timeSpanBased = false; // UZeitraumbasierter Rechnung, Bit1
-    // public isSEPA = false; // ist SEPA-Lastschrift, Bit2
 
     constructor(
         private router: Router,
@@ -183,22 +159,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.changedItem = this.invoice.items[this.changedItemNumber];
     }
 
-    /*
-    private receiveInvoiceById_old(methId: string, historyId: string): void {
-        if (!this.creatingInvoice) {
-            this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
-                this.invoice = Invoice.normalizeInvoice(invoiceType);
-
-                this.calculateSums();
-                this.calculateAddress();
-                // console.log('III: ', this.invoice);
-            });
-        } else {
-            this.invoice = Invoice.createNewInvoice();
-        }
-    }
-    */
-
     private receiveInvoiceById(methId: string, historyId: string): void {
         this.fbInvoiceService.getInvoiceById(methId, historyId).subscribe(invoiceType => {
             this.invoice = Invoice.normalizeInvoice(invoiceType);
@@ -206,7 +166,6 @@ export class InvoiceDetailComponent implements OnInit {
             this.calculateAddress();
             this.fbInvoiceService.testInvoiceHistoryById(methId).subscribe(invoiceTest => {
                 this.historyTest = invoiceTest[1];
-                console.log('RRRR: ', invoiceTest, this.historyTest,);
             });
         });
     }
@@ -222,34 +181,8 @@ export class InvoiceDetailComponent implements OnInit {
         // this.creatingInvoiceBtn = false;
         this.calculateSums();
         this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
-        /*
-        if (this.creatingInvoice) {
-
-            this.fbInvoiceService.updateInvoice(null, this.invoice.exportInvoiceToAny(archive));
-
-        } else {
-            this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
-        }
-        */
         this.router.navigateByUrl('/invoice-list');
     }
-
-    /*
-    private calculateInitialDataLoad() {
-        // TODO: calculate out-commented data from firebase-DB
-        console.log('method calculateInitialDataLoad() {...}');
-        // this.percentageString = this.invoiceService.getSalesTaxPercentageString(this.invoiceId);
-        this.calculateSums();
-    }
-
-    private calculateInitialDataCreate() {
-        console.log('method calculateInitialDataCreate() {...}');
-        this.invoiceDate = new Date();
-        this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
-            this.invoiceDate.getDate() + 14, 12);
-
-    }
-    */
 
     private calculateAddress(): void {
         this.customerAdress = this.invoice.customer.addressLine1 + '\r\n'
@@ -264,14 +197,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.salesTax = !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
     }
-
-    /*
-    private calculateSavingData() {
-        this.calculateSums();
-        // this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
-        //  this.invoiceDate.getDate() + 14, 12);
-    }
-    */
 
     private changeInternational(): void {
         this.invoice.invoiceKind.international = !this.invoice.invoiceKind.international;

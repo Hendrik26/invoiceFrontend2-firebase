@@ -23,6 +23,11 @@ export class FbInvoiceService {
     constructor(private db: AngularFirestore) {
     }
 
+    private hitoryKeyToLabel(key: string): string{
+        return key.slice(12, 14) + '.' + key.slice(9, 11) + '.' + key.slice(4, 8) + ' ' + key.slice(15, 17) + ':' + key.slice(18, 20)
+            + ':' + key.slice(21, 23);
+    }
+
     // receives the of the customers with archive or not
     getCustomersList(archive: string): Observable<any> {
         // create the database reference/query witch depends on the value of the "archive" parameter
@@ -68,12 +73,7 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     historyKey: c.payload.doc.id,
-                    historyLabel: c.payload.doc.id.slice(12, 14)
-                        + '.' + c.payload.doc.id.slice(9, 11)
-                        + '.' + c.payload.doc.id.slice(4, 8)
-                        + ' ' + c.payload.doc.id.slice(15, 17)
-                        + ':' + c.payload.doc.id.slice(18, 20)
-                        + ':' + c.payload.doc.id.slice(21, 23)
+                    historyLabel: this.hitoryKeyToLabel(c.payload.doc.id)
                 }))
             )
         );
@@ -227,12 +227,7 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     historyKey: c.payload.doc.id,
-                    historyLabel: c.payload.doc.id.slice(12, 14)
-                        + '.' + c.payload.doc.id.slice(9, 11)
-                        + '.' + c.payload.doc.id.slice(4, 8)
-                        + ' ' + c.payload.doc.id.slice(15, 17)
-                        + ':' + c.payload.doc.id.slice(18, 20)
-                        + ':' + c.payload.doc.id.slice(21, 23)
+                    historyLabel: this.hitoryKeyToLabel(c.payload.doc.id)
                 }))
             )
         );
