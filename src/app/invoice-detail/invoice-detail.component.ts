@@ -33,11 +33,9 @@ export class InvoiceDetailComponent implements OnInit {
     creatingInvoiceBtn: boolean;
     invoiceDate: Date;
     invoiceDueDate: Date;
-
     invoiceKind: InvoiceKind;
-    items: Item[];
-    // percentageString = '19%';
-    receivedInvoiceIdError: boolean;
+    private items: Item[];
+    private receivedInvoiceIdError: boolean;
     changedItemNumber = -1;
     changedItem: Item;
     private oldItem: Item;
@@ -92,13 +90,11 @@ export class InvoiceDetailComponent implements OnInit {
         console.log('invoice-detail.component.ts.changeTimeSpanBased(), T1');
         this.invoice.invoiceKind.timeSpanBased = !this.invoice.invoiceKind.timeSpanBased;
         console.log('invoice-detail.component.ts.changeTimeSpanBased(), T2');
-
     }
 
     public changeIsSEPA(): void {
         this.invoice.invoiceKind.isSEPA = !this.invoice.invoiceKind.isSEPA;
         console.log('invoice-detail.component.ts.changeISSEPAs()');
-
     }
 
     private editItemNumber(row: number): void {
@@ -115,11 +111,6 @@ export class InvoiceDetailComponent implements OnInit {
             this.calculateSums();
         }
     }
-
-    /* private changeChangedItemCost(): void {
-        // this.changedItem.wholeCost = this.changedItem.count * this.changedItem.partialCost;
-        this.calculateSums();
-    } */
 
     private saveItem(): void {
         this.invoice.items[this.changedItemNumber] = Item.normalizeItem(this.invoice, this.invoice.items[this.changedItemNumber]);
@@ -223,8 +214,6 @@ export class InvoiceDetailComponent implements OnInit {
 
     private invoiceTimespanBeginChange(methEvent: string) {
         this.invoice.timespanBegin = new Date(methEvent);
-        // this.invoiceDueDate = new Date(this.invoiceDate.getFullYear(), this.invoiceDate.getMonth(),
-        //   this.invoiceDate.getDate() + 14, 12);
     }
 
     private invoiceTimespanEndChange(methEvent: string) {

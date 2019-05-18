@@ -8,8 +8,6 @@ import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
 import {map} from 'rxjs/operators';
 import {Observable, from, combineLatest} from 'rxjs';
-import * as firebase from 'firebase';
-import Firestore = firebase.firestore.Firestore;
 
 
 @Injectable({
@@ -248,35 +246,6 @@ export class FbInvoiceService {
         );
     }
 
-    /* updateInvoiceOld(id: string, data: InvoiceType): void {
-        // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
-        this.db.runTransaction(transaction => {
-            return transaction.get(this.db.doc(`${this.dbInvoicePath}/${id}`)).then(invoiceDoc => {
-                if (!invoiceDoc.exists) {
-                    console.log('\r\n\r\nInvoiceDocument does not exist!\r\n\r\n');
-                } else {
-                    transaction.update(data)
-                }
-
-            });
-        });
-    } */
-
-    updateInvoice_old(id: string, data: InvoiceType): void {
-        // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
-        const batch = this.db.firestore.batch();
-        const invoiceRef = this.db.firestore.collection(this.dbInvoicePath).doc(id);
-        const invoiceHistoryRef = this.db.firestore.collection(this.dbInvoicePath)
-            .doc(id).collection('History').doc(FbInvoiceService.getHistoryKey());
-        batch.update(invoiceRef, data);
-        console.log(`\r\n\r\nDB-Update with BatchWrite invoiceRef!!! \r\n\r\n`);
-        batch.set(invoiceHistoryRef, data);
-        console.log(`\r\n\r\nDB-Update with BatchWrite invoiceHistoryRef!!! \r\n\r\n`);
-        batch.commit().then(() => {
-            console.log(`\r\n\r\nDB-Update with BatchWrite completed!!! \r\n\r\n`);
-        }).catch(error => this.handleError(error));
-    }
-
     // update or create a invoice document together with a history document in one batc
     updateInvoice(id: string, data: InvoiceType): void {
         const batch = this.db.firestore.batch();
@@ -293,38 +262,6 @@ export class FbInvoiceService {
         batch.commit().then(() => {
             console.log(`\r\n\r\nDB-Update with BatchWrite completed!!! \r\n\r\n`);
         }).catch(error => this.handleError(error));
-    }
-
-     /*
-           createInvoice(data: any): void {
-               let invId: string = '-111';
-               console.log('Method FbInvoiceService.createInvoice(...) started!');
-               // console.log(data.invoiceKind.printToString()); ///
-               this.db.collection(this.dbInvoicePath).add(data).then(docRef => {
-                   console.log(`\r\n\r\ndocRef.id ===${docRef.id}!!! \r\n\r\n`);
-                   invId = docRef.id;
-                   console.log(`\r\n\r\ninvId01 ===${invId}!!! \r\n\r\n`);
-               }).catch(error => this.handleError(error));
-               console.log(`\r\n\r\ninvId02 ===${invId}!!! \r\n\r\n`);
-           }
-
-           createInvoice_exp(data: any): void {
-               const promise = new Promise((resolve, reject) => {
-                   let invId: string = '-111';
-                   console.log('Method FbInvoiceService.createInvoice(...) started!');
-                   // console.log(data.invoiceKind.printToString()); ///
-                   this.db.collection(this.dbInvoicePath).add(data).then(docRef => {
-                       console.log(`\r\n\r\ndocRef.id ===${docRef.id}!!! \r\n\r\n`);
-                       invId = docRef.id;
-                       console.log(`\r\n\r\ninvId01 ===${invId}!!! \r\n\r\n`);
-                   }).catch(error => this.handleError(error));
-                   console.log(`\r\n\r\ninvId02 ===${invId}!!! \r\n\r\n`);
-               });
-           }
-           */
-
-    getNewInvoiceId(): Observable<any> {
-        return from(this.db.collection(this.dbInvoicePath).add({}));
     }
 
     private handleError(error) {
