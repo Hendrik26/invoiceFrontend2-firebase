@@ -20,6 +20,7 @@ export class FbInvoiceService {
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
+    private dbUserPath = '/userprofiles';
 
     constructor(private firebaseAuth: AngularFireAuth,
                 private db: AngularFirestore) {
@@ -50,11 +51,11 @@ export class FbInvoiceService {
         if (type === 1) {
             user$ = from(this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password));
         }
-        if (type === 2) {
+        /* if (type === 2) {
             user$ = from(this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
-        }
+        }*/
         const userProfile$: Observable<any> = user$.pipe(switchMap(value => {
-            return this.db.collection('/userProfile').doc(value.user.uid).valueChanges();
+            return this.db.collection(this.dbUserPath).doc(value.user.uid).valueChanges();
         }));
         return combineLatest(user$, userProfile$);
     }

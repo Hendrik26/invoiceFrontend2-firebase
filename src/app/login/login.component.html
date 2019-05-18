@@ -17,9 +17,9 @@
     Login
   </button>
   &nbsp;&nbsp;
-  <button (click)="signin(2)" >
+  <!--button (click)="signin(2)" >
     Login mit Google
-  </button>
+  </button-->
 </div>
 <h6 *ngIf="loginUser.id && passReset1">Please, check your mailbox</h6>
 <button (click)="logout()" *ngIf="loginUser.id">
