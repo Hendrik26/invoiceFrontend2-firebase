@@ -23,12 +23,24 @@ export class FbInvoiceService {
     constructor(private db: AngularFirestore) {
     }
 
-    private hitoryKeyToLabel(key: string): string{
+    private static hitoryKeyToLabel(key: string): string{
         return key.slice(12, 14) + '.' + key.slice(9, 11) + '.' + key.slice(4, 8) + ' ' + key.slice(15, 17) + ':' + key.slice(18, 20)
             + ':' + key.slice(21, 23);
     }
 
-    // receives the of the customers with archive or not
+    private static getHistoryKey(): string {
+        const date = new Date();
+        const key = 'Key-' + date.getFullYear() + '-'
+            + ('0' + (date.getMonth() + 1).toString()).slice(-2) + '-'
+            + ('0' + date.getDate().toString()).slice(-2) + '-'
+            + ('0' + date.getHours().toString()).slice(-2) + '-'
+            + ('0' + date.getMinutes().toString()).slice(-2) + '-'
+            + ('0' + date.getSeconds().toString()).slice(-2) + '-'
+            + ('00' + date.getMilliseconds().toString()).slice(-3);
+        return key;
+    }
+
+    // receives the list of the customers with archive or not
     getCustomersList(archive: string): Observable<any> {
         // create the database reference/query witch depends on the value of the "archive" parameter
         let customersRef: AngularFirestoreCollection<Customer> = null;
@@ -73,7 +85,7 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     historyKey: c.payload.doc.id,
-                    historyLabel: this.hitoryKeyToLabel(c.payload.doc.id)
+                    historyLabel: FbInvoiceService.hitoryKeyToLabel(c.payload.doc.id)
                 }))
             )
         );
@@ -98,9 +110,10 @@ export class FbInvoiceService {
 
     // updates an existing customer document
     updateCustomer(id: string, data: CustomerType): void {
-        this.db.doc(`${this.dbCustomerPath}/${id}`).update(data).catch(error => this.handleError(error));
+        this.db.doc(`${this.dbCustomerPath}/${id}`).set(data).catch(error => this.handleError(error));
     }
 
+    // receives one specific invoice document
     getInvoiceById(invoiceId: string, historyId: string): Observable<any> {
         // create the database path witch depends from the value of the "historyId" parameter
         let path = '';
@@ -113,6 +126,7 @@ export class FbInvoiceService {
         return this.db.doc(path).valueChanges();
     }
 
+    // receives the invoice query with several filter options
     getInvoiceList(refIndex: number, filterStartDate: Date, filterEndDate: Date, filterState: string,
                    filterCustomer: string, filterArchive: boolean): Observable<any> {
         // let invoiceRef: AngularFirestoreCollection<Invoice> = null;
@@ -208,7 +222,7 @@ export class FbInvoiceService {
             ));
     }
 
-    // receives te first two documents of the history - necessary to test the existence of the customer history
+    // receives te first two documents of the history - necessary to test the existence of the invoice history
     testInvoiceHistoryById(invoiceId: string): Observable<any> {
         // create the database reference
         const invoiceRef = this.db.collection(`${this.dbInvoicePath}/${invoiceId}/History`,
@@ -219,6 +233,7 @@ export class FbInvoiceService {
                 changes.map(c => ({historyId: c.payload.doc.id}))));
     }
 
+    // receives the history list of one specific invoice - used in the select element
     getInvoiceHistoryById(invoicerId: string): Observable<any> {
         // create the database reference
         const invoicerRef = this.db.collection(`${this.dbInvoicePath}/${invoicerId}/History`);
@@ -227,7 +242,7 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     historyKey: c.payload.doc.id,
-                    historyLabel: this.hitoryKeyToLabel(c.payload.doc.id)
+                    historyLabel: FbInvoiceService.hitoryKeyToLabel(c.payload.doc.id)
                 }))
             )
         );
@@ -252,7 +267,7 @@ export class FbInvoiceService {
         const batch = this.db.firestore.batch();
         const invoiceRef = this.db.firestore.collection(this.dbInvoicePath).doc(id);
         const invoiceHistoryRef = this.db.firestore.collection(this.dbInvoicePath)
-            .doc(id).collection('History').doc(this.getHistoryKey());
+            .doc(id).collection('History').doc(FbInvoiceService.getHistoryKey());
         batch.update(invoiceRef, data);
         console.log(`\r\n\r\nDB-Update with BatchWrite invoiceRef!!! \r\n\r\n`);
         batch.set(invoiceHistoryRef, data);
@@ -262,22 +277,16 @@ export class FbInvoiceService {
         }).catch(error => this.handleError(error));
     }
 
+    // update or create a invoice document together with a history document in one batc
     updateInvoice(id: string, data: InvoiceType): void {
-        // this.db.doc(`${this.dbInvoicePath}/${id}`).update(data).catch(error => this.handleError(error));
-        let newInvoice = false;
         const batch = this.db.firestore.batch();
         if (!id) {
             id = this.db.firestore.collection(this.dbInvoicePath).doc().id;
-            newInvoice = true;
         }
         const invoiceRef = this.db.firestore.collection(this.dbInvoicePath).doc(id);
         const invoiceHistoryRef = this.db.firestore.collection(this.dbInvoicePath)
-            .doc(id).collection('History').doc(this.getHistoryKey());
-        if (newInvoice) {
-            batch.set(invoiceRef, data);
-        } else {
-            batch.update(invoiceRef, data);
-        }
+            .doc(id).collection('History').doc(FbInvoiceService.getHistoryKey());
+        batch.set(invoiceRef, data);
         console.log(`\r\n\r\nDB-Update with BatchWrite invoiceRef!!! \r\n\r\n`);
         batch.set(invoiceHistoryRef, data);
         console.log(`\r\n\r\nDB-Update with BatchWrite invoiceHistoryRef!!! \r\n\r\n`);
@@ -321,17 +330,4 @@ export class FbInvoiceService {
     private handleError(error) {
         console.log(error);
     }
-
-    private getHistoryKey(): string {
-        const date = new Date();
-        const key = 'Key-' + date.getFullYear() + '-'
-            + ('0' + (date.getMonth() + 1).toString()).slice(-2) + '-'
-            + ('0' + date.getDate().toString()).slice(-2) + '-'
-            + ('0' + date.getHours().toString()).slice(-2) + '-'
-            + ('0' + date.getMinutes().toString()).slice(-2) + '-'
-            + ('0' + date.getSeconds().toString()).slice(-2) + '-'
-            + ('00' + date.getMilliseconds().toString()).slice(-3);
-        return key;
-    }
-
 }
