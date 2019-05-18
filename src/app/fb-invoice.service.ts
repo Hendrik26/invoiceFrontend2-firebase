@@ -6,8 +6,11 @@ import {Customer} from './customer';
 import {CustomerType} from './customer-type';
 import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
-import {map} from 'rxjs/operators';
+// import {map} from 'rxjs/operators';
 import {Observable, from, combineLatest} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire//auth';
+import * as firebase from 'firebase';
+import {switchMap, map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -18,7 +21,8 @@ export class FbInvoiceService {
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
 
-    constructor(private db: AngularFirestore) {
+    constructor(private firebaseAuth: AngularFireAuth,
+                private db: AngularFirestore) {
     }
 
     private static historyKeyToLabel(key: string): string{
@@ -36,6 +40,37 @@ export class FbInvoiceService {
             + ('0' + date.getSeconds().toString()).slice(-2) + '-'
             + ('00' + date.getMilliseconds().toString()).slice(-3);
         return key;
+    }
+
+    signin$(type: number, email: string, password: string): Observable<any> {
+        let user$: Observable<any>;
+        if (type === 0) {
+            user$ = from(this.firebaseAuth.auth.signInWithEmailAndPassword(email, password));
+        }
+        if (type === 1) {
+            user$ = from(this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password));
+        }
+        if (type === 2) {
+            user$ = from(this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
+        }
+        const userProfile$: Observable<any> = user$.pipe(switchMap(value => {
+            return this.db.collection('/userProfile').doc(value.user.uid).valueChanges();
+        }));
+        return combineLatest(user$, userProfile$);
+    }
+
+    logout() {
+        this.firebaseAuth
+            .auth
+            .signOut();
+    }
+
+    resetPassword(email: string) {
+        const auth = firebase.auth();
+
+        return auth.sendPasswordResetEmail(email)
+            .then(() => console.log('email sent'))
+            .catch((error) => console.log(error));
     }
 
     // receives the list of the customers with archive or not

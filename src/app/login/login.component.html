@@ -1,3 +1,30 @@
-<p>
-  login works!
-</p>
+<div *ngIf="loginUser.id">
+  <h1>Welcome {{loginUser.email}}!</h1>
+  Authority Level: {{loginUser.authorityLevel}}&nbsp;&nbsp;&nbsp;Created: {{loginUser.created | date:'dd.MM.yyyy hh:mm'}}
+  &nbsp;&nbsp;&nbsp;Provider: {{loginUser.providerId}} &nbsp;&nbsp;&nbsp;ID: {{loginUser.id}}
+  <hr>
+</div>
+<div *ngIf="!loginUser.id">
+  <input type="text" [(ngModel)]="email" placeholder="email"  name="email"><br>
+  <input type="password" [(ngModel)]="password" placeholder="password"  name="password">
+  <br><br>
+  <button (click)="signin(1)" [disabled]="!email || !password">
+    Signup
+  </button>
+  &nbsp;&nbsp;
+  <button (click)="signin(0)" [disabled]="!email || !password">
+    Login
+  </button>
+  &nbsp;&nbsp;
+  <button (click)="signin(2)" >
+    Login mit Google
+  </button>
+</div>
+<h6 *ngIf="loginUser.id && passReset1">Please, check your mailbox</h6>
+<button (click)="logout()" *ngIf="loginUser.id">
+  Logout
+</button>
+&nbsp;&nbsp;
+<button (click)="resetPassword()" *ngIf="loginUser.id && !passReset1 && passReset2">
+  Reset Password
+</button>
