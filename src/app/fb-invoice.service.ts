@@ -21,7 +21,7 @@ export class FbInvoiceService {
     constructor(private db: AngularFirestore) {
     }
 
-    private static hitoryKeyToLabel(key: string): string{
+    private static historyKeyToLabel(key: string): string{
         return key.slice(12, 14) + '.' + key.slice(9, 11) + '.' + key.slice(4, 8) + ' ' + key.slice(15, 17) + ':' + key.slice(18, 20)
             + ':' + key.slice(21, 23);
     }
@@ -83,7 +83,7 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     historyKey: c.payload.doc.id,
-                    historyLabel: FbInvoiceService.hitoryKeyToLabel(c.payload.doc.id)
+                    historyLabel: FbInvoiceService.historyKeyToLabel(c.payload.doc.id)
                 }))
             )
         );
@@ -240,7 +240,7 @@ export class FbInvoiceService {
             map(changes =>
                 changes.map(c => ({
                     historyKey: c.payload.doc.id,
-                    historyLabel: FbInvoiceService.hitoryKeyToLabel(c.payload.doc.id)
+                    historyLabel: FbInvoiceService.historyKeyToLabel(c.payload.doc.id)
                 }))
             )
         );

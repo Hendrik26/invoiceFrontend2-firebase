@@ -12,7 +12,10 @@ import { CustomerDetailComponent } from './customer-detail/customer-detail.compo
 import { AngularFireModule } from '@angular/fire'; // line must be addesd
 import { AngularFirestoreModule } from '@angular/fire/firestore'; // line must be addesd
 import { environment } from '../environments/environment'; // line must be addesd
-import {FbInvoiceService} from './fb-invoice.service'; // line must be addesd
+import {FbInvoiceService} from './fb-invoice.service';
+import { LoginComponent } from './login/login.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { SettingsDetailComponent } from './settings-detail/settings-detail.component'; // line must be addesd
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import {FbInvoiceService} from './fb-invoice.service'; // line must be addesd
     InvoiceDetailComponent,
     // ItemDetailComponent,
     CustomerListComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    LoginComponent,
+    UserListComponent,
+    SettingsDetailComponent
   ],
   imports: [
     BrowserModule,
