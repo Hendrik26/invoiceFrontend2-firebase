@@ -4,20 +4,20 @@ import {InvoiceType} from './invoice-type';
 
 export class Item implements ItemType {
 
-  //region other properties
+  // region other properties
   itemDate: string; /// <th>Leistungsdatum</th>
   itemName: string;  // <th>Leistungsbeschreibung</th>
-  //endregion
+  // endregion
   partialCost: number; // <th>Stückpreis</th>
   count: number; // <th>Anzahl</th>
-  wholeCost: number; // <th>Gesamtpreis</th>
+  // wholeCost: number; // <th>Gesamtpreis</th>
   hourPayment = false;
   currency = '€';
-  //region IDs
+  // region IDs
   private itemId: number; // <th>Ändern</th>
   private invoiceId: string;
 
-  //endregion
+  // endregion
 
   public constructor(invoice: Invoice, data: ItemType) {
     this.itemId = invoice.computeNextItemId(); // item needs itemId and invoiceId to be unique.
@@ -26,7 +26,7 @@ export class Item implements ItemType {
     this.itemName = data.itemName;
     this.partialCost = data.partialCost;
     this.count = data.count;
-    this.wholeCost = data.count * data.partialCost;
+    // this.wholeCost = data.count * data.partialCost;
     this.hourPayment = data.hourPayment;
     this.currency = data.currency || '€';
   }
@@ -43,7 +43,7 @@ export class Item implements ItemType {
     return new Item(motherInvoice, itemData);
   }
 
-  //region getter
+  // region getter
   public getData(): ItemType {
     let data: ItemType;
     data = {
@@ -83,7 +83,7 @@ export class Item implements ItemType {
       };
     }
 
-  //endregion
+  // endregion
 
   // other methods
 

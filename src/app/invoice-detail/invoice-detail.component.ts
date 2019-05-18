@@ -116,10 +116,10 @@ export class InvoiceDetailComponent implements OnInit {
         }
     }
 
-    private changeChangedItemCost(): void {
-        this.changedItem.wholeCost = this.changedItem.count * this.changedItem.partialCost;
+    /* private changeChangedItemCost(): void {
+        // this.changedItem.wholeCost = this.changedItem.count * this.changedItem.partialCost;
         this.calculateSums();
-    }
+    } */
 
     private saveItem(): void {
         this.invoice.items[this.changedItemNumber] = Item.normalizeItem(this.invoice, this.invoice.items[this.changedItemNumber]);

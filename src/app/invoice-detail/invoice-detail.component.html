@@ -112,14 +112,14 @@
                         <td *ngIf="changedItemNumber !== i">{{item.count}}</td>
                         <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="7"
                                                                    [(ngModel)] = "changedItem.count"
-                                                                   (ngModelChange)="changeChangedItemCost()">
+                                                                   (ngModelChange)="calculateSums()">
 
                         </td>
                         <!-- td>{{item.partialCost | number:'1.2-2'}}{{invoiceCurrency}}</td -->
                         <td *ngIf="changedItemNumber !== i">{{item.partialCostString(invoice.currency)}}</td>
                         <td *ngIf="changedItemNumber === i"><input type="text" name="changedItem" size="7"
                                                                    [(ngModel)]="changedItem.partialCost"
-                                                                   (ngModelChange) = "changeChangedItemCost()">
+                                                                   (ngModelChange) = "calculateSums()">
                             <label>Stundenpreis</label>
                             <input type="checkbox" [(ngModel)] = "changedItem.hourPayment">
                             {{invoice.currency}}</td>
