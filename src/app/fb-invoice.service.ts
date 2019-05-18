@@ -13,7 +13,7 @@ import {Observable, from, combineLatest} from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class FbInvoiceService {
+export class FbInvoiceService { ////
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
