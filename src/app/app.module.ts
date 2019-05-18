@@ -16,7 +16,7 @@ import {FbInvoiceService} from './fb-invoice.service';
 import { LoginComponent } from './login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { SettingsDetailComponent } from './settings-detail/settings-detail.component'; // line must be addesd
-
+import { AngularFireAuthModule } from '@angular/fire/auth';  // line must be addesd
 
 @NgModule({
   declarations: [
@@ -35,6 +35,7 @@ import { SettingsDetailComponent } from './settings-detail/settings-detail.compo
     FormsModule,
     InvoiceRouterModule,
     AngularFireModule.initializeApp(environment.firebase), // line must be addesd
+    AngularFireAuthModule,  // line must be addesd
     AngularFirestoreModule // line must be addesd
   ],
   providers: [FbInvoiceService], // line must be changed
