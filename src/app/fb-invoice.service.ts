@@ -74,6 +74,19 @@ export class FbInvoiceService {
             .catch((error) => console.log(error));
     }
 
+    // receives the list of the users
+    getUserList(): Observable<any> {
+        // create the database reference/query witch depends on the value of the "archive" parameter
+        const usersRef = this.db.collection(this.dbUserPath,
+            ref => ref.orderBy('email'));
+        // return of the observable
+        return usersRef.snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))
+            )
+        );
+    }
+
     // receives the list of the customers with archive or not
     getCustomersList(archive: string): Observable<any> {
         // create the database reference/query witch depends on the value of the "archive" parameter

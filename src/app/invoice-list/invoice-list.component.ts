@@ -1,14 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Invoice} from '../invoice';
-// import {InvoiceShort} from '../invoice-short';
 // import {isNullOrUndefined} from 'util';
 import {ThreeStateButton} from '../three-state-button';
 import {Router} from '@angular/router';
-// import {ActivatedRoute} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
-import {Customer} from '../customer';
 import {SettingsService} from '../settings.service';
-// import {map} from 'rxjs/operators';
+import {Customer} from '../customer';
 
 
 @Component({

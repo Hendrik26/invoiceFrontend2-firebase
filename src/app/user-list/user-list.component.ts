@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {FbInvoiceService} from '../fb-invoice.service';
+import {SettingsService} from '../settings.service';
+import {LoginUser} from '../loginuser';
+import {Router} from '@angular/router';
+import {Invoice} from '../invoice';
+import {Customer} from '../customer';
 
 @Component({
   selector: 'app-user-list',
@@ -7,9 +13,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserListComponent implements OnInit {
 
-  constructor() { }
+  users: LoginUser[];
+
+  constructor(private fbInvoiceService: FbInvoiceService,
+              public settingsService: SettingsService,
+              private router: Router) {
+  }
+
 
   ngOnInit() {
+    this.receiveUsers();
   }
+
+  receiveUsers(): void {
+    this.fbInvoiceService.getUserList()
+        .subscribe(data => {this.users = data.map(x => LoginUser.normalizeUser(x)) ;
+        });
+    console.log('ÄÄÄÄÄ', this.users);
+  }
+
+
+
 
 }

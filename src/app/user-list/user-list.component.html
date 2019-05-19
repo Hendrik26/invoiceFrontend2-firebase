@@ -1,3 +1,20 @@
 <p>
   user-list works!
 </p>
+<div>
+  <table style="display: block; max-height: 80vh; overflow-y: scroll">
+    <thead>
+    <tr>
+      <th>Kundennummer</th>
+      <th>Kundenname</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users; let i = index">
+      <td>{{user.id}}</td>
+      <td>{{user.email}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

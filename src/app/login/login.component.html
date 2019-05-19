@@ -31,6 +31,8 @@
     <h6 *ngIf="settingsService.readonly">Sie haben nur Leseberechtigung</h6>
     <a routerLink="/invoice-list" *ngIf="settingsService.loginUser.authorityLevel >= 1">Rechnungen bearbeiten</a>&nbsp;&nbsp;
     <a routerLink="/customer-list" *ngIf="!settingsService.readonly">Kunden bearbeiten</a>&nbsp;&nbsp;
+    <a routerLink="/user-list" *ngIf="settingsService.loginUser.authorityLevel >= 3">Benutzer bearbeiten</a>&nbsp;&nbsp;
+    <a routerLink="/settings-detail" *ngIf="settingsService.loginUser.authorityLevel >= 3">Einstellungen bearbeiten</a>&nbsp;&nbsp;
     <hr>
 
     <button (click)="logout()">

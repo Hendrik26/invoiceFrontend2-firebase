@@ -95,19 +95,6 @@ export class Invoice implements InvoiceType {
         });
     }
 
-
-    /*
-        public static createNewInvoiceId(): string {
-            const methDate: Date = new Date();
-            return 'Inv' + methDate.getTime();       }
-
-        /*
-        public static createNewInvoice(): Invoice { // factory pattern, prime example
-            let methInvoice: Invoice;
-            methInvoice = this.createInvoiceFromExistingId(this.createNewInvoiceId(), this.emptyData);
-            return methInvoice;
-        */
-
     public static createInvoiceFromExistingId(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
         let invoice: Invoice;
         invoice = new Invoice(invId, data);
