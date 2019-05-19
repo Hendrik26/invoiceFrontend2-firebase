@@ -184,82 +184,130 @@ export class FbInvoiceService {
                    filterCustomer: string, filterArchive: boolean): Observable<any> {
         // let invoiceRef: AngularFirestoreCollection<Invoice> = null;
         const invoiceRefs: AngularFirestoreCollection<Invoice>[] = [
+            // 0
             this.db.collection(this.dbInvoicePath),
+            // 1
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDate', '>=', filterStartDate)
                     .where('invoiceDate', '<=', filterEndDate)),
+            // 2
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate)),
+            // 3
             null,
+            // 4
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)),
+            // 5
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDate', '>=', filterStartDate)
-                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+                    .where('invoiceDate', '<=', filterEndDate)
+                    .where('invoiceState', '==', filterState)),
+            // 6
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
+                    .where('invoiceDueDate', '<=', filterEndDate)
+                    .where('invoiceState', '==', filterState)),
+            // 7
             null,
+            // 8
             this.db.collection(this.dbInvoicePath,
-                ref => ref.where('customerId', '==', filterCustomer)),
+                ref => ref.where('customer.customerId', '==', filterCustomer)),
+            // 9
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDate', '>=', filterStartDate)
-                    .where('invoiceDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
+                    .where('invoiceDate', '<=', filterEndDate)
+                    .where('customer.customerId', '==', filterCustomer)),
+            // 10
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                    .where('invoiceDueDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
+                    .where('invoiceDueDate', '<=', filterEndDate)
+                    .where('customer.customerId', '==', filterCustomer)),
+            // 11
             null,
+            //12
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)
-                    .where('customerId', '==', filterCustomer)),
+                    .where('customer.customerId', '==', filterCustomer)),
+            // 13
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDate', '>=', filterStartDate)
                     .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
-                    .where('customerId', '==', filterCustomer)),
+                    .where('customer.customerId', '==', filterCustomer)),
+            // 14
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
-                    .where('customerId', '==', filterCustomer)),
+                    .where('customer.customerId', '==', filterCustomer)),
+            // 15
             null,
+            // 16
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('archived', '==', filterArchive)),
+            // 17
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDate', '>=', filterStartDate)
-                    .where('invoiceDate', '<=', filterEndDate)),
+                    .where('invoiceDate', '<=', filterEndDate)
+                    .where('archived', '==', filterArchive)),
+            // 18
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                    .where('invoiceDueDate', '<=', filterEndDate)),
+                    .where('invoiceDueDate', '<=', filterEndDate)
+                    .where('archived', '==', filterArchive)),
+            // 19
             null,
-            this.db.collection(this.dbInvoicePath,
-                ref => ref.where('invoiceState', '==', filterState)),
-            this.db.collection(this.dbInvoicePath,
-                ref => ref.where('invoiceDate', '>=', filterStartDate)
-                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
-            this.db.collection(this.dbInvoicePath,
-                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)),
-            null,
-            this.db.collection(this.dbInvoicePath,
-                ref => ref.where('customerId', '==', filterCustomer)),
-            this.db.collection(this.dbInvoicePath,
-                ref => ref.where('invoiceDate', '>=', filterStartDate)
-                    .where('invoiceDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
-            this.db.collection(this.dbInvoicePath,
-                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
-                    .where('invoiceDueDate', '<=', filterEndDate).where('customerId', '==', filterCustomer)),
-            null,
+            // 20
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)
-                    .where('customerId', '==', filterCustomer)),
+                    .where('archived', '==', filterArchive)),
+            // 21
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDate', '>=', filterStartDate)
                     .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
-                    .where('customerId', '==', filterCustomer)),
+                    .where('archived', '==', filterArchive)),
+            // 22
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceDueDate', '>=', filterStartDate)
                     .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
-                    .where('customerId', '==', filterCustomer)),
+                    .where('archived', '==', filterArchive)),
+            // 23
+            null,
+            // 24
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('customer.customerId', '==', filterCustomer)
+                    .where('archived', '==', filterArchive)),
+            // 25
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate)
+                    .where('customer.customerId', '==', filterCustomer)
+                    .where('archived', '==', filterArchive)),
+            // 26
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate)
+                    .where('customer.customerId', '==', filterCustomer)
+                    .where('archived', '==', filterArchive)),
+            // 27
+            null,
+            // 28
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceState', '==', filterState)
+                    .where('customer.customerId', '==', filterCustomer)
+                    .where('archived', '==', filterArchive)),
+            // 29
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDate', '>=', filterStartDate)
+                    .where('invoiceDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
+                    .where('customer.customerId', '==', filterCustomer)
+                    .where('archived', '==', filterArchive)),
+            // 30
+            this.db.collection(this.dbInvoicePath,
+                ref => ref.where('invoiceDueDate', '>=', filterStartDate)
+                    .where('invoiceDueDate', '<=', filterEndDate).where('invoiceState', '==', filterState)
+                    .where('customer.customerId', '==', filterCustomer)
+                    .where('archived', '==', filterArchive)),
             null
         ];
         return invoiceRefs[refIndex].snapshotChanges().pipe(

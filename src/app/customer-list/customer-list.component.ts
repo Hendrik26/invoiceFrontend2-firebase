@@ -19,7 +19,7 @@ export class CustomerListComponent implements OnInit {
     newParentCustomer = false;
     hasReceivedCustomerParentIdError = false;
     history = false;
-    showArchived = false;
+    // showArchived = false;
     showArchive = 'notArchive';
     // endregion
 
@@ -63,12 +63,6 @@ export class CustomerListComponent implements OnInit {
             return false;
         }
     }
-
-    /*
-    private toShow(customerArchived): boolean {
-        return ((this.showArchived === customerArchived) || this.history);
-    }
-    */
 
     receiveCustomers(): void {
             this.fbInvoiceService.getCustomersList(this.showArchive)
