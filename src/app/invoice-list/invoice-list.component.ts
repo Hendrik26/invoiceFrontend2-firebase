@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 // import {ActivatedRoute} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Customer} from '../customer';
+import {SettingsService} from '../settings.service';
 // import {map} from 'rxjs/operators';
 
 
@@ -51,6 +52,7 @@ export class InvoiceListComponent implements OnInit {
     // endregion
 
     constructor(private fbInvoiceService: FbInvoiceService,
+                public settingsService: SettingsService,
                 private router: Router) {
     }
 
@@ -143,50 +145,8 @@ export class InvoiceListComponent implements OnInit {
         this.receiveInvoices();
     }
 
-    /*
-    public newInvoice(): void {
-        // TODO save new invoice to firebase-DB
-        // const invoice = Invoice.createNewInvoice();
-        // code deleted here
-        // const invoiceId = invoice.getID();
-        // this.router.navigateByUrl(`invoice-detail/${invoiceId}/true`);
-        this.router.navigateByUrl(`invoice-detail/newInvoice/true`);
-    }
-    */
-
 
     // endregion
-
-    /*
-       public dateGreaterEqualThen(date1: Date, date2: Date): boolean {
-           if (!date1) {
-               return true;
-           }
-           if (!date2) {
-               return true;
-           }
-           const ret: boolean = (date1.getTime() >= date2.getTime());
-        return ret;
-       }
-
-       /*
-       calculateCompanySelectOptions(invoices: Invoice[]): object[] {
-           console.log('Method calculateCompanySelectOptions(...) started! ');
-           const retList: object[] = [];
-           invoices.forEach(function (fktInvoice) {
-               retList.push({value: fktInvoice.companyName(), name: fktInvoice.companyName()});
-           });
-           console.log('Method calculateCompanySelectOptions(...) finished! ');
-           return retList;
-       }
-
-       calculateCompanySelectOptions2(invoices: Invoice[]): string[] {
-           const companyNames = Array.from(new Set(Invoice.companyNames(invoices))); // array unique
-           // makes sure that all elements in array are unique
-           companyNames.push('--alle--');
-           return companyNames.sort();
-       }
-       */
 
     sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
         // sortInvoicesByButtons(sortButtons: ThreeStateButton[], invoices: Invoice[]): Invoice[] {
@@ -216,65 +176,5 @@ export class InvoiceListComponent implements OnInit {
 
     }
 
-    /*
-    // region getter
-    private getGreatPastDate(): Date {
-        return new Date('1871-01-18');
-    }
 
-    private checkInvoiceState(invoice: Invoice, filterState: string): boolean {
-        if (filterState == undefined) {
-            return true;
-        }
-        if (filterState == null) {
-            return true;
-        }
-        if (filterState.trim() == '') {
-            return true;
-        }
-        if (filterState.trim().toLowerCase() == 'none') {
-            return true;
-        }
-        if (filterState.trim().toLocaleLowerCase() == 'kein') {
-            return true;
-        }
-
-        if (filterState.trim() == invoice.invoiceState) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private checkInvoiceCompanyName(invoice: Invoice, filterCompanyName: string): boolean {
-        // Fragezeichen vor Doppelpunkt in ParamListe: Dieser Parameter kann Null werden
-        if (isNullOrUndefined(filterCompanyName)) {
-            return true;
-        }
-        if (filterCompanyName.trim().toLowerCase() == '') {
-            return true;
-        }
-
-        if (filterCompanyName.trim().toLowerCase() == '--alle--') {
-            return true;
-        }
-        if (filterCompanyName.trim() == invoice.companyName()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private checkInvoiveCompany(invoice: Invoice, companyNames: string[]): boolean {
-        let ret = false;
-        companyNames.forEach(function (value) {
-            if (value.trim().toLowerCase() == invoice.companyName().trim().toLowerCase()) {
-                ret = true;
-            }
-        });
-        return ret;
-    }
-
-    // endregion
-    */
 }

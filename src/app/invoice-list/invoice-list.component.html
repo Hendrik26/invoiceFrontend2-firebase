@@ -101,7 +101,7 @@
 </table>
 
 <a routerLink="/login">Home</a>
-<a routerLink="/invoice-detail/newInvoice/true">Neuer Rechnungsentwurf</a>
+<a *ngIf="!settingsService.readonly" routerLink="/invoice-detail/newInvoice/true" >Neuer Rechnungsentwurf</a>
 
 
 <a routerLink="/customer-list">Kunden bearbeiten</a>

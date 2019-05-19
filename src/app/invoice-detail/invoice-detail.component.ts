@@ -6,6 +6,7 @@ import {Invoice} from '../invoice';
 import {Item} from '../item';
 import {InvoiceKind} from '../invoice-kind';
 import {FbInvoiceService} from '../fb-invoice.service';
+import {SettingsService} from '../settings.service';
 import {Customer} from '../customer';
 
 @Component({
@@ -49,7 +50,8 @@ export class InvoiceDetailComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
-        private fbInvoiceService: FbInvoiceService
+        private fbInvoiceService: FbInvoiceService,
+        public settingsService: SettingsService
     ) {
         this.invoiceDate = new Date();
         this.invoiceKind = InvoiceKind.create(false, false, false);

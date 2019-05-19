@@ -6,11 +6,12 @@ import {LoginUser} from './loginuser';
 })
 export class SettingsService {
 
+  loginUser: LoginUser;
   email: string;
   password: string;
-  loginUser: LoginUser;
   passReset1 = false;
   passReset2 = false;
+  readonly: boolean;
 
   constructor() {this.loginUser = new LoginUser(); }
 }

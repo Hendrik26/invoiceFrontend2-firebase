@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
             this.settingsService.loginUser.email = value[1].email;
             this.settingsService.loginUser.authorityLevel = value[1].authorityLevel;
             this.settingsService.loginUser.created = value[1].created.toDate();
+            this.settingsService.readonly = value[1].authorityLevel <= 1;
           }
         });
     this.settingsService.email = '';

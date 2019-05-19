@@ -9,14 +9,12 @@
     <hr>
     <input type="text" [(ngModel)]="settingsService.email" placeholder="email" name="email">&nbsp;&nbsp;
     <input type="password" [(ngModel)]="settingsService.password" placeholder="password" name="password">&nbsp;&nbsp;
-    <button (click)="signin(1)" [disabled]="!settingsService.email || !settingsService.password">
-        Signup
-    </button>&nbsp;&nbsp;
-    &nbsp;&nbsp;
     <button (click)="signin(0)" [disabled]="!settingsService.email || !settingsService.password">
         Login
     </button>&nbsp;&nbsp;
-    &nbsp;&nbsp;
+    <button (click)="signin(1)" [disabled]="!settingsService.email || !settingsService.password">
+        Signup
+    </button>&nbsp;&nbsp;
     <!--button (click)="signin(2)" >
       Login mit Google
     </button-->
@@ -30,9 +28,9 @@
     <hr>
     <h6 *ngIf="settingsService.loginUser.authorityLevel === 0">Sie haben keine Berechtigung, bitte wenden Sie sich an
         den Systemadministrator</h6>
-    <h6 *ngIf="settingsService.loginUser.authorityLevel === 1">Sie haben nur Leseberechtigung</h6>
+    <h6 *ngIf="settingsService.readonly">Sie haben nur Leseberechtigung</h6>
     <a routerLink="/invoice-list" *ngIf="settingsService.loginUser.authorityLevel >= 1">Rechnungen bearbeiten</a>&nbsp;&nbsp;
-    <a routerLink="/customer-list" *ngIf="settingsService.loginUser.authorityLevel >= 1">Kunden bearbeiten</a>&nbsp;&nbsp;
+    <a routerLink="/customer-list" *ngIf="!settingsService.readonly">Kunden bearbeiten</a>&nbsp;&nbsp;
     <hr>
 
     <button (click)="logout()">
