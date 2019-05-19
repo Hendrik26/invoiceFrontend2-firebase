@@ -226,7 +226,7 @@ export class FbInvoiceService {
                     .where('customer.customerId', '==', filterCustomer)),
             // 11
             null,
-            //12
+            // 12
             this.db.collection(this.dbInvoicePath,
                 ref => ref.where('invoiceState', '==', filterState)
                     .where('customer.customerId', '==', filterCustomer)),
@@ -310,14 +310,14 @@ export class FbInvoiceService {
                     .where('archived', '==', filterArchive)),
             null
         ];
-        return invoiceRefs[refIndex].snapshotChanges().pipe(
-            map(changes =>
+        return invoiceRefs[refIndex].snapshotChanges()
+            .pipe(map(changes =>
                 changes.map(c => ({
                     key: c.payload.doc.id,
                     ...c.payload.doc.data(),
                     wholeCost: (c.payload.doc.data().itemTypes
                         ? c.payload.doc.data().itemTypes.reduce((sum, current) =>
-                             isNaN(current.count) || isNaN(current.partialCost) ? 0 : sum + current.count * current.partialCost,
+                             isNaN(current.count) || isNaN(current.partialCost) ? sum : sum + current.count * current.partialCost,
                             0) : 0)
                 }))
             ));
