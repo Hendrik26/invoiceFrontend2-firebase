@@ -29,10 +29,11 @@ export class UserListComponent implements OnInit {
     this.fbInvoiceService.getUserList()
         .subscribe(data => {this.users = data.map(x => LoginUser.normalizeUser(x)) ;
         });
-    console.log('ÄÄÄÄÄ', this.users);
   }
 
-
+  changeauthorityLevel(index: number, level: number): void {
+    this.users[index].authorityLevel = level;
+  }
 
 
 }

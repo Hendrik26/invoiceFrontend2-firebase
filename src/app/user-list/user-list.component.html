@@ -1,19 +1,29 @@
-<p>
-  user-list works!
-</p>
+<h1>Benutzerübersicht</h1>
 <div>
   <table style="display: block; max-height: 80vh; overflow-y: scroll">
     <thead>
     <tr>
-      <th>Kundennummer</th>
-      <th>Kundenname</th>
-
+      <th>Nr.</th>
+      <th>Email</th>
+      <th>erstellt</th>
+      <th>Id</th>
+      <th>Berechtigung</th>
+      <th>Bearbeiten</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let user of users; let i = index">
-      <td>{{user.id}}</td>
+      <td>{{i}}</td>
       <td>{{user.email}}</td>
+      <td>{{user.created}}</td>
+      <td>{{user.id}}</td>
+      <td>{{user.authorityLevel}}</td>
+      <td>
+        <input type="radio" value="0" name="{{'radio' + i}}" [checked]="user.authorityLevel== 0" (click)="changeauthorityLevel(i,0)"> keine
+        <input type="radio" value="1" name="{{'radio' + i}}" [checked]="user.authorityLevel== 1" (click)="changeauthorityLevel(i,1)"> lesen
+        <input type="radio" value="2" name="{{'radio' + i}}" [checked]="user.authorityLevel== 2" (click)="changeauthorityLevel(i,2)"> bearbeiten
+        <input type="radio" value="3" name="{{'radio' + i}}" [checked]="user.authorityLevel== 3" (click)="changeauthorityLevel(i,3)"> administrieren
+      </td>
     </tr>
     </tbody>
   </table>
