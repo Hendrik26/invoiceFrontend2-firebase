@@ -31,8 +31,9 @@ export class UserListComponent implements OnInit {
         });
   }
 
-  changeauthorityLevel(index: number, level: number): void {
+  changeAuthorityLevel(index: number, level: number): void {
     this.users[index].authorityLevel = level;
+    this.fbInvoiceService.updateUser(this.users[index].id, level);
   }
 
 

@@ -87,6 +87,12 @@ export class FbInvoiceService {
         );
     }
 
+    // updates the authorityLevel field of an existing user document
+    updateUser(id: string, authorityLevel: number): void {
+        this.db.doc(`${this.dbUserPath}/${id}`).update({authorityLevel: authorityLevel})
+            .catch(error => this.handleError(error));
+    }
+
     // receives the list of the customers with archive or not
     getCustomersList(archive: string): Observable<any> {
         // create the database reference/query witch depends on the value of the "archive" parameter
