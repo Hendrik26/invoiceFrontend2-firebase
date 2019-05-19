@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FbInvoiceService} from '../fb-invoice.service';
+import {SettingsService} from '../settings.service';
 import {LoginUser} from '../loginuser';
 
 @Component({
@@ -8,45 +9,37 @@ import {LoginUser} from '../loginuser';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  email: string;
-  password: string;
-  loginUser: LoginUser;
-  passReset1 = false;
-  passReset2 = false;
-  passResetEmail: string;
-
 
   constructor(
-      public fbInvoiceService: FbInvoiceService
-  ) {
-    this.loginUser = new LoginUser();
-  }
+      public fbInvoiceService: FbInvoiceService,
+      public settingsService: SettingsService
+  ) {}
 
   signin(type: number) {
-    this.fbInvoiceService.signin$(type, this.email, this.password)
+    this.fbInvoiceService.signin$(type, this.settingsService.email, this.settingsService.password)
         .subscribe(value => {
-          this.loginUser.id = value[0].user.uid;
-          this.loginUser.providerId = value[0].additionalUserInfo.providerId;
-          this.passReset2 = (value[0].additionalUserInfo.providerId === 'password');
+          this.settingsService.loginUser.id = value[0].user.uid;
+          this.settingsService.loginUser.providerId = value[0].additionalUserInfo.providerId;
+          this.settingsService.passReset2 = (value[0].additionalUserInfo.providerId === 'password');
           if (value[1]) {
-            this.loginUser.email = value[1].email;
-            this.loginUser.authorityLevel = value[1].authorityLevel;
-            this.loginUser.created = value[1].created.toDate();
+            this.settingsService.loginUser.email = value[1].email;
+            this.settingsService.loginUser.authorityLevel = value[1].authorityLevel;
+            this.settingsService.loginUser.created = value[1].created.toDate();
           }
         });
-    this.email = '';
-    this.password = '';
+    this.settingsService.email = '';
+    this.settingsService.password = '';
   }
 
   logout() {
-    this.loginUser.id = null;
-    this.loginUser.email = null;
+    this.settingsService.loginUser.id = null;
+    this.settingsService.loginUser.email = null;
     this.fbInvoiceService.logout();
   }
 
   resetPassword() {
-    this.fbInvoiceService.resetPassword(this.loginUser.email)
-        .then(() => this.passReset1 = true);
+    this.fbInvoiceService.resetPassword(this.settingsService.loginUser.email)
+        .then(() => this.settingsService.passReset1 = true);
   }
 
   ngOnInit() {

@@ -4,15 +4,16 @@
     Erstellt auf der Basis von Google Angular 6 und Goggle Firebase
 </div>
 
-<div *ngIf="!loginUser.id">
-    <h2>Bitte melden Sie sich an</h2><hr>
-    <input type="text" [(ngModel)]="email" placeholder="email" name="email">&nbsp;&nbsp;
-    <input type="password" [(ngModel)]="password" placeholder="password" name="password">&nbsp;&nbsp;
-    <button (click)="signin(1)" [disabled]="!email || !password">
+<div *ngIf="!settingsService.loginUser.id">
+    <h2>Bitte melden Sie sich an</h2>
+    <hr>
+    <input type="text" [(ngModel)]="settingsService.email" placeholder="email" name="email">&nbsp;&nbsp;
+    <input type="password" [(ngModel)]="settingsService.password" placeholder="password" name="password">&nbsp;&nbsp;
+    <button (click)="signin(1)" [disabled]="!settingsService.email || !settingsService.password">
         Signup
     </button>&nbsp;&nbsp;
     &nbsp;&nbsp;
-    <button (click)="signin(0)" [disabled]="!email || !password">
+    <button (click)="signin(0)" [disabled]="!settingsService.email || !settingsService.password">
         Login
     </button>&nbsp;&nbsp;
     &nbsp;&nbsp;
@@ -20,24 +21,29 @@
       Login mit Google
     </button-->
 </div>
-<div *ngIf="loginUser.id">
-    <h2>Welcome {{loginUser.email}}!</h2>
-    Authority
-    Level: {{loginUser.authorityLevel}}&nbsp;&nbsp;&nbsp;Created: {{loginUser.created | date:'dd.MM.yyyy hh:mm'}}
-    &nbsp;&nbsp;&nbsp;Provider: {{loginUser.providerId}} &nbsp;&nbsp;&nbsp;ID: {{loginUser.id}}
+<div *ngIf="settingsService.loginUser.id">
+    <h2>Welcome {{settingsService.loginUser.email}}!</h2>
+    Authority Level: {{settingsService.loginUser.authorityLevel}}&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;Created: {{settingsService.loginUser.created | date:'dd.MM.yyyy hh:mm'}}
+    &nbsp;&nbsp;&nbsp;Provider: {{settingsService.loginUser.providerId}}
+    &nbsp;&nbsp;&nbsp;ID: {{settingsService.loginUser.id}}
     <hr>
-    <h6 *ngIf="loginUser.authorityLevel === 0">Sie haben keine Berechtigung, bitte wenden Sie sich an den Systemadministrator</h6>
-    <h6 *ngIf="loginUser.authorityLevel === 1">Sie haben nur Leseberechtigung</h6>
-    <a routerLink="/invoice-list" *ngIf="loginUser.authorityLevel >= 1">Rechnungen bearbeiten</a>&nbsp;&nbsp;
-    <a routerLink="/customer-list" *ngIf="loginUser.authorityLevel >= 1">Kunden bearbeiten</a>&nbsp;&nbsp;
+    <h6 *ngIf="settingsService.loginUser.authorityLevel === 0">Sie haben keine Berechtigung, bitte wenden Sie sich an
+        den Systemadministrator</h6>
+    <h6 *ngIf="settingsService.loginUser.authorityLevel === 1">Sie haben nur Leseberechtigung</h6>
+    <a routerLink="/invoice-list" *ngIf="settingsService.loginUser.authorityLevel >= 1">Rechnungen bearbeiten</a>&nbsp;&nbsp;
+    <a routerLink="/customer-list" *ngIf="settingsService.loginUser.authorityLevel >= 1">Kunden bearbeiten</a>&nbsp;&nbsp;
     <hr>
 
     <button (click)="logout()">
         Logout
     </button>&nbsp;&nbsp;
-    <button (click)="resetPassword()" *ngIf="loginUser.id && !passReset1 && passReset2">
+    <button (click)="resetPassword()"
+            *ngIf="settingsService.loginUser.id && !settingsService.passReset1 && settingsService.passReset2">
         Kennwort zurücksetzen
     </button>&nbsp;&nbsp;
 
-    &nbsp;<h6 *ngIf="loginUser.id && passReset1">Das Rücksetzen des Kennwortes wurde eingeleitet, bitte prüfen Sie Ihr Postfach</h6>
+    <h6 *ngIf="settingsService.loginUser.id && settingsService.passReset1">
+        Das Rücksetzen des Kennwortes wurde eingeleitet, bitte prüfen Sie Ihr Postfach
+    </h6>
 </div>&nbsp;
