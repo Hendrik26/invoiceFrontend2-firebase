@@ -9,7 +9,7 @@ import {UserListComponent} from './user-list/user-list.component';
 import {SettingsDetailComponent} from './settings-detail/settings-detail.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/invoice-list', pathMatch: 'full'},
+    {path: '', redirectTo: '/login', pathMatch: 'full'},
     {path: 'invoice-list', component: InvoiceListComponent},
     {path: 'customer-list', component: CustomerListComponent},
     {path: 'invoice-detail/:invoiceId/:newInvoice', component: InvoiceDetailComponent},

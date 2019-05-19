@@ -125,11 +125,11 @@
                         <td>{{item.count * item.partialCost | number:'1.2-2'}}{{invoice.currency}}</td>
                         <td>
                             <button *ngIf="changedItemNumber !== i" (click)="editItemNumber(i)"
-                                             [disabled]="changedItemNumber != '-1'">
+                                             [disabled]="changedItemNumber != -1">
                                 bearbeiten
                             </button>
                             <button *ngIf="changedItemNumber !== i" (click)="deleteItemNumber(i)"
-                                    [disabled]="changedItemNumber != '-1'">
+                                    [disabled]="changedItemNumber != -1">
                                 löschen
                             </button>
                             <button *ngIf="changedItemNumber === i" (click)="notSaveItem()">

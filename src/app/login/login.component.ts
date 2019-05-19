@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword() {
-    this.fbInvoiceService.resetPassword(this.passResetEmail)
+    this.fbInvoiceService.resetPassword(this.loginUser.email)
         .then(() => this.passReset1 = true);
   }
 
