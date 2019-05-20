@@ -13,5 +13,5 @@ export class SettingsService {
   passReset2 = false;
   readonly: boolean;
 
-  constructor() {this.loginUser = new LoginUser(); }
+  constructor() {this.loginUser = new LoginUser(null, null, null, null, null); }
 }
