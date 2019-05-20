@@ -15,9 +15,9 @@
     <button (click)="signin(1)" [disabled]="!settingsService.email || !settingsService.password">
         Signup
     </button>&nbsp;&nbsp;
-    <!--button (click)="signin(2)" >
+    <button (click)="signin(2)" >
       Login mit Google
-    </button-->
+    </button>
 </div>
 <div *ngIf="settingsService.loginUser.id">
     <h2>Welcome {{settingsService.loginUser.email}}!</h2>
