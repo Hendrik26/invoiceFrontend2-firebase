@@ -354,7 +354,7 @@ export class FbInvoiceService {
         const batch = this.db.firestore.batch();
         if (!id) {
             id = this.db.firestore.collection(this.dbInvoicePath).doc().id;
-        }
+        } // creating invoiceId if not existing
         const invoiceRef = this.db.firestore.collection(this.dbInvoicePath).doc(id);
         const invoiceHistoryRef = this.db.firestore.collection(this.dbInvoicePath)
             .doc(id).collection('History').doc(FbInvoiceService.getHistoryKey());
