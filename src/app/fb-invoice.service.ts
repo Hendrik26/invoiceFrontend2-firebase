@@ -17,7 +17,6 @@ import {switchMap, map} from 'rxjs/operators';
     providedIn: 'root'
 })
 export class FbInvoiceService {
-    // branch dev2019-04-26f_writeDBFunctions based on dev2019-04-26e_authentication
 
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
