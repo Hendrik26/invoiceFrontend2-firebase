@@ -25,6 +25,7 @@ export class Invoice implements InvoiceType {
         itemTypes: [],
         newCreatedInvoice: true,
         salesTaxPercentage: 19,
+        settingId: null,
         timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
         timespanBegin: new Date(),
         timespanEnd: new Date(),
@@ -48,6 +49,7 @@ export class Invoice implements InvoiceType {
     itemTypes: ItemType[];
     newCreatedInvoice: boolean;
     salesTaxPercentage: number;
+    settingId: string;
     timeSpan: string; // <th>Rechnungzeitraum</th>
     timespanBegin: Date;
     timespanEnd: Date;
@@ -77,6 +79,7 @@ export class Invoice implements InvoiceType {
         this.itemTypes = [];
         this.newCreatedInvoice = data.newCreatedInvoice;
         this.salesTaxPercentage = data.salesTaxPercentage;
+        this.settingId = data.settingId;
         this.timeSpan = `${data.timespanBegin} bis ${data.timespanEnd}`; // <th>Rechnungzeitraum</th>
         this.timespanBegin = data.timespanBegin;
         this.timespanEnd = data.timespanEnd;
@@ -124,6 +127,7 @@ export class Invoice implements InvoiceType {
             itemTypes: [],
             newCreatedInvoice: false,
             salesTaxPercentage: (typeof inputInvoice.salesTaxPercentage === 'number') ? inputInvoice.salesTaxPercentage : 19,
+            settingId:  inputInvoice.settingId,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin.toDate ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd.toDate() ? inputInvoice.timespanEnd.toDate() : new Date(),
@@ -228,39 +232,6 @@ export class Invoice implements InvoiceType {
         });
     }
 
-    /*
-    public firstSave(): void {
-        this.newCreatedInvoice = false;
-    }
-
-    public exportInvoiceData(archived: boolean): InvoiceType {
-        console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
-        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
-        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
-        // const invKind = this.invoiceKind.exportInvoiceKindData();
-        return {
-            archived: archived,
-            countReminders: this.countReminders, // <th>Anzahl der Mahnungen</th>
-            currency: this.currency,
-            customerId: this.customer.getCustomerId(),
-            customerData: this.customer.exportCustomerData(),
-            invoiceDate: this.invoiceDate, // <th>Rechnungsdatum</th>
-            invoiceDueDate: this.invoiceDueDate, // Faelligkeitsdatum
-            invoiceIntendedUse: this.invoiceIntendedUse, // Verwendungszweck
-            invoiceKind: this.invoiceKind.exportInvoiceKindData(),
-            invoiceNumber: this.invoiceNumber, // <th>RechnungsNr</th>
-            invoiceState: this.invoiceState, // <th>Status (Entwurf, bezahlt, ...)</th>
-            itemTypes: Invoice.createItemTypeArray(this.items),
-            newCreatedInvoice: this.newCreatedInvoice,
-            salesTaxPercentage: this.salesTaxPercentage,
-            timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
-            timespanBegin: this.timespanBegin,
-            timespanEnd: this.timespanEnd,
-            wholeCost: this.wholeCost // <th>Gesamtpreis</th>
-        };
-    }
-    */
-
     public exportInvoiceToAny(archived: boolean): any {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
         console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
@@ -280,6 +251,7 @@ export class Invoice implements InvoiceType {
             itemTypes: Invoice.createItemTypeArray(this.items),
             newCreatedInvoice: this.newCreatedInvoice,
             salesTaxPercentage: this.salesTaxPercentage,
+            settingId: this.settingId,
             timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
             timespanBegin: this.timespanBegin,
             timespanEnd: this.timespanEnd,

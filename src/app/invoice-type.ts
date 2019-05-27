@@ -15,7 +15,7 @@ export interface InvoiceType {
     invoiceState: string; // <th>Status (Entwurf, bezahlt, ...)</th>
     itemTypes: ItemType[];
     salesTaxPercentage: number;
-
+    settingId: string;
     timeSpan: string; // <th>Rechnungzeitraum</th>
     timespanBegin: Date;
     timespanEnd: Date;
