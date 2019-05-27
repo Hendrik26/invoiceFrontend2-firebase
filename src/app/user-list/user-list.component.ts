@@ -33,7 +33,13 @@ export class UserListComponent implements OnInit {
 
   changeAuthorityLevel(index: number, level: number): void {
     this.users[index].authorityLevel = level;
-    this.fbInvoiceService.updateUser(this.users[index].id, level);
+    this.fbInvoiceService.updateUser(this.users[index].id, level).subscribe(
+        () => {
+        }
+        , () => {
+          this.settingsService.handleDbError('Datenbankfehler', 'Error during updating a user');
+        }
+    );
   }
 
 

@@ -88,9 +88,8 @@ export class FbInvoiceService {
     }
 
     // updates the authorityLevel field of an existing user document
-    updateUser(id: string, authorityLevel: number): void {
-        this.db.doc(`${this.dbUserPath}/${id}`).update({authorityLevel: authorityLevel})
-            .catch(error => this.handleError(error));
+    updateUser(id: string, authorityLevel: number): Observable<any> {
+        return from(this.db.doc(`${this.dbUserPath}/${id}`).update({authorityLevel: authorityLevel}));
     }
 
     // receives the list of the customers with archive or not
@@ -156,14 +155,14 @@ export class FbInvoiceService {
     }
 
     // creates a new customer document
-    createCustomer(data: CustomerType): void {
-        this.db.collection(this.dbCustomerPath).add(data)
-            .catch(error => this.handleError(error));
+    createCustomer(data: CustomerType): Observable<any> {
+        return from(this.db.collection(this.dbCustomerPath).add(data));
+
     }
 
     // updates an existing customer document
-    updateCustomer(id: string, data: CustomerType): void {
-        this.db.doc(`${this.dbCustomerPath}/${id}`).set(data).catch(error => this.handleError(error));
+    updateCustomer(id: string, data: CustomerType):  Observable<any> {
+        return from(this.db.doc(`${this.dbCustomerPath}/${id}`).set(data));
     }
 
     // receives one specific invoice document
@@ -350,7 +349,7 @@ export class FbInvoiceService {
     }
 
     // update or create a invoice document together with a history document in one batc
-    updateInvoice(id: string, data: InvoiceType): void {
+    updateInvoice(id: string, data: InvoiceType): Observable<any> {
         const batch = this.db.firestore.batch();
         if (!id) {
             id = this.db.firestore.collection(this.dbInvoicePath).doc().id;
@@ -362,12 +361,7 @@ export class FbInvoiceService {
         console.log(`\r\n\r\nDB-Update with BatchWrite invoiceRef!!! \r\n\r\n`);
         batch.set(invoiceHistoryRef, data);
         console.log(`\r\n\r\nDB-Update with BatchWrite invoiceHistoryRef!!! \r\n\r\n`);
-        batch.commit().then(() => {
-            console.log(`\r\n\r\nDB-Update with BatchWrite completed!!! \r\n\r\n`);
-        }).catch(error => this.handleError(error));
+        return from(batch.commit());
     }
 
-    private handleError(error) {
-        console.log(error);
-    }
 }

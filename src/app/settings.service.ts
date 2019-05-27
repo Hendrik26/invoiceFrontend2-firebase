@@ -14,4 +14,9 @@ export class SettingsService {
   readonly: boolean;
 
   constructor() {this.loginUser = new LoginUser(null, null, null, null, null); }
+
+  handleDbError(text: string, textEn: string): void {
+    console.log(textEn);
+    alert(text);
+  }
 }

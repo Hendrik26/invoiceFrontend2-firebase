@@ -4,7 +4,7 @@ import {Customer} from '../customer';
 import {CustomerType} from '../customer-type';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {Location} from '@angular/common';
-import {Invoice} from '../invoice';
+import {SettingsService} from '../settings.service';
 
 
 @Component({
@@ -20,19 +20,21 @@ export class CustomerDetailComponent implements OnInit {
 
     // region other properties
     customer: CustomerType = Customer.getEmptyCustomer();
-    historyDateList: [{ historyKey: string, historyLabel: string}] ;
+    historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
     archived = false;
     historyTest: boolean;
+
     // endregion
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
-        private fbInvoiceService: FbInvoiceService) { // To Comment in
+        private fbInvoiceService: FbInvoiceService,
+        private settingsService: SettingsService) {
     }
 
     ngOnInit() {
@@ -60,8 +62,11 @@ export class CustomerDetailComponent implements OnInit {
     receiveFbCustomerById(id: string, historyId: string): void {
         if (!this.newCustomer) {
             this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customerType => {
-                  this.customer = new Customer(id, customerType); });
-            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customerTest => {this.historyTest = customerTest[1]; });
+                this.customer = new Customer(id, customerType);
+            });
+            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customerTest => {
+                this.historyTest = customerTest[1];
+            });
         } else {
             this.customer = Customer.createNewCustomer();
         }
@@ -87,11 +92,31 @@ export class CustomerDetailComponent implements OnInit {
         };
         if (this.newCustomer) {
             this.newCustomer = false;
-            this.fbInvoiceService.createCustomer(customerType);
+            this.createCustomer(customerType);
         } else {
-            this.fbInvoiceService.updateCustomer(this.customerId, customerType);
+            this.updateCustomer(this.customerId, customerType);
         }
         this.router.navigateByUrl('/customer-list');
+    }
+
+    createCustomer(customerType: CustomerType): void {
+        this.fbInvoiceService.createCustomer(customerType).subscribe(
+            () => {
+            }
+            , () => {
+                this.settingsService.handleDbError('Datenbankfehler', 'Error during creation of a new customer');
+            }
+        );
+    }
+
+    updateCustomer(id: string, customerType: CustomerType): void {
+        this.fbInvoiceService.updateCustomer(id, customerType).subscribe(
+            () => {
+            }
+            , () => {
+                this.settingsService.handleDbError('Datenbankfehler', 'Error during updating of a customer');
+            }
+        );
     }
 
     backToCustomerList(): void {
@@ -101,7 +126,9 @@ export class CustomerDetailComponent implements OnInit {
 
     receiveCustomerHistoryById(id: string): void {
         this.fbInvoiceService.getCustomerHistoryById(id)
-            .subscribe(data => {this.historyDateList = data; });
+            .subscribe(data => {
+                this.historyDateList = data;
+            });
     }
 
 }

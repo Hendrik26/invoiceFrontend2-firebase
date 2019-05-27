@@ -161,11 +161,15 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private saveInvoice(archive: boolean = false): void {
-        // TODO: reload new-created invoices to get their Id, reload them by invoiceDate and invoiceCustomerName
         console.log('invoice-detail.component.ts: method saveInvoice');
-        // this.creatingInvoiceBtn = false;
         this.calculateSums();
-        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive));
+        this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive)).subscribe(
+            () => {
+            }
+            , () => {
+                this.settingsService.handleDbError('Datenbankfehler', 'Error during saving a invoice');
+            }
+        );
         this.router.navigateByUrl('/invoice-list');
     }
 
