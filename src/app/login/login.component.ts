@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {SettingsService} from '../settings.service';
+import {Setting} from '../setting';
 import {LoginUser} from '../loginuser';
 
 @Component({
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
         });
     this.settingsService.email = '';
     this.settingsService.password = '';
+    this.getLastSetting();
   }
 
   logout() {
@@ -43,7 +45,18 @@ export class LoginComponent implements OnInit {
         .then(() => this.settingsService.passReset1 = true);
   }
 
-  ngOnInit() {
+  getLastSetting(): void {
+      this.fbInvoiceService.getLastSetting()
+          .subscribe(s => {
+              if (s) {
+                  this.settingsService.setting = Setting.normalizeSetting(s[0]);
+                  this.settingsService.settingId = s.key;
+              }
+              console.log('OOOOOOOOOOOOO:', this.settingsService.setting);
+          });
   }
+
+  ngOnInit() {
+        }
 
 }

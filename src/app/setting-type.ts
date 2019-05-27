@@ -1,7 +1,4 @@
-import {SettingType} from './setting-type';
-
-export class Setting implements SettingType {
-
+export interface SettingType {
     headerShortAddress: string;
     headerAddressLine01: string;
     /* headerAddressLine02: string;
@@ -33,27 +30,4 @@ export class Setting implements SettingType {
     footerTaxIdentification: string;
     LogoUrl: string; */
     creationTime: Date;
-
-    public static normalizeSetting(inSetting: any): Setting {
-        let setting = new Setting();
-        setting.headerShortAddress = inSetting.headerShortAddress ? inSetting.headerShortAddress : '';
-        setting.headerAddressLine01 = inSetting.headerAddressLine01 ? inSetting.headerAddressLine01 : '';
-        setting.creationTime = inSetting.creationTime ? inSetting.creationTime : new Date();
-        return setting;
-    }
-
-    constructor() {
-        this.headerShortAddress = '';
-        this.headerAddressLine01 = '';
-        this.creationTime = new Date();
-    }
-
-    exportSettingData(): SettingType {
-        return {
-            headerShortAddress: this.headerShortAddress ? this.headerShortAddress : '',
-            headerAddressLine01: this.headerAddressLine01 ? this.headerAddressLine01 : '',
-            creationTime: new Date()
-        };
-    }
-
 }

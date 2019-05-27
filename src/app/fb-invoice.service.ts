@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {Customer} from './customer';
 import {CustomerType} from './customer-type';
+import {Setting} from './setting';
 import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
 // import {map} from 'rxjs/operators';
@@ -11,6 +12,7 @@ import {Observable, from, combineLatest} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire//auth';
 import * as firebase from 'firebase';
 import {switchMap, map} from 'rxjs/operators';
+import {SettingType} from './setting-type';
 
 
 @Injectable({
@@ -21,12 +23,13 @@ export class FbInvoiceService {
     private dbCustomerPath = '/customers';
     private dbInvoicePath = '/invoices';
     private dbUserPath = '/userprofiles';
+    private dbSettingPath = '/settings';
 
     constructor(private firebaseAuth: AngularFireAuth,
                 private db: AngularFirestore) {
     }
 
-    private static historyKeyToLabel(key: string): string{
+    private static historyKeyToLabel(key: string): string {
         return key.slice(12, 14) + '.' + key.slice(9, 11) + '.' + key.slice(4, 8) + ' ' + key.slice(15, 17) + ':' + key.slice(18, 20)
             + ':' + key.slice(21, 23);
     }
@@ -90,6 +93,17 @@ export class FbInvoiceService {
     // updates the authorityLevel field of an existing user document
     updateUser(id: string, authorityLevel: number): Observable<any> {
         return from(this.db.doc(`${this.dbUserPath}/${id}`).update({authorityLevel: authorityLevel}));
+    }
+
+    // save the setting document as a new version
+    saveSetting(setting: SettingType): Observable<any> {
+        return from(this.db.collection(this.dbSettingPath).add(setting));
+    }
+
+    getLastSetting(): Observable<any> {
+        return this.db.collection(this.dbSettingPath, ref => ref.orderBy('creationTime', 'desc').limit(1))
+            .snapshotChanges()
+            .pipe(map(changes => changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))));
     }
 
     // receives the list of the customers with archive or not
@@ -157,11 +171,10 @@ export class FbInvoiceService {
     // creates a new customer document
     createCustomer(data: CustomerType): Observable<any> {
         return from(this.db.collection(this.dbCustomerPath).add(data));
-
     }
 
     // updates an existing customer document
-    updateCustomer(id: string, data: CustomerType):  Observable<any> {
+    updateCustomer(id: string, data: CustomerType): Observable<any> {
         return from(this.db.doc(`${this.dbCustomerPath}/${id}`).set(data));
     }
 
@@ -316,7 +329,7 @@ export class FbInvoiceService {
                     ...c.payload.doc.data(),
                     wholeCost: (c.payload.doc.data().itemTypes
                         ? c.payload.doc.data().itemTypes.reduce((sum, current) =>
-                             isNaN(current.count) || isNaN(current.partialCost) ? sum : sum + current.count * current.partialCost,
+                                isNaN(current.count) || isNaN(current.partialCost) ? sum : sum + current.count * current.partialCost,
                             0) : 0)
                 }))
             ));
