@@ -147,9 +147,12 @@ export class InvoiceDetailComponent implements OnInit {
     }
 
     private receiveInvoiceById(methId: string, historyId: string): void {
-        this.fbInvoiceService.getInvoiceById(methId, historyId, this.settingsService.settingId).subscribe(invoiceType => {
-            this.invoice = Invoice.normalizeInvoice(invoiceType[0]);
-            this.setting = invoiceType[1];
+        this.fbInvoiceService.getInvoiceById(methId, historyId, this.settingsService.settingId).subscribe(c => {
+            this.invoice = Invoice.normalizeInvoice(c[0]);
+            this.setting = Setting.normalizeSetting(c[1]);
+            if (!this.invoice.settingId) {
+                this.invoice.settingId = this.settingsService.settingId;
+            }
             this.calculateSums();
             this.calculateAddress();
             this.fbInvoiceService.testInvoiceHistoryById(methId).subscribe(invoiceTest => {

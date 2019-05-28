@@ -87,6 +87,6 @@ footer {
   margin-bottom: 3px;
 }
 
-.address p, .contact dl, .bankconnection dl, .tax-number p {
+.address p, .contact dl, .bankconnection p, .tax-number p {
   margin: 0;
 }

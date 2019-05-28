@@ -1,12 +1,12 @@
 <h1> Rechnungsverwaltung </h1>
 <div>
-    Beispielprogramm zur Verwaltung von Rechnungen von kleinen Unternehmen<br>
-    Erstellt auf der Basis von Google Angular 6 und Goggle Firebase
+    <p>Beispielprogramm zur Verwaltung von Rechnungen von kleinen Unternehmen<br>
+   Erstellt auf der Basis von Google Angular 6 und Goggle Firebase</p>
 </div>
-
+<hr>
 <div *ngIf="!settingsService.loginUser.id">
     <h2>Bitte melden Sie sich an</h2>
-    <hr>
+
     <input type="text" [(ngModel)]="settingsService.email" placeholder="email" name="email">&nbsp;&nbsp;
     <input type="password" [(ngModel)]="settingsService.password" placeholder="password" name="password">&nbsp;&nbsp;
     <button (click)="signin(0)" [disabled]="!settingsService.email || !settingsService.password">
@@ -21,10 +21,10 @@
 </div>
 <div *ngIf="settingsService.loginUser.id">
     <h2>Welcome {{settingsService.loginUser.email}}!</h2>
-    Authority Level: {{settingsService.loginUser.authorityLevel}}&nbsp;&nbsp;&nbsp;
+    <p>Authority Level: {{settingsService.loginUser.authorityLevel}}&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;Created: {{settingsService.loginUser.created | date:'dd.MM.yyyy hh:mm'}}
     &nbsp;&nbsp;&nbsp;Provider: {{settingsService.loginUser.providerId}}
-    &nbsp;&nbsp;&nbsp;ID: {{settingsService.loginUser.id}}
+        &nbsp;&nbsp;&nbsp;ID: {{settingsService.loginUser.id}}</p>
     <hr>
     <h6 *ngIf="settingsService.loginUser.authorityLevel === 0">Sie haben keine Berechtigung, bitte wenden Sie sich an
         den Systemadministrator</h6>
@@ -40,7 +40,7 @@
     </button>&nbsp;&nbsp;
     <button (click)="resetPassword()"
             *ngIf="settingsService.loginUser.id && !settingsService.passReset1 && settingsService.passReset2">
-        Kennwort zurücksetzen
+        Kennwort ändern
     </button>&nbsp;&nbsp;
 
     <h6 *ngIf="settingsService.loginUser.id && settingsService.passReset1">

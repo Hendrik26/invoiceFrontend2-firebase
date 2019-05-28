@@ -58,7 +58,7 @@ export class Setting implements SettingType {
         setting.footerContactLine12 = inSetting.footerContactLine12 ? inSetting.footerContactLine12 : '';
         setting.footerContactLine13 = inSetting.footerContactLine13 ? inSetting.footerContactLine13 : '';
         setting.footerContactLine14 = inSetting.footerContactLine14 ? inSetting.footerContactLine14 : '';
-        setting.footerContactLine01 = inSetting.footerContactLine15 ? inSetting.footerContactLine15 : '';
+        setting.footerContactLine15 = inSetting.footerContactLine15 ? inSetting.footerContactLine15 : '';
         setting.footerBankConnection01 = inSetting.footerBankConnection01 ? inSetting.footerBankConnection01 : '';
         setting.footerBankConnection02 = inSetting.footerBankConnection02 ? inSetting.footerBankConnection02 : '';
         setting.footerBankConnection03 = inSetting.footerBankConnection03 ? inSetting.footerBankConnection03 : '';

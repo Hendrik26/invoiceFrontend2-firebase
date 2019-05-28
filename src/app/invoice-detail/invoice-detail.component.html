@@ -291,17 +291,28 @@
         </div>
         <div class="bankconnection">
             <p><strong>Bankverbindung</strong></p>
-            Commerzbank Dresden
+            <p *ngIf="setting.footerBankConnection01 && setting.footerBankConnection01.length > 0">
+                {{setting.footerBankConnection01}}</p>
+            <p *ngIf="setting.footerBankConnection02 && setting.footerBankConnection02.length > 0">
+                {{setting.footerBankConnection02}}</p>
+            <p *ngIf="setting.footerBankConnection03 && setting.footerBankConnection03.length > 0">
+                {{setting.footerBankConnection03}}</p>
+            <p *ngIf="setting.footerBankConnection04 && setting.footerBankConnection04.length > 0">
+                {{setting.footerBankConnection04}}</p>
+            <p *ngIf="setting.footerBankConnection05 && setting.footerBankConnection05.length > 0">
+                {{setting.footerBankConnection05}}</p>
+            <!--Commerzbank Dresden
             <dl>
                 <dt>BIC</dt>
                 <dd>DRESDEFF850</dd>
                 <dt>IBAN</dt>
                 <dd>DE56 8508 0000 0265 0770 01</dd>
-            </dl>
+            </dl-->
         </div>
         <div class="tax-number">
             <p><strong>USt-IdNr.</strong></p>
-            <p>DE243517710</p>
+            <p *ngIf="setting.footerTaxIdentification && setting.footerTaxIdentification.length > 0">
+                {{setting.footerTaxIdentification}}</p>
         </div>
     </footer>
 </div>
