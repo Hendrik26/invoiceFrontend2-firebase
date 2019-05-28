@@ -2,7 +2,8 @@
     <header>
         <div class="adress-window">
             <div class="postage-info">
-                SednaSoft GbR, Biesnitzer Straße 8, 02826 Görlitz
+                <!--SednaSoft GbR, Biesnitzer Straße 8, 02826 Görlitz-->
+                {{setting.headerShortAddress}}/{{invoice.settingId}}
             </div><!-- class="postage-info" -->
             <select [(ngModel)]="invoiceSelectCustomer" (ngModelChange)="changeFilterCompany($event)">
                 <option selected [ngValue]="invoiceSelectCustomerDef1">

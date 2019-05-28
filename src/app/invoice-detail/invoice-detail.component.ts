@@ -8,6 +8,7 @@ import {InvoiceKind} from '../invoice-kind';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {SettingsService} from '../settings.service';
 import {Customer} from '../customer';
+import {Setting} from '../setting';
 
 @Component({
     selector: 'app-invoice-detail',
@@ -45,6 +46,7 @@ export class InvoiceDetailComponent implements OnInit {
     historyTest: boolean;
     historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
+    setting: Setting;
 
     constructor(
         private router: Router,
@@ -55,6 +57,8 @@ export class InvoiceDetailComponent implements OnInit {
     ) {
         this.invoiceDate = new Date();
         this.invoiceKind = InvoiceKind.create(false, false, false);
+        this.setting = this.settingsService.setting;
+        this.invoice.settingId = this.settingsService.settingId;
     }
 
     // endregion
@@ -147,6 +151,10 @@ export class InvoiceDetailComponent implements OnInit {
             this.invoice = Invoice.normalizeInvoice(invoiceType);
             this.calculateSums();
             this.calculateAddress();
+            if (!this.invoice.settingId) {
+                this.invoice.settingId = this.settingsService.settingId;
+                this.setting = this.settingsService.setting;
+            }
             this.fbInvoiceService.testInvoiceHistoryById(methId).subscribe(invoiceTest => {
                 this.historyTest = invoiceTest[1];
             });
@@ -163,6 +171,7 @@ export class InvoiceDetailComponent implements OnInit {
     private saveInvoice(archive: boolean = false): void {
         console.log('invoice-detail.component.ts: method saveInvoice');
         this.calculateSums();
+        console.log('ÄÄÄÄÄÄÄÄÄ:', this.invoice);
         this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive)).subscribe(
             () => {
             }

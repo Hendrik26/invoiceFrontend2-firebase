@@ -50,9 +50,8 @@ export class LoginComponent implements OnInit {
           .subscribe(s => {
               if (s) {
                   this.settingsService.setting = Setting.normalizeSetting(s[0]);
-                  this.settingsService.settingId = s.key;
+                  this.settingsService.settingId = s[0].key;
               }
-              console.log('OOOOOOOOOOOOO:', this.settingsService.setting);
           });
   }
 

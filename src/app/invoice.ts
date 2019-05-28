@@ -90,14 +90,6 @@ export class Invoice implements InvoiceType {
         return new Invoice('newInvoice', Invoice.emptyData);
     }
 
-    // region static methods
-    private static createItemTypeArray(items: Item[]): ItemType[] {
-        // let itemTypes: ItemType[] = [];
-        return items.map(item => {
-            return item.exportItemData();
-        });
-    }
-
     public static createInvoiceFromExistingId(invId: string, data: InvoiceType): Invoice { // factory pattern, prime example
         let invoice: Invoice;
         invoice = new Invoice(invId, data);
@@ -166,7 +158,6 @@ export class Invoice implements InvoiceType {
         return 1;
     }
 
-
     public static sortInvoices(sortBy: string, ascending: boolean, invoices: Invoice[]): Invoice[] {
         // sortBy: Groesse, nach der sortiert werden soll
         let ascendingFactor = -1;
@@ -191,9 +182,16 @@ export class Invoice implements InvoiceType {
         return invoices;
     }
 
+    // region static methods
+    private static createItemTypeArray(items: Item[]): ItemType[] {
+        // let itemTypes: ItemType[] = [];
+        return items.map(item => {
+            return item.exportItemData();
+        });
+    }
+
 
     // endregion
-
 
     // region getter
     public getID(): string {
@@ -226,16 +224,10 @@ export class Invoice implements InvoiceType {
         return this.getMaxItemId() + 1;
     }
 
-    private createItemArray(itemTypes: ItemType[]): Item[] {
-        return itemTypes.map(itemType => {
-            return new Item(this, itemType);
-        });
-    }
-
     public exportInvoiceToAny(archived: boolean): any {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
-        console.log(`invoice.timespanBegin ===${this.timespanBegin} !!!  `);
-        console.log(`invoice.timespanEnd ===${this.timespanEnd} !!!  `);
+        console.log('ZZZZZZZZZ:', this.settingId);
+
         // const invKind = this.invoiceKind.exportInvoiceKindData();
         return {
             archived: archived,
@@ -257,6 +249,12 @@ export class Invoice implements InvoiceType {
             timespanEnd: this.timespanEnd,
             // wholeCost: this.wholeCost // <th>Gesamtpreis</th>
         };
+    }
+
+    private createItemArray(itemTypes: ItemType[]): Item[] {
+        return itemTypes.map(itemType => {
+            return new Item(this, itemType);
+        });
     }
 
     private getMaxItemId(): number {
