@@ -100,6 +100,7 @@ export class FbInvoiceService {
         return from(this.db.collection(this.dbSettingPath).add(setting));
     }
 
+    // receives the last setting document
     getLastSetting(): Observable<any> {
         return this.db.collection(this.dbSettingPath, ref => ref.orderBy('creationTime', 'desc').limit(1))
             .snapshotChanges()
@@ -179,7 +180,7 @@ export class FbInvoiceService {
     }
 
     // receives one specific invoice document
-    getInvoiceById(invoiceId: string, historyId: string): Observable<any> {
+    getInvoiceById(invoiceId: string, historyId: string, defaultSettingId: string): Observable<any> {
         // create the database path witch depends from the value of the "historyId" parameter
         let path = '';
         if (!historyId) {
@@ -187,8 +188,13 @@ export class FbInvoiceService {
         } else {
             path = `${this.dbInvoicePath}/${invoiceId}/History/${historyId}`;
         }
-        // return of the observable
-        return this.db.doc(path).valueChanges();
+        // join and return of the observables
+        const invoice$: Observable<any> = this.db.doc(path).valueChanges();
+        const settings$: Observable<any> = invoice$.pipe(switchMap(value => {
+            return this.db.collection(this.dbSettingPath).doc(value.settingId ? value.settingId : defaultSettingId).valueChanges();
+        }));
+        return combineLatest(invoice$, settings$);
+        // return  invoice$;
     }
 
     // receives the invoice query with several filter options
