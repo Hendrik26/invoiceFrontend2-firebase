@@ -1,13 +1,64 @@
 <div class="item-detail">
-  <h1>Einstellungen</h1>
-  <!-- p>erstellt am: {{creationTime | date:'yyyy-MM-dd'}}</p -->
-  <form>
-    <label><span>Kurzadresse</span><input type="text" name="shortAddress" [(ngModel)]="settingsService.setting.headerShortAddress"></label>
-    <label><span>Adresszeile 1</span><input type="text" name="headerAdressLine01" [(ngModel)]="settingsService.setting.headerAddressLine01"></label>
-    <br>
-    <button (click)="saveSetting()">speichern</button>
-    <a routerLink="/login">Home</a>
+    <h1>Einstellungen</h1>
+    <!-- p>erstellt am: {{creationTime | date:'yyyy-MM-dd'}}</p -->
+    <form>
+        <h3>Kuradresse</h3>
+        <label><span>Kurzadresse</span><input type="text" name="shortAddress"
+                                              [(ngModel)]="settingsService.setting.headerShortAddress"></label>
+        <h3>Adresse im Rechnungskopf</h3>
+        <label><span>Adresszeile 1</span><input type="text" name="headerAdressLine01"
+                                                [(ngModel)]="settingsService.setting.headerAddressLine01"></label>
+        <br>
+        <h3>Adresse im Rechnungsfuß</h3>
+        <label><span>Adresszeile 1</span><input type="text" name="footerAdressLine01"
+                                                [(ngModel)]="settingsService.setting.footerAddressLine01"></label>
+        <label><span>Adresszeile 2</span><input type="text" name="footerAdressLine02"
+                                                [(ngModel)]="settingsService.setting.footerAddressLine02"></label>
+        <label><span>Adresszeile 3</span><input type="text" name="footerAdressLine03"
+                                                [(ngModel)]="settingsService.setting.footerAddressLine03"></label>
+        <label><span>Adresszeile 4</span><input type="text" name="footerAdressLine04"
+                                                [(ngModel)]="settingsService.setting.footerAddressLine04"></label>
+        <label><span>Adresszeile 5</span><input type="text" name="footerAdressLine05"
+                                                [(ngModel)]="settingsService.setting.footerAddressLine05"></label>
+        <h3>Kontakt im Rechnungsfuß</h3>
+        <label><span>Kontaktzeile 1</span><input type="text1" name="footerContactLine01"
+                                                 [(ngModel)]="settingsService.setting.footerContactLine01">
+            <input type="text2" name="footerContactLine11"
+                   [(ngModel)]="settingsService.setting.footerContactLine11"></label>
+        <label><span>Kontaktzeile 2</span><input type="text1" name="footerContactLine02"
+                                                 [(ngModel)]="settingsService.setting.footerContactLine02">
+            <input type="text2" name="footerContactLine12"
+                   [(ngModel)]="settingsService.setting.footerContactLine12"></label>
+        <label><span>Kontaktzeile 3</span><input type="text1" name="footerContactLine03"
+                                                 [(ngModel)]="settingsService.setting.footerContactLine03">
+            <input type="text2" name="footerContactLine13"
+                   [(ngModel)]="settingsService.setting.footerContactLine13"></label>
+        <label><span>Kontaktzeile 4</span><input type="text1" name="footerContactLine04"
+                                                 [(ngModel)]="settingsService.setting.footerContactLine04">
+            <input type="text2" name="footerContactLine14"
+                   [(ngModel)]="settingsService.setting.footerContactLine14"></label>
+        <label><span>Kontaktzeile 5</span><input type="text1" name="footerContactLine05"
+                                                 [(ngModel)]="settingsService.setting.footerContactLine05">
+            <input type="text2" name="footerContactLine15"
+                   [(ngModel)]="settingsService.setting.footerContactLine15"></label>
+        <h3>Bankverbindung im Rechnungsfuß</h3>
+        <label><span>Bankverbindung 1</span><input type="text" name="footerBankConnection01"
+                                                [(ngModel)]="settingsService.setting.footerBankConnection01"></label>
+        <label><span>Bankverbindung 2</span><input type="text" name="footerBankConnection02"
+                                                [(ngModel)]="settingsService.setting.footerBankConnection02"></label>
+        <label><span>Bankverbindung 3</span><input type="text" name="footerBankConnection03"
+                                                [(ngModel)]="settingsService.setting.footerBankConnection03"></label>
+        <label><span>Bankverbindung 4</span><input type="text" name="footerBankConnection04"
+                                                [(ngModel)]="settingsService.setting.footerBankConnection04"></label>
+        <label><span>Bankverbindung 5</span><input type="text" name="footerBankConnection05"
+                                                [(ngModel)]="settingsService.setting.footerBankConnection05"></label>
+        <h3>Steueridentifikationsnummer im Rechnungsfuß</h3>
+        <label><span>Steueridentifikationsnummer</span><input type="text" name="footerTaxIdentification"
+                                                   [(ngModel)]="settingsService.setting.footerTaxIdentification"></label>
+
+        <button (click)="saveSetting()">speichern</button>
+        <a routerLink="/login">Home</a>
 
 
-  </form>
+    </form>
 </div>

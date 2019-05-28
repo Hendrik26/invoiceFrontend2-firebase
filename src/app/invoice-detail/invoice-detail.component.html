@@ -3,7 +3,7 @@
         <div class="adress-window">
             <div class="postage-info">
                 <!--SednaSoft GbR, Biesnitzer Straße 8, 02826 Görlitz-->
-                {{setting.headerShortAddress}}/{{invoice.settingId}}
+                {{setting.headerShortAddress}}
             </div><!-- class="postage-info" -->
             <select [(ngModel)]="invoiceSelectCustomer" (ngModelChange)="changeFilterCompany($event)">
                 <option selected [ngValue]="invoiceSelectCustomerDef1">
@@ -187,6 +187,7 @@
             <button *ngIf="!settingsService.readonly" (click)="saveInvoice(false)">{{invoiceId ? 'speichern' : 'erstellen'}}</button>
             <button *ngIf="invoiceId && !settingsService.readonly"(click)="saveInvoice(true)">archivieren</button>
             <button (click)="backToInvoiceList()">zurück</button>
+            <button (click)="refreshSettings()">Einstellungen aktualisieren</button>
             <button *ngIf="historyTest" (click)="receiveInvoiceHistoryById(invoiceId)">alte Versionen</button>
             <select (change)="receiveInvoiceById(invoiceId,historyId)" *ngIf="historyDateList"
                     [(ngModel)]="historyId" [ngModelOptions]="{standalone: true}" >
@@ -240,15 +241,44 @@
     <footer>
         <div class="address">
             <p><strong>Adresse</strong></p>
-            <p>SednaSoft GbR</p>
-            <p>A.Schaffhirt & A.Wünsche</p>
-            <p>Biesnitzer Straße 8</p>
-            <p>02826 Görlitz</p>
+            <p *ngIf="setting.footerAddressLine01 && setting.footerAddressLine01.length > 0">
+                {{setting.footerAddressLine01}}</p>
+            <p *ngIf="setting.footerAddressLine02 && setting.footerAddressLine02.length > 0">
+                {{setting.footerAddressLine02}}</p>
+            <p *ngIf="setting.footerAddressLine03 && setting.footerAddressLine03.length > 0">
+                {{setting.footerAddressLine03}}</p>
+            <p *ngIf="setting.footerAddressLine04 && setting.footerAddressLine04.length > 0">
+                {{setting.footerAddressLine04}}</p>
+            <p *ngIf="setting.footerAddressLine05 && setting.footerAddressLine05.length > 0">
+                {{setting.footerAddressLine05}}</p>
             <p *ngIf="invoice.invoiceKind.international">GERMANY</p>
         </div>
         <div class="contact">
             <p><strong>Kontakt</strong></p>
             <dl>
+                <dt *ngIf="setting.footerContactLine01 && setting.footerContactLine01.length > 0">
+                    {{setting.footerContactLine01}}</dt>
+                <dd *ngIf="setting.footerContactLine01 && setting.footerContactLine01.length > 0">
+                    {{setting.footerContactLine11}}</dd>
+                <dt *ngIf="setting.footerContactLine02 && setting.footerContactLine02.length > 0">
+                    {{setting.footerContactLine02}}</dt>
+                <dd *ngIf="setting.footerContactLine02 && setting.footerContactLine02.length > 0">
+                    {{setting.footerContactLine12}}</dd>
+                <dt *ngIf="setting.footerContactLine03 && setting.footerContactLine03.length > 0">
+                    {{setting.footerContactLine03}}</dt>
+                <dd *ngIf="setting.footerContactLine03 && setting.footerContactLine03.length > 0">
+                    {{setting.footerContactLine13}}</dd>
+                <dt *ngIf="setting.footerContactLine04 && setting.footerContactLine04.length > 0">
+                    {{setting.footerContactLine04}}</dt>
+                <dd *ngIf="setting.footerContactLine04 && setting.footerContactLine04.length > 0">
+                    {{setting.footerContactLine14}}</dd>
+                <dt *ngIf="setting.footerContactLine05 && setting.footerContactLine05.length > 0">
+                    {{setting.footerContactLine05}}</dt>
+                <dd *ngIf="setting.footerContactLine05 && setting.footerContactLine05.length > 0">
+                    {{setting.footerContactLine15}}</dd>
+
+            </dl>
+            <!--dl>
                 <dt>Fon</dt>
                 <dd>+49-3581-3221063</dd>
                 <dt>Fax</dt>
@@ -257,7 +287,7 @@
                 <dd>kontakt@sedna-soft.de</dd>
                 <dt>Web</dt>
                 <dd>http://sedna-soft.de</dd>
-            </dl>
+            </dl-->
         </div>
         <div class="bankconnection">
             <p><strong>Bankverbindung</strong></p>

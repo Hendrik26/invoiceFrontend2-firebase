@@ -168,7 +168,6 @@ export class InvoiceDetailComponent implements OnInit {
     private saveInvoice(archive: boolean = false): void {
         console.log('invoice-detail.component.ts: method saveInvoice');
         this.calculateSums();
-        console.log('ÄÄÄÄÄÄÄÄÄ:', this.invoice);
         this.fbInvoiceService.updateInvoice(this.invoiceId, this.invoice.exportInvoiceToAny(archive)).subscribe(
             () => {
             }
@@ -191,6 +190,11 @@ export class InvoiceDetailComponent implements OnInit {
             ? this.invoice.items.reduce((sum, current) => sum + current.count * current.partialCost, 0) : 0;
         this.salesTax = !this.invoice.invoiceKind.international ? this.invoice.wholeCost * this.invoice.salesTaxPercentage / 100 : 0;
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
+    }
+
+    refreshSettings(): void {
+        this.setting = this.settingsService.setting;
+        this.invoice.settingId = this.settingsService.settingId;
     }
 
     private changeInternational(): void {

@@ -20,6 +20,13 @@ input[type=text] {
     width: 84%;
 }
 
+input[type=text1] {
+    width: 20%;
+}
+input[type=text2] {
+    width: 63%;
+}
+
 input[type=checkbox] {
     margin-left: 10%;
 }

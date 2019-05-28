@@ -11,7 +11,7 @@ export interface SettingType {
     headerAddressLine09: string;
     headerAddressLine10: string;
     headerLocation: string;
-    creditorIdentificationNumber: string;
+    creditorIdentificationNumber: string; */
     footerAddressLine01: string;
     footerAddressLine02: string;
     footerAddressLine03: string;
@@ -22,12 +22,16 @@ export interface SettingType {
     footerContactLine03: string;
     footerContactLine04: string;
     footerContactLine05: string;
-    footerBankAccount01: string;
-    footerBankAccount02: string;
-    footerBankAccount03: string;
-    footerBankAccount04: string;
-    footerBankAccount05: string;
+    footerContactLine11: string;
+    footerContactLine12: string;
+    footerContactLine13: string;
+    footerContactLine14: string;
+    footerContactLine15: string;
+    footerBankConnection01: string;
+    footerBankConnection02: string;
+    footerBankConnection03: string;
+    footerBankConnection04: string;
+    footerBankConnection05: string;
     footerTaxIdentification: string;
-    LogoUrl: string; */
     creationTime: Date;
 }
