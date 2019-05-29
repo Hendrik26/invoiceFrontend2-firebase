@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {SettingsService} from '../settings.service';
 import {Setting} from '../setting';
+import {Observable} from 'rxjs';
 
 // import {LoginUser} from '../loginuser';
 
@@ -19,8 +20,7 @@ export class LoginComponent implements OnInit {
     }
 
     private signin(type: number) {
-        this.fbInvoiceService.signin$(type, this.settingsService.email, this.settingsService.password)
-            .subscribe(value => {
+        this.fbInvoiceService.signin$(type, this.settingsService.email, this.settingsService.password).subscribe(value => {
                 this.settingsService.loginUser.id = value[0].user.uid;
                 this.settingsService.loginUser.providerId = value[0].additionalUserInfo.providerId;
                 this.settingsService.passReset2 = (value[0].additionalUserInfo.providerId === 'password');

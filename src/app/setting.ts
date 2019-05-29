@@ -4,22 +4,17 @@ export class Setting implements SettingType {
 
     headerShortAddress: string;
     headerAddressLine01: string;
-    /* headerAddressLine02: string;
+    headerAddressLine02: string;
     headerAddressLine03: string;
     headerAddressLine04: string;
     headerAddressLine05: string;
-    headerAddressLine06: string;
-    headerAddressLine07: string;
-    headerAddressLine08: string;
-    headerAddressLine09: string;
-    headerAddressLine10: string;
     headerLocation: string;
-    creditorIdentificationNumber: string; */
     footerAddressLine01: string;
     footerAddressLine02: string;
     footerAddressLine03: string;
     footerAddressLine04: string;
     footerAddressLine05: string;
+    footerAddressCountry: string;
     footerContactLine01: string;
     footerContactLine02: string;
     footerContactLine03: string;
@@ -36,6 +31,7 @@ export class Setting implements SettingType {
     footerBankConnection04: string;
     footerBankConnection05: string;
     footerTaxIdentification: string;
+    creditorIdentificationNumber: string;
      /*LogoUrl: string; */
     creationTime: Date;
 
@@ -43,12 +39,17 @@ export class Setting implements SettingType {
         let setting = new Setting();
         setting.headerShortAddress = inSetting.headerShortAddress ? inSetting.headerShortAddress : '';
         setting.headerAddressLine01 = inSetting.headerAddressLine01 ? inSetting.headerAddressLine01 : '';
-
+        setting.headerAddressLine02 = inSetting.headerAddressLine02 ? inSetting.headerAddressLine02 : '';
+        setting.headerAddressLine03 = inSetting.headerAddressLine03 ? inSetting.headerAddressLine03 : '';
+        setting.headerAddressLine04 = inSetting.headerAddressLine04 ? inSetting.headerAddressLine04 : '';
+        setting.headerAddressLine05 = inSetting.headerAddressLine05 ? inSetting.headerAddressLine05 : '';
+        setting.headerLocation = inSetting.headerLocation ? inSetting.headerLocation : '';
         setting.footerAddressLine01 = inSetting.footerAddressLine01 ? inSetting.footerAddressLine01 : '';
         setting.footerAddressLine02 = inSetting.footerAddressLine02 ? inSetting.footerAddressLine02 : '';
         setting.footerAddressLine03 = inSetting.footerAddressLine03 ? inSetting.footerAddressLine03 : '';
         setting.footerAddressLine04 = inSetting.footerAddressLine04 ? inSetting.footerAddressLine04 : '';
         setting.footerAddressLine05 = inSetting.footerAddressLine05 ? inSetting.footerAddressLine05 : '';
+        setting.footerAddressCountry = inSetting.footerAddressCountry ? inSetting.footerAddressCountry : '';
         setting.footerContactLine01 = inSetting.footerContactLine01 ? inSetting.footerContactLine01 : '';
         setting.footerContactLine02 = inSetting.footerContactLine02 ? inSetting.footerContactLine02 : '';
         setting.footerContactLine03 = inSetting.footerContactLine03 ? inSetting.footerContactLine03 : '';
@@ -65,6 +66,7 @@ export class Setting implements SettingType {
         setting.footerBankConnection04 = inSetting.footerBankConnection04 ? inSetting.footerBankConnection04 : '';
         setting.footerBankConnection05 = inSetting.footerBankConnection05 ? inSetting.footerBankConnection05 : '';
         setting.footerTaxIdentification = inSetting.footerTaxIdentification ? inSetting.footerTaxIdentification : '';
+        setting.creditorIdentificationNumber = inSetting.creditorIdentificationNumber ? inSetting.creditorIdentificationNumber : '';
         setting.creationTime = inSetting.creationTime ? inSetting.creationTime : new Date();
         return setting;
     }
@@ -72,11 +74,17 @@ export class Setting implements SettingType {
     constructor() {
         this.headerShortAddress = '';
         this.headerAddressLine01 = '';
+        this.headerAddressLine02 = '';
+        this.headerAddressLine03 = '';
+        this.headerAddressLine04 = '';
+        this.headerAddressLine05 = '';
+        this.headerLocation = '';
         this.footerAddressLine01 = '';
         this.footerAddressLine02 = '';
         this.footerAddressLine03 = '';
         this.footerAddressLine04 = '';
         this.footerAddressLine05 = '';
+        this.footerAddressCountry = '';
         this.footerContactLine01 = '';
         this.footerContactLine02 = '';
         this.footerContactLine03 = '';
@@ -93,6 +101,7 @@ export class Setting implements SettingType {
         this.footerBankConnection04 = '';
         this.footerBankConnection05 = '';
         this.footerTaxIdentification = '';
+        this.creditorIdentificationNumber = '';
         this.creationTime = new Date();
     }
 
@@ -100,11 +109,17 @@ export class Setting implements SettingType {
         return {
             headerShortAddress: this.headerShortAddress,
             headerAddressLine01: this.headerAddressLine01,
+            headerAddressLine02: this.headerAddressLine02,
+            headerAddressLine03: this.headerAddressLine03,
+            headerAddressLine04: this.headerAddressLine04,
+            headerAddressLine05: this.headerAddressLine05,
+            headerLocation: this.headerLocation,
             footerAddressLine01: this.footerAddressLine01,
             footerAddressLine02: this.footerAddressLine02,
             footerAddressLine03: this.footerAddressLine03,
             footerAddressLine04: this.footerAddressLine04,
             footerAddressLine05: this.footerAddressLine05,
+            footerAddressCountry: this.footerAddressCountry,
             footerContactLine01: this.footerContactLine01,
             footerContactLine02: this.footerContactLine02,
             footerContactLine03: this.footerContactLine03,
@@ -121,7 +136,7 @@ export class Setting implements SettingType {
             footerBankConnection04: this.footerBankConnection04,
             footerBankConnection05: this.footerBankConnection05,
             footerTaxIdentification: this.footerTaxIdentification,
-
+            creditorIdentificationNumber: this.creditorIdentificationNumber,
             creationTime: new Date()
         };
     }

@@ -33,7 +33,7 @@ export class InvoiceDetailComponent implements OnInit {
     salesTax: number;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
-    creditorIdentificationNumber = '1234-5678-1234';
+    // creditorIdentificationNumber = '1234-5678-1234';
     invoiceDate: Date;
     invoiceDueDate: Date;
     invoiceKind: InvoiceKind;

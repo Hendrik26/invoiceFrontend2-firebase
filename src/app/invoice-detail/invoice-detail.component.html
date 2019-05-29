@@ -38,7 +38,19 @@
             <div class="logo">
                 <img src="assets/logo.png" alt="SednaSoft" title="SednaSoft"/>
             </div><!-- class="logo" -->
-            <strong>SednaSoft GbR</strong>
+            <p *ngIf="setting.headerAddressLine01 && setting.headerAddressLine01.length > 0">
+                <strong>{{setting.headerAddressLine01}}</strong></p>
+            <p *ngIf="setting.headerAddressLine02 && setting.headerAddressLine02.length > 0">
+                {{setting.headerAddressLine02}}</p>
+            <p *ngIf="setting.headerAddressLine03 && setting.headerAddressLine03.length > 0">
+                {{setting.headerAddressLine03}}</p>
+            <p *ngIf="setting.headerAddressLine04 && setting.headerAddressLine04.length > 0">
+                {{setting.headerAddressLine04}}</p>
+            <p *ngIf="setting.headerAddressLine05 && setting.headerAddressLine05.length > 0">
+                {{setting.headerAddressLine05}}</p>
+            
+            
+            <!--strong>SednaSoft GbR</strong>
             <p>A. Schaffhirt & A. Wünsche</p>
             <p>Biesnitzer Straße 8</p>
             <p>02826 Görlitz</p>
@@ -52,7 +64,7 @@
                 <dd>kontakt@sedna-soft.de</dd>
                 <dt>Web</dt>
                 <dd>http://sedna-soft.de</dd>
-            </dl>
+            </dl-->
         </div><!-- class="contact-block" -->
 
     </header>
@@ -60,7 +72,7 @@
 
     <main>
         <section>
-            <div class="city-date">Görlitz,
+            <div class="city-date">{{setting.headerLocation}},
                 <input type="date" name="inDate" [ngModel]="invoice.invoiceDate | date:'yyyy-MM-dd'"
                        (ngModelChange)="invoiceDateChange($event)">
             </div>
@@ -228,7 +240,7 @@
                     zum Mandat
                     <input type="text" name="mandateIdentification" size="27"
                            [(ngModel)]="invoice.customer.mandateIdentification">
-                    zu der Gläubigeridentifikationsnummer {{creditorIdentificationNumber}}
+                    zu der Gläubigeridentifikationsnummer {{setting.creditorIdentificationNumber}}
                     von Ihrem Konto IBAN
                     <input type="text" name="customerIBAN" size="27" [(ngModel)]="invoice.customer.customerIBAN">
                     bei der Bank BIC
@@ -251,7 +263,7 @@
                 {{setting.footerAddressLine04}}</p>
             <p *ngIf="setting.footerAddressLine05 && setting.footerAddressLine05.length > 0">
                 {{setting.footerAddressLine05}}</p>
-            <p *ngIf="invoice.invoiceKind.international">GERMANY</p>
+            <p *ngIf="invoice.invoiceKind.international">{{setting.footerAddressCountry}}</p>
         </div>
         <div class="contact">
             <p><strong>Kontakt</strong></p>
@@ -278,16 +290,6 @@
                     {{setting.footerContactLine15}}</dd>
 
             </dl>
-            <!--dl>
-                <dt>Fon</dt>
-                <dd>+49-3581-3221063</dd>
-                <dt>Fax</dt>
-                <dd>+49-3581-6858089</dd>
-                <dt>Mail</dt>
-                <dd>kontakt@sedna-soft.de</dd>
-                <dt>Web</dt>
-                <dd>http://sedna-soft.de</dd>
-            </dl-->
         </div>
         <div class="bankconnection">
             <p><strong>Bankverbindung</strong></p>
@@ -301,13 +303,6 @@
                 {{setting.footerBankConnection04}}</p>
             <p *ngIf="setting.footerBankConnection05 && setting.footerBankConnection05.length > 0">
                 {{setting.footerBankConnection05}}</p>
-            <!--Commerzbank Dresden
-            <dl>
-                <dt>BIC</dt>
-                <dd>DRESDEFF850</dd>
-                <dt>IBAN</dt>
-                <dd>DE56 8508 0000 0265 0770 01</dd>
-            </dl-->
         </div>
         <div class="tax-number">
             <p><strong>USt-IdNr.</strong></p>
