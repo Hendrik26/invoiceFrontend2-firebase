@@ -36,4 +36,20 @@ export class SettingsDetailComponent implements OnInit {
         this.router.navigateByUrl('/login');
     }
 
+    uploadLogo(event): void {
+        console.log('EVENT:', event);
+        this.fbInvoiceService.uploadLogo(event).subscribe(
+            r => {
+                console.log('UUUUUUUUU:', r.state, r.metadata.name);
+                if (r.state === 'success') {
+                    console.log('üüüüüüüüüüüüüüüüüüü');
+                    this.settingsService.setting.logoId = r.metadata.name;
+                }
+            }
+            , () => {
+                this.settingsService.handleDbError('Speicherfehler', 'Error during uploading a file');
+            }
+        );
+    }
+
 }

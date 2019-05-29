@@ -29,5 +29,6 @@ export interface SettingType {
     footerBankConnection05: string;
     footerTaxIdentification: string;
     creditorIdentificationNumber: string;
+    logoId: string;
     creationTime: Date;
 }

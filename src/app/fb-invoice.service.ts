@@ -4,12 +4,13 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {Customer} from './customer';
 import {CustomerType} from './customer-type';
-import {Setting} from './setting';
+// import {Setting} from './setting';
 import {Invoice} from './invoice';
 import {InvoiceType} from './invoice-type';
 // import {map} from 'rxjs/operators';
 import {Observable, from, combineLatest} from 'rxjs';
-import {AngularFireAuth} from '@angular/fire//auth';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireStorage} from '@angular/fire//storage';
 import * as firebase from 'firebase';
 import {switchMap, map} from 'rxjs/operators';
 import {SettingType} from './setting-type';
@@ -26,7 +27,8 @@ export class FbInvoiceService {
     private dbSettingPath = '/settings';
 
     constructor(private firebaseAuth: AngularFireAuth,
-                private db: AngularFirestore) {
+                private db: AngularFirestore,
+                private afStorage: AngularFireStorage) {
     }
 
     private static historyKeyToLabel(key: string): string {
@@ -44,6 +46,16 @@ export class FbInvoiceService {
             + ('0' + date.getSeconds().toString()).slice(-2) + '-'
             + ('00' + date.getMilliseconds().toString()).slice(-3);
         return key;
+    }
+
+    uploadLogo(event): Observable<any> {
+        const ref = this.afStorage.ref(FbInvoiceService.getHistoryKey());
+        return  from(ref.put(event.target.files[0]));
+    }
+
+    getDownloadUrl(id: string): Observable<any> {
+        const ref = this.afStorage.ref(id);
+        return from(ref.getDownloadURL());
     }
 
     signin$(type: number, email: string, password: string): Observable<any> {

@@ -32,7 +32,7 @@ export class Setting implements SettingType {
     footerBankConnection05: string;
     footerTaxIdentification: string;
     creditorIdentificationNumber: string;
-     /*LogoUrl: string; */
+    logoId: string;
     creationTime: Date;
 
     public static normalizeSetting(inSetting: any): Setting {
@@ -66,7 +66,8 @@ export class Setting implements SettingType {
         setting.footerBankConnection04 = inSetting.footerBankConnection04 ? inSetting.footerBankConnection04 : '';
         setting.footerBankConnection05 = inSetting.footerBankConnection05 ? inSetting.footerBankConnection05 : '';
         setting.footerTaxIdentification = inSetting.footerTaxIdentification ? inSetting.footerTaxIdentification : '';
-        setting.creditorIdentificationNumber = inSetting.creditorIdentificationNumber ? inSetting.creditorIdentificationNumber : '';
+        setting.creditorIdentificationNumber = inSetting.logoId ? inSetting.creditorIdentificationNumber : '';
+        setting.logoId = inSetting.logoId ? inSetting.creditorIdentificationNumber : ''
         setting.creationTime = inSetting.creationTime ? inSetting.creationTime : new Date();
         return setting;
     }
@@ -102,6 +103,7 @@ export class Setting implements SettingType {
         this.footerBankConnection05 = '';
         this.footerTaxIdentification = '';
         this.creditorIdentificationNumber = '';
+        this.logoId = '';
         this.creationTime = new Date();
     }
 
@@ -137,6 +139,7 @@ export class Setting implements SettingType {
             footerBankConnection05: this.footerBankConnection05,
             footerTaxIdentification: this.footerTaxIdentification,
             creditorIdentificationNumber: this.creditorIdentificationNumber,
+            logoId: this.logoId,
             creationTime: new Date()
         };
     }

@@ -18,7 +18,7 @@
                                                 [(ngModel)]="settingsService.setting.headerAddressLine05"></label>
         <h3>Ortsbezeichnung vor Datumsfeld</h3>
         <label><span>Ortsbezeichnung</span><input type="text" name="headerLocation"
-                                                [(ngModel)]="settingsService.setting.headerLocation"></label>
+                                                  [(ngModel)]="settingsService.setting.headerLocation"></label>
         <h3>Adresse im Rechnungsfuß</h3>
         <label><span>Adresszeile 1</span><input type="text" name="footerAddressLine01"
                                                 [(ngModel)]="settingsService.setting.footerAddressLine01"></label>
@@ -31,7 +31,7 @@
         <label><span>Adresszeile 5</span><input type="text" name="footerAddressLine05"
                                                 [(ngModel)]="settingsService.setting.footerAddressLine05"></label>
         <label><span>Land</span><input type="text" name="footerAddressCountry"
-                                                [(ngModel)]="settingsService.setting.footerAddressCountry"></label>
+                                       [(ngModel)]="settingsService.setting.footerAddressCountry"></label>
         <h3>Kontakt im Rechnungsfuß</h3>
         <label><span>Kontaktzeile 1</span><input type="text1" name="footerContactLine01"
                                                  [(ngModel)]="settingsService.setting.footerContactLine01">
@@ -55,20 +55,24 @@
                    [(ngModel)]="settingsService.setting.footerContactLine15"></label>
         <h3>Bankverbindung im Rechnungsfuß</h3>
         <label><span>Bankverbindung 1</span><input type="text" name="footerBankConnection01"
-                                                [(ngModel)]="settingsService.setting.footerBankConnection01"></label>
+                                                   [(ngModel)]="settingsService.setting.footerBankConnection01"></label>
         <label><span>Bankverbindung 2</span><input type="text" name="footerBankConnection02"
-                                                [(ngModel)]="settingsService.setting.footerBankConnection02"></label>
+                                                   [(ngModel)]="settingsService.setting.footerBankConnection02"></label>
         <label><span>Bankverbindung 3</span><input type="text" name="footerBankConnection03"
-                                                [(ngModel)]="settingsService.setting.footerBankConnection03"></label>
+                                                   [(ngModel)]="settingsService.setting.footerBankConnection03"></label>
         <label><span>Bankverbindung 4</span><input type="text" name="footerBankConnection04"
-                                                [(ngModel)]="settingsService.setting.footerBankConnection04"></label>
+                                                   [(ngModel)]="settingsService.setting.footerBankConnection04"></label>
         <label><span>Bankverbindung 5</span><input type="text" name="footerBankConnection05"
-                                                [(ngModel)]="settingsService.setting.footerBankConnection05"></label>
+                                                   [(ngModel)]="settingsService.setting.footerBankConnection05"></label>
         <h3>Weitere Angaben im Rechnungsfuß</h3>
         <label><span>Steueridentifikationsnr.</span><input type="text" name="footerTaxIdentification"
-                                                   [(ngModel)]="settingsService.setting.footerTaxIdentification"></label>
+                                                           [(ngModel)]="settingsService.setting.footerTaxIdentification"></label>
         <label><span>Gläubigeridentifikationsnr.</span><input type="text" name="footerCreditorIdentification"
                                                               [(ngModel)]="settingsService.setting.creditorIdentificationNumber"></label>
+
+        <h3>neues Logo hochladen</h3>
+        <label><span>neue Logo Datei</span>
+            <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg"></label>
 
         <button (click)="saveSetting()">speichern</button>
         <a routerLink="/login">Home</a>
