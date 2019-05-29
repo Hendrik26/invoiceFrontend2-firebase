@@ -71,6 +71,9 @@
                                                               [(ngModel)]="settingsService.setting.creditorIdentificationNumber"></label>
 
         <h3>neues Logo hochladen</h3>
+        <div class="logo">
+            <img [src]="settingsService.logoUrl" alt="Logo" title="Logo"/>
+        </div>
         <label><span>neue Logo Datei</span>
             <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg"></label>
 

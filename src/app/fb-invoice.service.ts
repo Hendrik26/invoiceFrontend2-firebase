@@ -55,7 +55,7 @@ export class FbInvoiceService {
 
     getDownloadUrl(id: string): Observable<any> {
         const ref = this.afStorage.ref(id);
-        return from(ref.getDownloadURL());
+        return ref.getDownloadURL();
     }
 
     signin$(type: number, email: string, password: string): Observable<any> {

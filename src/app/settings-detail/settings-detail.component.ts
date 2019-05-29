@@ -21,6 +21,9 @@ export class SettingsDetailComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.settingsService.setting.logoId) {
+            this.settingsService.getDownloadUrl(this.settingsService.setting.logoId);
+        }
     }
 
     saveSetting(): void {
@@ -36,13 +39,12 @@ export class SettingsDetailComponent implements OnInit {
         this.router.navigateByUrl('/login');
     }
 
+
+
     uploadLogo(event): void {
-        console.log('EVENT:', event);
         this.fbInvoiceService.uploadLogo(event).subscribe(
             r => {
-                console.log('UUUUUUUUU:', r.state, r.metadata.name);
                 if (r.state === 'success') {
-                    console.log('üüüüüüüüüüüüüüüüüüü');
                     this.settingsService.setting.logoId = r.metadata.name;
                 }
             }

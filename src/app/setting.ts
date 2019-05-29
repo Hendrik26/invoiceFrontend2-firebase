@@ -67,7 +67,7 @@ export class Setting implements SettingType {
         setting.footerBankConnection05 = inSetting.footerBankConnection05 ? inSetting.footerBankConnection05 : '';
         setting.footerTaxIdentification = inSetting.footerTaxIdentification ? inSetting.footerTaxIdentification : '';
         setting.creditorIdentificationNumber = inSetting.logoId ? inSetting.creditorIdentificationNumber : '';
-        setting.logoId = inSetting.logoId ? inSetting.creditorIdentificationNumber : ''
+        setting.logoId = inSetting.logoId ? inSetting.logoId : ''
         setting.creationTime = inSetting.creationTime ? inSetting.creationTime : new Date();
         return setting;
     }

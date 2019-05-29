@@ -42,3 +42,12 @@ p {
     border-bottom: 1px solid #000;
     font-weight: bold;
 }
+
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 300px;
+}
