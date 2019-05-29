@@ -72,10 +72,14 @@
 
         <h3>neues Logo hochladen</h3>
         <div class="logo">
-            <img [src]="settingsService.logoUrl" alt="Logo" title="Logo"/>
+
+
+        <label><span>neue Logo Datei hochladen</span>
+            <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg">
+            <img [src]="settingsService.logoUrl" alt="Logo" title="Logo"/></label>
+
         </div>
-        <label><span>neue Logo Datei</span>
-            <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg"></label>
+        <hr>
 
         <button (click)="saveSetting()">speichern</button>
         <a routerLink="/login">Home</a>

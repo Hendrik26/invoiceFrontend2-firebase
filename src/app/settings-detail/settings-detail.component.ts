@@ -46,6 +46,9 @@ export class SettingsDetailComponent implements OnInit {
             r => {
                 if (r.state === 'success') {
                     this.settingsService.setting.logoId = r.metadata.name;
+                    if (this.settingsService.setting.logoId) {
+                        this.settingsService.getDownloadUrl(this.settingsService.setting.logoId);
+                    }
                 }
             }
             , () => {

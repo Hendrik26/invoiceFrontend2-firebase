@@ -2,6 +2,13 @@
     margin: 50px;
 }
 
+
+h1 {
+    background-color: #00afc4;
+    font-weight: bold;
+    color: #fff;
+}
+
 label {
     display: block;
     padding: 4px;

@@ -32,7 +32,6 @@ export class SettingsService {
     this.fbInvoiceService.getDownloadUrl(id).subscribe(
         r => {
           this.logoUrl = r;
-          console.log('============', this.logoUrl);
         }
         , () => {
           this.handleDbError('Speicherfehler', 'Error during downloading a file');
