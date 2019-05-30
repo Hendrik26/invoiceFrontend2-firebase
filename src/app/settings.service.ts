@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {LoginUser} from './loginuser';
 import {Setting} from './setting';
-import {FbInvoiceService} from './fb-invoice.service';
+// import {FbInvoiceService} from './fb-invoice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class SettingsService {
   readonly: boolean;
   logoUrl: string;
 
-  constructor( private fbInvoiceService: FbInvoiceService) {
+  constructor( ) {
     this.loginUser = new LoginUser(null, null, null, null, null);
     this.setting = new Setting();
   }
@@ -28,14 +28,5 @@ export class SettingsService {
     alert(text);
   }
 
-  getDownloadUrl(id: string): void {
-    this.fbInvoiceService.getDownloadUrl(id).subscribe(
-        r => {
-          this.logoUrl = r;
-        }
-        , () => {
-          this.handleDbError('Speicherfehler', 'Error during downloading a file');
-        }
-    );
-  }
+
 }

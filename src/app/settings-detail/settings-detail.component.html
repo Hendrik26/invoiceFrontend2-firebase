@@ -72,13 +72,12 @@
 
         <h3>neues Logo hochladen</h3>
         <div class="logo">
-
-
-        <label><span>neue Logo Datei hochladen</span>
-            <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg">
-            <img [src]="settingsService.logoUrl" alt="Logo" title="Logo"/></label>
-
+            <label><span>neue Logo Datei hochladen</span>
+                <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg">
+                    <img [src]="settingsService.logoUrl" *ngIf="settingsService.logoUrl && settingsService.logoUrl.length > 0" alt="Logo" title="Logo"/>
+            </label>
         </div>
+
         <hr>
 
         <button (click)="saveSetting()">speichern</button>

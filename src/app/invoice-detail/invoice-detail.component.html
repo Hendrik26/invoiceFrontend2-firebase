@@ -36,7 +36,8 @@
 
         <div class="contact-block">
             <div class="logo">
-                <img src="assets/logo.png" alt="SednaSoft" title="SednaSoft"/>
+                <!--img src="assets/logo.png" alt="SednaSoft" title="SednaSoft"/-->
+                <img [src]="logoUrl" *ngIf="logoUrl && logoUrl.length > 0" alt="Logo" title="Logo"/>
             </div><!-- class="logo" -->
             <p *ngIf="setting.headerAddressLine01 && setting.headerAddressLine01.length > 0">
                 <strong>{{setting.headerAddressLine01}}</strong></p>
@@ -48,23 +49,6 @@
                 {{setting.headerAddressLine04}}</p>
             <p *ngIf="setting.headerAddressLine05 && setting.headerAddressLine05.length > 0">
                 {{setting.headerAddressLine05}}</p>
-            
-            
-            <!--strong>SednaSoft GbR</strong>
-            <p>A. Schaffhirt & A. Wünsche</p>
-            <p>Biesnitzer Straße 8</p>
-            <p>02826 Görlitz</p>
-            <p *ngIf="invoice.invoiceKind.international">GERMANY</p>
-            <dl>
-                <dt>Fon</dt>
-                <dd>+49-3581-3221063</dd>
-                <dt>Fax</dt>
-                <dd>+49-3581-6858089</dd>
-                <dt>Mail</dt>
-                <dd>kontakt@sedna-soft.de</dd>
-                <dt>Web</dt>
-                <dd>http://sedna-soft.de</dd>
-            </dl-->
         </div><!-- class="contact-block" -->
 
     </header>

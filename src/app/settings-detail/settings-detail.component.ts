@@ -22,7 +22,7 @@ export class SettingsDetailComponent implements OnInit {
 
     ngOnInit() {
         if (this.settingsService.setting.logoId) {
-            this.settingsService.getDownloadUrl(this.settingsService.setting.logoId);
+            this.getDownloadUrl(this.settingsService.setting.logoId);
         }
     }
 
@@ -47,12 +47,23 @@ export class SettingsDetailComponent implements OnInit {
                 if (r.state === 'success') {
                     this.settingsService.setting.logoId = r.metadata.name;
                     if (this.settingsService.setting.logoId) {
-                        this.settingsService.getDownloadUrl(this.settingsService.setting.logoId);
+                        this.getDownloadUrl(this.settingsService.setting.logoId);
                     }
                 }
             }
             , () => {
                 this.settingsService.handleDbError('Speicherfehler', 'Error during uploading a file');
+            }
+        );
+    }
+
+    getDownloadUrl(id: string): void {
+        this.fbInvoiceService.getDownloadUrl(id).subscribe(
+            r => {
+                this.settingsService.logoUrl = r;
+            }
+            , () => {
+                this.settingsService.handleDbError('Speicherfehler', 'Error during downloading a file');
             }
         );
     }

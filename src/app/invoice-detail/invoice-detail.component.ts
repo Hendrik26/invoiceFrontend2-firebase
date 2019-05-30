@@ -33,7 +33,6 @@ export class InvoiceDetailComponent implements OnInit {
     salesTax: number;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
-    // creditorIdentificationNumber = '1234-5678-1234';
     invoiceDate: Date;
     invoiceDueDate: Date;
     invoiceKind: InvoiceKind;
@@ -47,6 +46,7 @@ export class InvoiceDetailComponent implements OnInit {
     historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
     setting: Setting;
+    logoUrl: string
 
     constructor(
         private router: Router,
@@ -67,10 +67,11 @@ export class InvoiceDetailComponent implements OnInit {
         this.creatingInvoice = false;
         this.receivedInvoiceIdError = !this.hasReceivedInvoiceId();
         console.log(`\r\n\r\nInvoiceDetailComponent.ngOnInit() step 002,\r\n creatingInvoice ===${this.creatingInvoice}! \r\n\r\n`);
-        if (!this.receivedInvoiceIdError) {
-            console.log('receivedInvoiceId==' + this.invoiceId + ';;;', 'color:Blue');
-            if (this.invoiceId) {
+        if (!this.receivedInvoiceIdError && this.invoiceId) {
                 this.receiveInvoiceById(this.invoiceId, null);
+        } else {
+            if (this.setting.logoId &&  this.setting.logoId.length > 0)  {
+                this.getDownloadUrl(this.setting.logoId);
             }
         }
         this.calculateSums();
@@ -153,12 +154,26 @@ export class InvoiceDetailComponent implements OnInit {
             if (!this.invoice.settingId) {
                 this.invoice.settingId = this.settingsService.settingId;
             }
+            if (this.setting.logoId &&  this.setting.logoId.length > 0)  {
+                this.getDownloadUrl(this.setting.logoId);
+            }
             this.calculateSums();
             this.calculateAddress();
             this.fbInvoiceService.testInvoiceHistoryById(methId).subscribe(invoiceTest => {
                 this.historyTest = invoiceTest[1];
             });
         });
+    }
+
+    getDownloadUrl(id: string): void {
+        this.fbInvoiceService.getDownloadUrl(id).subscribe(
+            r => {
+                this.logoUrl = r;
+            }
+            , () => {
+                this.settingsService.handleDbError('Speicherfehler', 'Error during downloading a file');
+            }
+        );
     }
 
     receiveInvoiceHistoryById(id: string): void {
@@ -198,6 +213,9 @@ export class InvoiceDetailComponent implements OnInit {
     refreshSettings(): void {
         this.setting = this.settingsService.setting;
         this.invoice.settingId = this.settingsService.settingId;
+        if (this.setting.logoId &&  this.setting.logoId.length > 0)  {
+            this.getDownloadUrl(this.setting.logoId);
+        }
     }
 
     private changeInternational(): void {
