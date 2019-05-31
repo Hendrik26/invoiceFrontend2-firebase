@@ -17,13 +17,13 @@ export class CustomerDetailComponent implements OnInit {
 
     customerId: string;
 
+    archived = false;
     customer: CustomerType = Customer.getEmptyCustomer();
     historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
+    historyTest: boolean;
     newCustomer: boolean;
     receivedCustomerIdError: boolean;
-    archived = false;
-    historyTest: boolean;
 
     constructor(
         private router: Router,
@@ -36,35 +36,8 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit() {
         this.newCustomer = false;
         this.receivedCustomerIdError = !this.hasReceivedCustomerId();
-        console.log('receivedCustomerIdError ===' + this.receivedCustomerIdError + '!!!     ');
         if (!this.receivedCustomerIdError) {
             this.receiveFbCustomerById(this.customerId, null);
-        }
-    }
-
-    hasReceivedCustomerId(): // can NOT be deleted
-        boolean {
-        if (this.route.snapshot.paramMap.has('customerId') && this.route.snapshot.paramMap.has('newCustomer')) {
-            this.customerId = this.route.snapshot.paramMap.get('customerId');  // get customerID???? customerId from URL
-            console.log('<<<<< CustomerID ===' + this.customerId + ' >>>>>    ');
-            this.newCustomer = (this.route.snapshot.paramMap.get('newCustomer') === 'true');
-            return true;
-        } else {
-            this.customerId = null; // stands for the creation of a new customer
-            return false;
-        }
-    }
-
-    receiveFbCustomerById(id: string, historyId: string): void {
-        if (!this.newCustomer) {
-            this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customerType => {
-                this.customer = new Customer(id, customerType);
-            });
-            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customerTest => {
-                this.historyTest = customerTest[1];
-            });
-        } else {
-            this.customer = Customer.createNewCustomer();
         }
     }
 
@@ -95,26 +68,6 @@ export class CustomerDetailComponent implements OnInit {
         this.router.navigateByUrl('/customer-list');
     }
 
-    createCustomer(customerType: CustomerType): void {
-        this.fbInvoiceService.createCustomer(customerType).subscribe(
-            () => {
-            }
-            , () => {
-                this.settingsService.handleDbError('Datenbankfehler', 'Error during creation of a new customer');
-            }
-        );
-    }
-
-    updateCustomer(id: string, customerType: CustomerType): void {
-        this.fbInvoiceService.updateCustomer(id, customerType).subscribe(
-            () => {
-            }
-            , () => {
-                this.settingsService.handleDbError('Datenbankfehler', 'Error during updating of a customer');
-            }
-        );
-    }
-
     backToCustomerList(): void {
         this.newCustomer = false;
         this.router.navigateByUrl('/customer-list');
@@ -125,6 +78,51 @@ export class CustomerDetailComponent implements OnInit {
             .subscribe(data => {
                 this.historyDateList = data;
             });
+    }
+
+    private hasReceivedCustomerId(): // can NOT be deleted
+        boolean {
+        if (this.route.snapshot.paramMap.has('customerId') && this.route.snapshot.paramMap.has('newCustomer')) {
+            this.customerId = this.route.snapshot.paramMap.get('customerId');  // get customerID???? customerId from URL
+            this.newCustomer = (this.route.snapshot.paramMap.get('newCustomer') === 'true');
+            return true;
+        } else {
+            this.customerId = null; // stands for the creation of a new customer
+            return false;
+        }
+    }
+
+    private receiveFbCustomerById(id: string, historyId: string): void {
+        if (!this.newCustomer) {
+            this.fbInvoiceService.getCustomerById(id, historyId).subscribe(customerType => {
+                this.customer = new Customer(id, customerType);
+            });
+            this.fbInvoiceService.testCustomerHistoryById(id).subscribe(customerTest => {
+                this.historyTest = customerTest[1];
+            });
+        } else {
+            this.customer = Customer.createNewCustomer();
+        }
+    }
+
+    private createCustomer(customerType: CustomerType): void {
+        this.fbInvoiceService.createCustomer(customerType).subscribe(
+            () => {
+            }
+            , () => {
+                this.settingsService.handleDbError('Datenbankfehler', 'Error during creation of a new customer');
+            }
+        );
+    }
+
+    private updateCustomer(id: string, customerType: CustomerType): void {
+        this.fbInvoiceService.updateCustomer(id, customerType).subscribe(
+            () => {
+            }
+            , () => {
+                this.settingsService.handleDbError('Datenbankfehler', 'Error during updating of a customer');
+            }
+        );
     }
 
 }
