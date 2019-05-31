@@ -3,13 +3,10 @@ import {Customer} from './customer';
 import {Item} from './item';
 import {InvoiceType} from './invoice-type';
 import {InvoiceKind} from './invoice-kind';
-import {InvoiceKindType} from './invoice-kind-type';
 import {ItemType} from './item-type';
 
 export class Invoice implements InvoiceType {
-    ////
 
-    // region static properties
     private static emptyData: InvoiceType = {
         archived: false,
         countReminders: 0, // <th>Anzahl der Mahnungen</th>
@@ -31,9 +28,7 @@ export class Invoice implements InvoiceType {
         timespanEnd: new Date(),
         wholeCost: -111, // <th>Gesamtpreis</th>
     };
-    // endregion
 
-    // region other properties
     archived: boolean;
     countReminders: number; // <th>Anzahl der Mahnungen</th>
     currency = '€';
@@ -56,7 +51,6 @@ export class Invoice implements InvoiceType {
     wholeCost: number; // <th>Gesamtpreis</th>
 
     customerData: CustomerType;
-    // endregion
 
     private invoiceId: string; // <th>Ändern</th>
 
@@ -119,22 +113,19 @@ export class Invoice implements InvoiceType {
             itemTypes: [],
             newCreatedInvoice: false,
             salesTaxPercentage: (typeof inputInvoice.salesTaxPercentage === 'number') ? inputInvoice.salesTaxPercentage : 19,
-            settingId:  inputInvoice.settingId,
+            settingId: inputInvoice.settingId,
             timeSpan: 'bspTimeSpan', // <th>Rechnungzeitraum</th>
             timespanBegin: inputInvoice.timespanBegin.toDate ? inputInvoice.timespanBegin.toDate() : new Date(),
             timespanEnd: inputInvoice.timespanEnd.toDate() ? inputInvoice.timespanEnd.toDate() : new Date(),
             wholeCost: (typeof inputInvoice.wholeCost === 'number') ? inputInvoice.wholeCost : 0 // <th>Gesamtpreis</th>
         };
-        const wcType: string = typeof inputInvoice.wholeCost;
-        // console.log(`\r\n wcType ===${wcType} !!! \r\n`)
+        // const wcType: string = typeof inputInvoice.wholeCost;
         const retInvoice: Invoice = Invoice.createInvoiceFromExistingId(inputInvoice.key, invoiceData);
-        // console.log(`\r\n normalizeInvoice.customerId ===${invoiceData.customerId} !!! \r\n`);
         if (inputInvoice.itemTypes) {
             inputInvoice.itemTypes.forEach(function (itemType) {
                 retInvoice.addNewItem(Item.normalizeItem(retInvoice, itemType));
             });
         }
-        // console.log(`\r\n normalizeInvoice.items ===${retInvoice.items} !!! \r\n`);
         return retInvoice;
     }
 
@@ -182,18 +173,12 @@ export class Invoice implements InvoiceType {
         return invoices;
     }
 
-    // region static methods
     private static createItemTypeArray(items: Item[]): ItemType[] {
-        // let itemTypes: ItemType[] = [];
         return items.map(item => {
             return item.exportItemData();
         });
     }
 
-
-    // endregion
-
-    // region getter
     public getID(): string {
         return this.invoiceId;
     }
@@ -202,7 +187,6 @@ export class Invoice implements InvoiceType {
         return this.customer.customerName;
     }
 
-    // region other methods
     public addNewItem(itemType: ItemType): number {
         // TODO add new Item to firebase-DB
         const createdItem = new Item(this, itemType);
@@ -210,11 +194,6 @@ export class Invoice implements InvoiceType {
         // return new Item(this, item);
         return createdItem.getItemId();
     }
-
-    // endregion
-
-    // setter
-
 
     public companyName(): string {
         return Invoice.firstLine(this.customer.customerName);
@@ -245,7 +224,6 @@ export class Invoice implements InvoiceType {
             timeSpan: this.timeSpan, // <th>Rechnungzeitraum</th>
             timespanBegin: this.timespanBegin,
             timespanEnd: this.timespanEnd,
-            // wholeCost: this.wholeCost // <th>Gesamtpreis</th>
         };
     }
 
@@ -264,8 +242,5 @@ export class Invoice implements InvoiceType {
             }, -1); // lambda-expression
         }
     }
-
-    // endregion
-
 
 }
