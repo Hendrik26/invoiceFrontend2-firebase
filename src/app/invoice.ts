@@ -226,8 +226,6 @@ export class Invoice implements InvoiceType {
 
     public exportInvoiceToAny(archived: boolean): any {
         console.log(`Method Invoice.exportInvoiceData() startrxd!!!  `);
-        console.log('ZZZZZZZZZ:', this.settingId);
-
         // const invKind = this.invoiceKind.exportInvoiceKindData();
         return {
             archived: archived,

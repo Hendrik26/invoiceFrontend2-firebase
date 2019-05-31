@@ -21,9 +21,7 @@ export class SettingsDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.settingsService.setting.logoId) {
-            this.getDownloadUrl(this.settingsService.setting.logoId);
-        }
+        this.getDownloadUrl(this.settingsService.setting.logoId);
     }
 
     saveSetting(): void {
@@ -40,15 +38,12 @@ export class SettingsDetailComponent implements OnInit {
     }
 
 
-
     uploadLogo(event): void {
         this.fbInvoiceService.uploadLogo(event).subscribe(
             r => {
                 if (r.state === 'success') {
                     this.settingsService.setting.logoId = r.metadata.name;
-                    if (this.settingsService.setting.logoId) {
-                        this.getDownloadUrl(this.settingsService.setting.logoId);
-                    }
+                    this.getDownloadUrl(this.settingsService.setting.logoId);
                 }
             }
             , () => {
@@ -57,7 +52,13 @@ export class SettingsDetailComponent implements OnInit {
         );
     }
 
-    getDownloadUrl(id: string): void {
+    private getDownloadUrl(id: string): void {
+        if (!id) {
+            return;
+        }
+        if (id.length === 0) {
+            return;
+        }
         this.fbInvoiceService.getDownloadUrl(id).subscribe(
             r => {
                 this.settingsService.logoUrl = r;

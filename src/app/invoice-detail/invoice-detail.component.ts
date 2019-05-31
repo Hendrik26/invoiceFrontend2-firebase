@@ -46,7 +46,7 @@ export class InvoiceDetailComponent implements OnInit {
     historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
     setting: Setting;
-    logoUrl: string
+    logoUrl: string;
 
     constructor(
         private router: Router,
@@ -68,11 +68,9 @@ export class InvoiceDetailComponent implements OnInit {
         this.receivedInvoiceIdError = !this.hasReceivedInvoiceId();
         console.log(`\r\n\r\nInvoiceDetailComponent.ngOnInit() step 002,\r\n creatingInvoice ===${this.creatingInvoice}! \r\n\r\n`);
         if (!this.receivedInvoiceIdError && this.invoiceId) {
-                this.receiveInvoiceById(this.invoiceId, null);
+            this.receiveInvoiceById(this.invoiceId, null);
         } else {
-            if (this.setting.logoId &&  this.setting.logoId.length > 0)  {
-                this.getDownloadUrl(this.setting.logoId);
-            }
+            this.getDownloadUrl(this.setting.logoId);
         }
         this.calculateSums();
         this.receiveCustomers();
@@ -80,13 +78,14 @@ export class InvoiceDetailComponent implements OnInit {
 
     receiveCustomers(): void {
         this.fbInvoiceService.getCustomersList('notArchive')
-            .subscribe(data => {this.customers = Customer.sortCustomers(data.map(x => Customer.normalizeCustomer(x))); });
+            .subscribe(data => {
+                this.customers = Customer.sortCustomers(data.map(x => Customer.normalizeCustomer(x)));
+            });
     }
 
     public changeFilterCompany(e: string): void {
-        // let x: Customer = this.customers.filter(c => c.getCustomerId() == e)[0];
-        if (e != this.invoiceSelectCustomerDef1) {
-            this.invoice.customer = this.customers.filter(c => c.getCustomerId() == e)[0];
+        if (e !== this.invoiceSelectCustomerDef1) {
+            this.invoice.customer = this.customers.filter(c => c.getCustomerId() === e)[0];
             this.calculateAddress();
         }
         console.log('PPP', this.invoiceSelectCustomer);
@@ -150,13 +149,15 @@ export class InvoiceDetailComponent implements OnInit {
     private receiveInvoiceById(methId: string, historyId: string): void {
         this.fbInvoiceService.getInvoiceById(methId, historyId, this.settingsService.settingId).subscribe(c => {
             this.invoice = Invoice.normalizeInvoice(c[0]);
-            this.setting = Setting.normalizeSetting(c[1]);
+            if (c[1]) {
+                this.setting = Setting.normalizeSetting(c[1]);
+            } else {
+                this.setting = this.settingsService.setting;
+            }
             if (!this.invoice.settingId) {
                 this.invoice.settingId = this.settingsService.settingId;
             }
-            if (this.setting.logoId &&  this.setting.logoId.length > 0)  {
-                this.getDownloadUrl(this.setting.logoId);
-            }
+            this.getDownloadUrl(this.setting.logoId);
             this.calculateSums();
             this.calculateAddress();
             this.fbInvoiceService.testInvoiceHistoryById(methId).subscribe(invoiceTest => {
@@ -165,7 +166,13 @@ export class InvoiceDetailComponent implements OnInit {
         });
     }
 
-    getDownloadUrl(id: string): void {
+    private getDownloadUrl(id: string): void {
+        if (!id) {
+            return;
+        }
+        if (id.length === 0) {
+            return;
+        }
         this.fbInvoiceService.getDownloadUrl(id).subscribe(
             r => {
                 this.logoUrl = r;
@@ -213,7 +220,7 @@ export class InvoiceDetailComponent implements OnInit {
     refreshSettings(): void {
         this.setting = this.settingsService.setting;
         this.invoice.settingId = this.settingsService.settingId;
-        if (this.setting.logoId &&  this.setting.logoId.length > 0)  {
+        if (this.setting.logoId && this.setting.logoId.length > 0) {
             this.getDownloadUrl(this.setting.logoId);
         }
     }

@@ -194,6 +194,7 @@ export class FbInvoiceService {
     // receives one specific invoice document
     getInvoiceById(invoiceId: string, historyId: string, defaultSettingId: string): Observable<any> {
         // create the database path witch depends from the value of the "historyId" parameter
+
         let path = '';
         if (!historyId) {
             path = `${this.dbInvoicePath}/${invoiceId}`;

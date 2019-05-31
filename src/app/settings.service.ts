@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LoginUser} from './loginuser';
 import {Setting} from './setting';
-// import {FbInvoiceService} from './fb-invoice.service';
 
 @Injectable({
   providedIn: 'root'
