@@ -1,17 +1,17 @@
 export interface SettingType {
-    headerShortAddress: string;
-    headerAddressLine01: string;
-    headerAddressLine02: string;
-    headerAddressLine03: string;
-    headerAddressLine04: string;
-    headerAddressLine05: string;
-    headerLocation: string;
+    creationTime: Date;
+    creditorIdentificationNumber: string;
+    footerAddressCountry: string;
     footerAddressLine01: string;
     footerAddressLine02: string;
     footerAddressLine03: string;
     footerAddressLine04: string;
     footerAddressLine05: string;
-    footerAddressCountry: string;
+    footerBankConnection01: string;
+    footerBankConnection02: string;
+    footerBankConnection03: string;
+    footerBankConnection04: string;
+    footerBankConnection05: string;
     footerContactLine01: string;
     footerContactLine02: string;
     footerContactLine03: string;
@@ -22,13 +22,13 @@ export interface SettingType {
     footerContactLine13: string;
     footerContactLine14: string;
     footerContactLine15: string;
-    footerBankConnection01: string;
-    footerBankConnection02: string;
-    footerBankConnection03: string;
-    footerBankConnection04: string;
-    footerBankConnection05: string;
     footerTaxIdentification: string;
-    creditorIdentificationNumber: string;
+    headerAddressLine01: string;
+    headerAddressLine02: string;
+    headerAddressLine03: string;
+    headerAddressLine04: string;
+    headerAddressLine05: string;
+    headerLocation: string;
+    headerShortAddress: string;
     logoId: string;
-    creationTime: Date;
 }
