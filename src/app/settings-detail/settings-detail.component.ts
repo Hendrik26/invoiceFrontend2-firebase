@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {SettingsService} from '../settings.service';
 import {} from '../setting';
