@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-// new imports added
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Invoice} from '../invoice';
@@ -16,37 +15,32 @@ import {Setting} from '../setting';
     styleUrls: ['./invoice-detail.component.css']
 })
 export class InvoiceDetailComponent implements OnInit {
-    ////
 
-    // region IDs
     invoiceId: string;
-    // endregion
 
-
-    // region other properties
-    invoice: Invoice = Invoice.getEmptyInvoice();
-    customers: Customer[];
-    invoiceSelectCustomer = '----------';
-    invoiceSelectCustomerDef1 = '----------';
-    customerAdress: string;
     bruttoSum: number;
-    salesTax: number;
+    changedItem: Item;
+    changedItemNumber = -1;
     creatingInvoice: boolean;
     creatingInvoiceBtn: boolean;
+    customerAdress: string;
+    customers: Customer[];
+    historyDateList: [{ historyKey: string, historyLabel: string }];
+    historyId: string;
+    historyTest: boolean;
+    invoice: Invoice = Invoice.getEmptyInvoice();
     invoiceDate: Date;
     invoiceDueDate: Date;
     invoiceKind: InvoiceKind;
-    private items: Item[];
-    private receivedInvoiceIdError: boolean;
-    changedItemNumber = -1;
-    changedItem: Item;
-    private oldItem: Item;
-    private editNewItem: boolean;
-    historyTest: boolean;
-    historyDateList: [{ historyKey: string, historyLabel: string }];
-    historyId: string;
-    setting: Setting;
+    invoiceSelectCustomer = '----------';
+    invoiceSelectCustomerDef1 = '----------';
     logoUrl: string;
+    salesTax: number;
+    setting: Setting;
+    private editNewItem: boolean;
+    private items: Item[];
+    private oldItem: Item;
+    private receivedInvoiceIdError: boolean;
 
     constructor(
         private router: Router,
@@ -60,8 +54,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.setting = this.settingsService.setting;
         this.invoice.settingId = this.settingsService.settingId;
     }
-
-    // endregion
 
     ngOnInit() {
         this.creatingInvoice = false;
@@ -104,6 +96,21 @@ export class InvoiceDetailComponent implements OnInit {
         console.log('invoice-detail.component.ts.changeISSEPAs()');
     }
 
+    public receiveInvoiceHistoryById(id: string): void {
+        this.fbInvoiceService.getInvoiceHistoryById(id)
+            .subscribe(data => {
+                this.historyDateList = data;
+            });
+    }
+
+    public refreshSettings(): void {
+        this.setting = this.settingsService.setting;
+        this.invoice.settingId = this.settingsService.settingId;
+        if (this.setting.logoId && this.setting.logoId.length > 0) {
+            this.getDownloadUrl(this.setting.logoId);
+        }
+    }
+
     private editItemNumber(row: number): void {
         this.changedItemNumber = row;
         this.oldItem = new Item(this.invoice, this.invoice.items[row]);
@@ -134,8 +141,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.editNewItem = false;
         this.calculateSums();
     }
-
-    // region other methods
 
     private addNewItem(): void {
         // this.invoice.items.push(Item.normalizeItem(this.invoice, {}));
@@ -183,13 +188,6 @@ export class InvoiceDetailComponent implements OnInit {
         );
     }
 
-    receiveInvoiceHistoryById(id: string): void {
-        this.fbInvoiceService.getInvoiceHistoryById(id)
-            .subscribe(data => {
-                this.historyDateList = data;
-            });
-    }
-
     private saveInvoice(archive: boolean = false): void {
         console.log('invoice-detail.component.ts: method saveInvoice');
         this.calculateSums();
@@ -217,14 +215,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.bruttoSum = this.salesTax + this.invoice.wholeCost;
     }
 
-    refreshSettings(): void {
-        this.setting = this.settingsService.setting;
-        this.invoice.settingId = this.settingsService.settingId;
-        if (this.setting.logoId && this.setting.logoId.length > 0) {
-            this.getDownloadUrl(this.setting.logoId);
-        }
-    }
-
     private changeInternational(): void {
         this.invoice.invoiceKind.international = !this.invoice.invoiceKind.international;
         console.log('invoice-detail.component.ts.changeInternational()');
@@ -236,7 +226,6 @@ export class InvoiceDetailComponent implements OnInit {
         if (this.route.snapshot.paramMap.has('invoiceId')) {
             this.invoiceId = this.route.snapshot.paramMap.get('invoiceId');  // get itemID???? invoiceId from URL
             // this.creatingInvoice = (this.route.snapshot.paramMap.get('newInvoice') === 'true');
-
             if (this.route.snapshot.paramMap.get('newInvoice') === 'true') {
                 this.invoiceId = null;
             }
@@ -265,7 +254,6 @@ export class InvoiceDetailComponent implements OnInit {
         this.invoice.timespanEnd = new Date(methEvent);
     }
 
-
     private invoiceNumberChange(e: string) {
         this.invoice.invoiceNumber = e;
         this.invoice.invoiceIntendedUse = 'die Rechnungsnummer ' + this.invoice.invoiceNumber;
@@ -288,8 +276,5 @@ export class InvoiceDetailComponent implements OnInit {
             = Math.round((this.invoice.timespanEnd.getTime() - this.invoice.timespanBegin.getTime()) / 1000 / 3600 / 24 / 30);
         return '(' + diffMonth + ' Monate)';
     }
-
-    // endregion
-
 
 }

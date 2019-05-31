@@ -80,7 +80,7 @@
 
         <hr>
 
-        <button (click)="saveSetting()">speichern</button>
+        <button (click)="saveSetting()" [disabled]="!enableSaveButton">speichern</button>
         <a routerLink="/login">Home</a>
 
 

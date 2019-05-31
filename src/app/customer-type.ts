@@ -1,8 +1,8 @@
 export interface CustomerType {
-    archived: boolean;
     addressLine1:  string;
     addressLine2:  string;
     addressLine3:  string;
+    archived: boolean;
     city:  string;
     country:  string;
     creationTime: Date;

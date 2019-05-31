@@ -11,6 +11,8 @@ import {} from '../setting';
 })
 export class SettingsDetailComponent implements OnInit {
 
+    public enableSaveButton = true;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -38,11 +40,13 @@ export class SettingsDetailComponent implements OnInit {
 
 
     uploadLogo(event): void {
+        this.enableSaveButton = false;
         this.fbInvoiceService.uploadLogo(event).subscribe(
             r => {
                 if (r.state === 'success') {
                     this.settingsService.setting.logoId = r.metadata.name;
                     this.getDownloadUrl(this.settingsService.setting.logoId);
+                    this.enableSaveButton = true;
                 }
             }
             , () => {

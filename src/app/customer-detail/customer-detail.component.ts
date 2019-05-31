@@ -14,11 +14,9 @@ import {SettingsService} from '../settings.service';
 })
 export class CustomerDetailComponent implements OnInit {
 
-    // region IDs
-    customerId: string;
-    // endregion
 
-    // region other properties
+    customerId: string;
+
     customer: CustomerType = Customer.getEmptyCustomer();
     historyDateList: [{ historyKey: string, historyLabel: string }];
     historyId: string;
@@ -26,8 +24,6 @@ export class CustomerDetailComponent implements OnInit {
     receivedCustomerIdError: boolean;
     archived = false;
     historyTest: boolean;
-
-    // endregion
 
     constructor(
         private router: Router,
@@ -74,21 +70,21 @@ export class CustomerDetailComponent implements OnInit {
 
     saveCustomer(archived: boolean): void {
         const customerType: CustomerType = {
-            customerNumber: this.customer.customerNumber ? this.customer.customerNumber : '', // Kundennummer
-            customerName: this.customer.customerName ? this.customer.customerName : '',  // Kundenname
-            country: this.customer.country ? this.customer.country : '',
-            postalCode: this.customer.postalCode ? this.customer.postalCode : '',
-            city: this.customer.city ? this.customer.city : '',
             addressLine1: this.customer.addressLine1 ? this.customer.addressLine1 : '',
             addressLine2: this.customer.addressLine2 ? this.customer.addressLine2 : '',
             addressLine3: this.customer.addressLine3 ? this.customer.addressLine3 : '',
-            customerSalesTaxNumber: this.customer.customerSalesTaxNumber ? this.customer.customerSalesTaxNumber : '',
+            archived: archived,
+            city: this.customer.city ? this.customer.city : '',
+            country: this.customer.country ? this.customer.country : '',
+            creationTime: this.customer.creationTime ? this.customer.creationTime : new Date(),
             customerBIC: this.customer.customerBIC ? this.customer.customerBIC : '',
             customerIBAN: this.customer.customerIBAN ? this.customer.customerIBAN : '',
-            mandateIdentification: this.customer.mandateIdentification ? this.customer.mandateIdentification : '',
-            creationTime: this.customer.creationTime ? this.customer.creationTime : new Date(),
+            customerName: this.customer.customerName ? this.customer.customerName : '',  // Kundenname
+            customerNumber: this.customer.customerNumber ? this.customer.customerNumber : '', // Kundennummer
+            customerSalesTaxNumber: this.customer.customerSalesTaxNumber ? this.customer.customerSalesTaxNumber : '',
             lastUpdateTime: new Date(),
-            archived: archived
+            mandateIdentification: this.customer.mandateIdentification ? this.customer.mandateIdentification : '',
+            postalCode: this.customer.postalCode ? this.customer.postalCode : ''
         };
         if (this.newCustomer) {
             this.newCustomer = false;

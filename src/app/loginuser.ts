@@ -1,19 +1,15 @@
-import {firestore} from 'firebase/app';
-import Timestamp = firestore.Timestamp;
-import {CustomerType} from './customer-type';
-
 export class LoginUser {
-    id: string;
-    authorityLevel: number;
-    created: Date;
-    email: string;
-    providerId: string;
+    public authorityLevel: number;
+    public created: Date;
+    public email: string;
+    public id: string;
+    public providerId: string;
 
     constructor(id: string, authorityLevel: number, created: Date, email: string, providerId: string) {
-        this.id = id;
         this.authorityLevel = authorityLevel;
         this.created = created;
         this.email = email;
+        this.id = id;
         this.providerId = providerId;
     }
 
