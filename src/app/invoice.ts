@@ -97,7 +97,6 @@ export class Invoice implements InvoiceType {
         const invoiceData: InvoiceType = {
             archived: !!inputInvoice.archived,
             countReminders: (typeof inputInvoice.countReminders === 'number') ? inputInvoice.countReminders : -1,
-            // <th>Anzahl der Mahnungen</th>
             currency: inputInvoice.currency ? inputInvoice.currency : '€',
             customerData: inputInvoice.customer ? Customer.normalizeCustomer(inputInvoice.customer) : Customer.getEmptyCustomer(),
             customerId: inputInvoice.customer.customerId ? inputInvoice.customer.customerId

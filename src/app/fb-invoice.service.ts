@@ -14,6 +14,7 @@ import {AngularFireStorage} from '@angular/fire//storage';
 import * as firebase from 'firebase';
 import {switchMap, map} from 'rxjs/operators';
 import {SettingType} from './setting-type';
+import {Setting} from './setting';
 
 
 @Injectable({
@@ -109,7 +110,8 @@ export class FbInvoiceService {
 
     // save the setting document as a new version
     saveSetting(setting: SettingType): Observable<any> {
-        return from(this.db.collection(this.dbSettingPath).add(setting));
+        const id = FbInvoiceService.getHistoryKey();
+        return from(this.db.collection(this.dbSettingPath).doc(id).set(setting));
     }
 
     // receives the last setting document
@@ -117,6 +119,19 @@ export class FbInvoiceService {
         return this.db.collection(this.dbSettingPath, ref => ref.orderBy('creationTime', 'desc').limit(1))
             .snapshotChanges()
             .pipe(map(changes => changes.map(c => ({key: c.payload.doc.id, ...c.payload.doc.data()}))));
+    }
+
+    // receives the last setting document
+    getSettingList(): Observable<any> {
+        return this.db.collection(this.dbSettingPath).snapshotChanges()
+            .pipe(map(changes =>
+                changes.map(c => ({key: c.payload.doc.id, creationTime: FbInvoiceService.historyKeyToLabel(c.payload.doc.id)} )
+            )));
+    }
+
+    // receives one specific setting document
+    getSettingById(settingId: string): Observable<any> {
+        return this.db.doc(`${this.dbSettingPath}/${settingId}`).valueChanges();
     }
 
     // receives the list of the customers with archive or not

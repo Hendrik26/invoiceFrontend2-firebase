@@ -82,6 +82,17 @@
 
         <button (click)="saveSetting()" [disabled]="!enableSaveButton">speichern</button>
         <a routerLink="/login">Home</a>
+        alte Versionen
+        <select (change)="receiveSettingById(settingId)" *ngIf="settingList"
+                [(ngModel)]="settingId" [ngModelOptions]="{standalone: true}" >
+        <option selected [ngValue]="undefined">
+            aktuell
+        </option>
+        <option *ngFor="let opt of settingList" [ngValue]="opt.key">
+            {{opt.creationTime}}
+        </option>
+    </select>
+
 
 
     </form>

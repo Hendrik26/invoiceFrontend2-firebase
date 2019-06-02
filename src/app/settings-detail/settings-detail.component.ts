@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FbInvoiceService} from '../fb-invoice.service';
 import {SettingsService} from '../settings.service';
-import {} from '../setting';
+import {Setting} from '../setting';
 
 @Component({
     selector: 'app-settings-detail',
@@ -12,6 +12,8 @@ import {} from '../setting';
 export class SettingsDetailComponent implements OnInit {
 
     public enableSaveButton = true;
+    public settingList: object;
+    public settingId: undefined;
 
     constructor(
         private router: Router,
@@ -23,12 +25,20 @@ export class SettingsDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getDownloadUrl(this.settingsService.setting.logoId);
+        this.getSettingList();
+    }
+
+    getSettingList(): void {
+        this.fbInvoiceService.getSettingList().subscribe(
+            r => {
+                this.settingList = r;
+            }
+        );
     }
 
     saveSetting(): void {
         this.fbInvoiceService.saveSetting(this.settingsService.setting.exportSettingData()).subscribe(
             r => {
-                console.log('new id:', r.id);
                 this.settingsService.settingId = r.id;
             }
             , () => {
@@ -37,7 +47,6 @@ export class SettingsDetailComponent implements OnInit {
         );
         this.router.navigateByUrl('/login');
     }
-
 
     uploadLogo(event): void {
         this.enableSaveButton = false;
@@ -53,6 +62,26 @@ export class SettingsDetailComponent implements OnInit {
                 this.settingsService.handleDbError('Speicherfehler', 'Error during uploading a file');
             }
         );
+    }
+
+    private receiveSettingById(settingId: string): void {
+        if (settingId) {
+            this.fbInvoiceService.getSettingById(settingId).subscribe(s => {
+                if (s) {
+                    this.settingsService.setting = Setting.normalizeSetting(s);
+                    this.settingsService.settingId = settingId;
+                }
+            });
+        } else {
+            this.fbInvoiceService.getLastSetting()
+                .subscribe(s => {
+                    if (s) {
+                        this.settingsService.setting = Setting.normalizeSetting(s[0]);
+                        this.settingsService.settingId = s[0].key;
+                    }
+                });
+        }
+        this.getDownloadUrl(this.settingsService.setting.logoId);
     }
 
     private getDownloadUrl(id: string): void {
