@@ -30,5 +30,9 @@ export interface SettingType {
     headerAddressLine05: string;
     headerLocation: string;
     headerShortAddress: string;
+    loginTxt0: string;
+    loginTxt1: string;
+    loginTxt2: string;
+    loginTxt3: string;
     logoId: string;
 }

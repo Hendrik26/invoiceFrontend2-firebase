@@ -33,6 +33,10 @@ export class Setting implements SettingType {
     headerAddressLine05: string;
     headerLocation: string;
     headerShortAddress: string;
+    loginTxt0: string;
+    loginTxt1: string;
+    loginTxt2: string;
+    loginTxt3: string;
     logoId: string;
 
     constructor() {
@@ -67,6 +71,10 @@ export class Setting implements SettingType {
         this.headerAddressLine05 = '';
         this.headerLocation = '';
         this.headerShortAddress = '';
+        this.loginTxt0 = '';
+        this.loginTxt1 = '';
+        this.loginTxt2 = '';
+        this.loginTxt3 = '';
         this.logoId = '';
     }
 
@@ -103,6 +111,10 @@ export class Setting implements SettingType {
         setting.headerAddressLine05 = inSetting.headerAddressLine05 ? inSetting.headerAddressLine05 : '';
         setting.headerLocation = inSetting.headerLocation ? inSetting.headerLocation : '';
         setting.headerShortAddress = inSetting.headerShortAddress ? inSetting.headerShortAddress : '';
+        setting.loginTxt0 = inSetting.loginTxt0 ? inSetting.loginTxt0 : '';
+        setting.loginTxt1 = inSetting.loginTxt1 ? inSetting.loginTxt1 : '';
+        setting.loginTxt2 = inSetting.loginTxt2 ? inSetting.loginTxt2 : '';
+        setting.loginTxt3 = inSetting.loginTxt3 ? inSetting.loginTxt3 : '';
         setting.logoId = inSetting.logoId ? inSetting.logoId : '';
         return setting;
     }
@@ -140,6 +152,10 @@ export class Setting implements SettingType {
             headerAddressLine05: this.headerAddressLine05,
             headerLocation: this.headerLocation,
             headerShortAddress: this.headerShortAddress,
+            loginTxt0: this.loginTxt0,
+            loginTxt1: this.loginTxt1,
+            loginTxt2: this.loginTxt2,
+            loginTxt3: this.loginTxt3,
             logoId: this.logoId
         };
     }

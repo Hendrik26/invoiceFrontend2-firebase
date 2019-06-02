@@ -69,30 +69,36 @@
                                                            [(ngModel)]="settingsService.setting.footerTaxIdentification"></label>
         <label><span>Gläubigeridentifikationsnr.</span><input type="text" name="footerCreditorIdentification"
                                                               [(ngModel)]="settingsService.setting.creditorIdentificationNumber"></label>
-
+        <h3>Login Nachricht</h3>
+        <label><span>Berechtigungsstufe 0</span><input type="text" name="loginTxt0"
+                                                       [(ngModel)]="settingsService.setting.loginTxt0"></label>
+        <label><span>Berechtigungsstufe 1</span><input type="text" name="loginTxt1"
+                                                       [(ngModel)]="settingsService.setting.loginTxt1"></label>
+        <label><span>Berechtigungsstufe 2</span><input type="text" name="loginTxt2"
+                                                       [(ngModel)]="settingsService.setting.loginTxt2"></label>
+        <label><span>Berechtigungsstufe 3</span><input type="text" name="loginTxt3"
+                                                       [(ngModel)]="settingsService.setting.loginTxt3"></label>
         <h3>neues Logo hochladen</h3>
         <div class="logo">
             <label><span>neue Logo Datei hochladen</span>
                 <input type="file" (change)="uploadLogo($event)" accept=".png,.jpg">
-                    <img [src]="settingsService.logoUrl" *ngIf="settingsService.logoUrl && settingsService.logoUrl.length > 0" alt="Logo" title="Logo"/>
+                <img [src]="settingsService.logoUrl"
+                     *ngIf="settingsService.logoUrl && settingsService.logoUrl.length > 0" alt="Logo" title="Logo"/>
             </label>
         </div>
-
         <hr>
-
         <button (click)="saveSetting()" [disabled]="!enableSaveButton">speichern</button>
         <a routerLink="/login">Home</a>
         alte Versionen
         <select (change)="receiveSettingById(settingId)" *ngIf="settingList"
-                [(ngModel)]="settingId" [ngModelOptions]="{standalone: true}" >
-        <option selected [ngValue]="undefined">
-            aktuell
-        </option>
-        <option *ngFor="let opt of settingList" [ngValue]="opt.key">
-            {{opt.creationTime}}
-        </option>
-    </select>
-
+                [(ngModel)]="settingId" [ngModelOptions]="{standalone: true}">
+            <option selected [ngValue]="undefined">
+                aktuell
+            </option>
+            <option *ngFor="let opt of settingList" [ngValue]="opt.key">
+                {{opt.creationTime}}
+            </option>
+        </select>
 
 
     </form>
